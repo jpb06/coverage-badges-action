@@ -1,0 +1,58 @@
+{
+  "name": "coverage-badges-action",
+  "description": "Generates coverage badges and pushes them to the repo",
+  "version": "1.0.0",
+  "main": "lib/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpb06/coverage-badges-action.git"
+  },
+  "author": "jpb06 <jpb.06@outlook.com>",
+  "license": "MIT",
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "cleanDist": "rimraf ./dist && rimraf ./lib",
+    "build": "pnpm cleanDist && tsc --project tsconfig.prod.json && ncc build --minify",
+    "lint": "eslint ./src",
+    "type-check": "tsc --noEmit ",
+    "test": "vitest",
+    "test-ci": "vitest --coverage --run",
+    "test-dev": "vitest --coverage",
+    "test-coverage": "vitest run --coverage",
+    "badges": "generateBadges",
+    "sync-icons": "pnpm generateReadmeIcons -h 50"
+  },
+  "dependencies": {
+    "@actions/core": "1.10.1",
+    "@actions/exec": "1.1.1",
+    "@actions/github": "6.0.0",
+    "fs-extra": "11.2.0",
+    "node-coverage-badges": "^1.0.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "18.6.1",
+    "@commitlint/config-conventional": "18.6.1",
+    "@stylistic/eslint-plugin": "^1.6.1",
+    "@types/eslint": "^8.56.2",
+    "@types/fs-extra": "11.0.4",
+    "@types/node": "20.11.17",
+    "@typescript-eslint/eslint-plugin": "7.0.1",
+    "@typescript-eslint/parser": "7.0.1",
+    "@vercel/ncc": "0.38.1",
+    "@vitest/coverage-v8": "^1.2.2",
+    "eslint": "8.56.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-markdown": "^3.0.1",
+    "eslint-plugin-prettier": "5.1.3",
+    "eslint-plugin-vitest": "^0.3.22",
+    "prettier": "3.2.5",
+    "readme-package-icons": "1.1.10",
+    "rimraf": "5.0.5",
+    "typescript": "5.3.3",
+    "vitest": "^1.2.2"
+  }
+}

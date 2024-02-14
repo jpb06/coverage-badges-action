@@ -1,0 +1,39 @@
+name: 'Coverage badges generation action'
+description: 'Action generating coverage badges and pushing them to the repo'
+
+inputs:
+  no-commit:
+    description: 'If set to true, badges will not be committed by the github action.'
+    default: 'false'
+  branches:
+    description: 'Branches on which the badges should be generated. Commas separated.'
+    default: 'master,main'
+  target-branch:
+    description: 'Branch on which badges should be pushed. If left empty, current branch will be used.'
+    default: ''
+  coverage-summary-path:
+    description: 'Coverage summary path (json-summary). Defining this may be useful if you need to run this action on a monorepo.'
+    default: './coverage/coverage-summary.json'
+  badges-icon:
+    description: 'Icon to use for the badges (simple-icons slug - https://simpleicons.org/).'
+    default: ''
+  commit-message:
+    description: 'Commit message of the commit with generated badges.'
+    default: 'Updating coverage badges'
+  commit-user:
+    description: 'User for the commit containing generated badges.'
+    default: ''
+  commit-user-email:
+    description: 'User email for the commit containing generated badges.'
+    default: ''
+  output-folder:
+    description: 'Where badges should be written (optional).'
+    default: './badges'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+
+branding:
+  icon: check-square
+  color: green
