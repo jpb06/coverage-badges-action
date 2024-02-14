@@ -3,7 +3,7 @@ name: ⚡ Coverage badges generation
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   coverage-badges-generation:
