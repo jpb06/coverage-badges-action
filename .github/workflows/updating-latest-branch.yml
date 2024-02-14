@@ -20,8 +20,8 @@ jobs:
       - name: ⬇️ Checkout latest
         run: git checkout latest
 
-      - name: 🔀 Rebase latest on master
-        run: git merge origin/master
+      - name: 🔀 Rebase latest on main
+        run: git merge origin/main
 
       - name: ⬆️ Push latest
         run: git push origin latest

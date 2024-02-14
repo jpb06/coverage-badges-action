@@ -3,7 +3,7 @@ name: ⚡ Integration checks
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 
 concurrency:
