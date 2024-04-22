@@ -17,17 +17,17 @@ export const actionWorkflow = async (): Promise<void> => {
     if (shouldCommit) {
       const isBranchValid = isBranchValidForBadgesGeneration(currentBranch);
       if (!isBranchValid) {
-        return info(
+        info(
           '🛑 Current branch does not belong to the branches allowed for badges generation, task dropped.',
-        );
+        ); return;
       }
     }
 
     const isReportAvailable = await isCoverageReportAvailable();
     if (!isReportAvailable) {
-      return setFailed(
+      setFailed(
         '❌ Coverage report is missing. Did you forget to run tests or to add `json-summary` to coverageReporters in your test runner config?',
-      );
+      ); return;
     }
 
     const summaryPathInput = getInput('coverage-summary-path');
@@ -41,18 +41,18 @@ export const actionWorkflow = async (): Promise<void> => {
 
     info(
       `ℹ️ Generating badges from ${
-        summaryPath ? summaryPath : 'default coverage summary path'
+        summaryPath ?? 'default coverage summary path'
       }`,
     );
     await generateBadges(summaryPath, outputPath, badgesIcon);
 
     if (!shouldCommit) {
-      return info("ℹ️ `no-commit` set to true: badges won't be committed");
+      info("ℹ️ `no-commit` set to true: badges won't be committed"); return;
     }
 
     const hasEvolved = await hasCoverageEvolved(badgesExist, outputPath);
     if (!hasEvolved) {
-      return info('✅ Coverage has not evolved, no action required.');
+      info('✅ Coverage has not evolved, no action required.'); return;
     }
 
     info('🚀 Pushing badges to the repo');
@@ -63,14 +63,14 @@ export const actionWorkflow = async (): Promise<void> => {
   } catch (error) {
     if (error instanceof Error) {
       if (error.message.startsWith('❌')) {
-        return setFailed(error.message);
+        setFailed(error.message); return;
       }
 
-      return setFailed(
+      setFailed(
         `❌ Oh no! An error occured: ${(error as { message: string }).message}`,
-      );
+      ); return;
     }
 
-    return setFailed(`❌ Oh no! An unknown error occured`);
+    setFailed(`❌ Oh no! An unknown error occured`); 
   }
 };

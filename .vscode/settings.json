@@ -1,8 +1,16 @@
 {
   "eslint.run": "onSave",
+  "eslint.experimental.useFlatConfig": true,
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+  "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"],
+  "editor.tabSize": 2,
+  "[properties]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  "editor.tabSize": 2
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 }
