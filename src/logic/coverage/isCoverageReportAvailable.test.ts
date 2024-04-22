@@ -28,7 +28,8 @@ describe('isCoverageReportAvailable function', () => {
 
   it('should return false if coverage report is empty', async () => {
     vi.mocked(pathExists).mockImplementationOnce(() => true as never);
-    vi.mocked(readJson).mockImplementationOnce(() => ({}) as never);
+    const emptyFn = () => ({});
+    vi.mocked(readJson).mockImplementationOnce(emptyFn as never);
 
     const result = await isCoverageReportAvailable();
 
@@ -37,13 +38,11 @@ describe('isCoverageReportAvailable function', () => {
 
   it('should return false if coverage report has missing details', async () => {
     vi.mocked(pathExists).mockImplementationOnce(() => true as never);
+    const summary = { total: { branches: { pct: 20 },
+      },
+    };
     vi.mocked(readJson).mockImplementationOnce(
-      () =>
-        ({
-          total: {
-            branches: { pct: 20 },
-          },
-        }) as never,
+      () => summary as never,
     );
 
     const result = await isCoverageReportAvailable();
@@ -53,16 +52,17 @@ describe('isCoverageReportAvailable function', () => {
 
   it('should return true', async () => {
     vi.mocked(pathExists).mockImplementationOnce(() => true as never);
+    const summary = {
+      total: {
+        branches: { pct: 90 },
+        functions: { pct: 70 },
+        lines: { pct: 100 },
+        statements: { pct: 60 },
+      },
+    };
     vi.mocked(readJson).mockImplementationOnce(
       () =>
-        ({
-          total: {
-            branches: { pct: 90 },
-            functions: { pct: 70 },
-            lines: { pct: 100 },
-            statements: { pct: 60 },
-          },
-        }) as never,
+        summary as never,
     );
 
     const result = await isCoverageReportAvailable();

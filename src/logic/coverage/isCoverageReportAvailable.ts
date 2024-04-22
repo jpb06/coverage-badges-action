@@ -1,6 +1,6 @@
 import { getInput } from '@actions/core';
 import { pathExists, readJson } from 'fs-extra';
-import { CoverageSummary, FileCoverageTotal } from 'node-coverage-badges';
+import { type CoverageSummary, type FileCoverageTotal } from 'node-coverage-badges';
 
 const isUndefined = (element?: FileCoverageTotal) => element?.pct === undefined;
 
@@ -17,7 +17,7 @@ export const isCoverageReportAvailable = async (): Promise<boolean> => {
   }
 
   const data: CoverageReport = await readJson(coverageSummaryPath);
-  if (!data?.total) {
+  if (data?.total === undefined) {
     return false;
   }
 
