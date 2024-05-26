@@ -1,9 +1,10 @@
 import { getInput } from '@actions/core';
 import { exec } from '@actions/exec';
 import { context } from '@actions/github';
+import { Effect } from 'effect';
 import { describe, beforeEach, expect, vi, it } from 'vitest';
 
-import { setGitConfig } from './setGitConfig';
+import { setGitConfig } from './set-git-config';
 
 vi.mock('@actions/exec');
 vi.mock('@actions/github');
@@ -17,19 +18,21 @@ describe('setGitConfig function', () => {
   it('should use default values for commit user', async () => {
     vi.mocked(getInput).mockReturnValue('');
 
-    await setGitConfig();
+    await Effect.runPromise(setGitConfig());
 
     expect(exec).toHaveBeenCalledTimes(2);
-    expect(exec).toHaveBeenNthCalledWith(1, 'git config', [
-      '--global',
-      'user.name',
-      context.actor,
-    ]);
-    expect(exec).toHaveBeenNthCalledWith(2, 'git config', [
-      '--global',
-      'user.email',
-      `${context.actor}@users.noreply.github.com`,
-    ]);
+    expect(exec).toHaveBeenNthCalledWith(
+      1,
+      'git config',
+      ['--global', 'user.name', context.actor],
+      undefined,
+    );
+    expect(exec).toHaveBeenNthCalledWith(
+      2,
+      'git config',
+      ['--global', 'user.email', `${context.actor}@users.noreply.github.com`],
+      undefined,
+    );
   });
 
   it('should use custom values for commit user', async () => {
@@ -37,18 +40,20 @@ describe('setGitConfig function', () => {
     const name = 'yolo bro';
     vi.mocked(getInput).mockReturnValueOnce(email).mockReturnValueOnce(name);
 
-    await setGitConfig();
+    await Effect.runPromise(setGitConfig());
 
     expect(exec).toHaveBeenCalledTimes(2);
-    expect(exec).toHaveBeenNthCalledWith(1, 'git config', [
-      '--global',
-      'user.name',
-      name,
-    ]);
-    expect(exec).toHaveBeenNthCalledWith(2, 'git config', [
-      '--global',
-      'user.email',
-      email,
-    ]);
+    expect(exec).toHaveBeenNthCalledWith(
+      1,
+      'git config',
+      ['--global', 'user.name', name],
+      undefined,
+    );
+    expect(exec).toHaveBeenNthCalledWith(
+      2,
+      'git config',
+      ['--global', 'user.email', email],
+      undefined,
+    );
   });
 });

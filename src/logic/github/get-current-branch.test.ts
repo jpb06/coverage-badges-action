@@ -1,6 +1,6 @@
 import { describe, beforeAll, expect, vi, it } from 'vitest';
 
-import { getCurrentBranch } from './getCurrentBranch';
+import { getCurrentBranch } from './get-current-branch';
 
 vi.mock('@actions/core');
 

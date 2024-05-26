@@ -82,7 +82,7 @@ module.exports = {
 
 If set to `true`, badges won't be committed by the github action.
 
-> Default value: *false**
+> Default value: **false**
 
 ### 🔶 `branches`
 
@@ -96,7 +96,7 @@ The branch on which generated badges should be pushed. If unset, the current bra
 
 ### 🔶 `coverage-summary-path`
 
-Jest coverage summary path (json-summary). Defining this may be useful if you need to run this action on a monorepo.
+Jest coverage summary paths (json-summary). Defining this may be useful if you need to run this action on a monorepo. Can be an array of glob paths.
 
 > Default value: **./coverage/coverage-summary.json**
 
@@ -140,7 +140,7 @@ Let's first define an npm script to run jest in package.json, specifying the cov
     // in case you use jest
     "test-ci": "jest --ci --coverage",
     // or if you use vitest ...
-    "test-ci": "vitest --coverage --run",
+    "test-ci": "vitest --coverage --run"
   }
 }
 ```
@@ -212,7 +212,7 @@ jobs:
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
-      
+
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v3
         with:
