@@ -1,7 +1,8 @@
+import { Effect } from 'effect';
 import { pathExists } from 'fs-extra';
 import { describe, expect, vi, it } from 'vitest';
 
-import { doBadgesExist } from './doBadgesExist';
+import { doBadgesExist } from './do-badges-exist';
 
 vi.mock('fs-extra', () => ({
   pathExists: vi.fn(),
@@ -18,7 +19,9 @@ describe('doBadgesExist function', () => {
       .mockImplementationOnce(() => true as never)
       .mockImplementationOnce(() => true as never);
 
-    const result = await doBadgesExist(outputPath);
+    const result = await Effect.runPromise(
+      doBadgesExist(outputPath, [{ path: './coverage/coverage-summary.json' }]),
+    );
 
     expect(result).toBe(false);
   });
@@ -31,7 +34,9 @@ describe('doBadgesExist function', () => {
       .mockImplementationOnce(() => true as never)
       .mockImplementationOnce(() => true as never);
 
-    const result = await doBadgesExist(outputPath);
+    const result = await Effect.runPromise(
+      doBadgesExist(outputPath, [{ path: './coverage/coverage-summary.json' }]),
+    );
 
     expect(result).toBe(true);
   });
