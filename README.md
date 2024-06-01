@@ -206,7 +206,7 @@ You may use an array of wildcard glob paths for
       uses: jpb06/coverage-badges-action@latest
         with:
           coverage-summary-path: |
-            ./my-module/coverage/coverage-summary.json
+            ./apps/**/coverage/coverage-summary.json
 ```
 
 ### 🔶 Pushing generated badges to a custom branch
