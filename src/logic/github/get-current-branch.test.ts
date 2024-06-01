@@ -1,13 +1,19 @@
 import { Effect } from 'effect';
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 
-import { mockActionsCore, mockProcess } from '../../tests/mocks';
+import { mockActionsCore } from '../../tests/mocks';
 
 describe('getCurrentBranch function', () => {
   const { info, warning } = mockActionsCore();
 
+  beforeAll(() => {
+    process.env.GITHUB_HEAD_REF = undefined;
+    process.env.GITHUB_REF_NAME = undefined;
+  });
+
   it('should fail when branch name could not be defined', async () => {
-    await mockProcess({});
+    process.env.GITHUB_HEAD_REF = undefined;
+    process.env.GITHUB_REF_NAME = undefined;
 
     const { getCurrentBranch } = await import('./get-current-branch');
 
@@ -21,12 +27,8 @@ describe('getCurrentBranch function', () => {
 
   it('should return the current branch', async () => {
     const branchName = 'master';
-    await mockProcess({
-      env: {
-        GITHUB_HEAD_REF: branchName,
-        GITHUB_REF_NAME: undefined,
-      },
-    });
+    process.env.GITHUB_HEAD_REF = branchName;
+    process.env.GITHUB_REF_NAME = undefined;
 
     const { getCurrentBranch } = await import('./get-current-branch');
 
@@ -38,13 +40,8 @@ describe('getCurrentBranch function', () => {
 
   it('should return the current branch from ref name env var', async () => {
     const branchName = 'master';
-
-    await mockProcess({
-      env: {
-        GITHUB_HEAD_REF: undefined,
-        GITHUB_REF_NAME: branchName,
-      },
-    });
+    process.env.GITHUB_HEAD_REF = undefined;
+    process.env.GITHUB_REF_NAME = branchName;
 
     const { getCurrentBranch } = await import('./get-current-branch');
 

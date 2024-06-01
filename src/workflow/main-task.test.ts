@@ -6,7 +6,6 @@ import { anyObject, arrayIncludes } from 'vitest-mock-extended';
 import { summaryFileMockData } from '../tests/mock-data/summary-file.mock';
 import {
   mockActionsCore,
-  mockProcess,
   mockGlob,
   mockFsExtra,
   mockActionsExec,
@@ -32,11 +31,15 @@ describe('actionWorkflow effect function', () => {
   });
 
   beforeAll(() => {
+    process.env.GITHUB_HEAD_REF = undefined;
+    process.env.GITHUB_REF_NAME = undefined;
+
     context.actor = 'actor';
   });
 
   it('should fail if current branch could not be computed', async () => {
-    await mockProcess({});
+    process.env.GITHUB_HEAD_REF = undefined;
+    process.env.GITHUB_REF_NAME = undefined;
 
     const { mainTask } = await import('./main-task');
 
@@ -50,11 +53,8 @@ describe('actionWorkflow effect function', () => {
 
   it('should fail if branch is not allowed, from allowed branches default value', async () => {
     const branchName = 'cool';
-    await mockProcess({
-      env: {
-        GITHUB_HEAD_REF: branchName,
-      },
-    });
+    process.env.GITHUB_HEAD_REF = branchName;
+    process.env.GITHUB_REF_NAME = undefined;
 
     getInput.calledWith('branches').mockReturnValueOnce('');
 
@@ -79,11 +79,8 @@ describe('actionWorkflow effect function', () => {
 
   it('should fail if branch is not allowed', async () => {
     const branchName = 'yolo';
-    await mockProcess({
-      env: {
-        GITHUB_HEAD_REF: branchName,
-      },
-    });
+    process.env.GITHUB_HEAD_REF = branchName;
+    process.env.GITHUB_REF_NAME = undefined;
 
     getInput.calledWith('branches').mockReturnValueOnce('bro,awoowoo');
 
@@ -101,11 +98,8 @@ describe('actionWorkflow effect function', () => {
 
   it('should fail if there is no coverage report (single file)', async () => {
     const branchName = 'main';
-    await mockProcess({
-      env: {
-        GITHUB_HEAD_REF: branchName,
-      },
-    });
+    process.env.GITHUB_HEAD_REF = branchName;
+    process.env.GITHUB_REF_NAME = undefined;
 
     getInput.calledWith('branches').mockReturnValueOnce('main,master');
     getMultilineInput
@@ -128,11 +122,8 @@ describe('actionWorkflow effect function', () => {
   it('should generate badges but not commit them', async () => {
     const reportPath = './coverage/coverage-summary.json';
 
-    await mockProcess({
-      env: {
-        GITHUB_HEAD_REF: branchName,
-      },
-    });
+    process.env.GITHUB_HEAD_REF = branchName;
+    process.env.GITHUB_REF_NAME = undefined;
 
     getInput.calledWith('no-commit').mockReturnValueOnce('true');
     getInput.calledWith('branches').mockReturnValueOnce('main,master');
@@ -186,11 +177,8 @@ describe('actionWorkflow effect function', () => {
   it('should not push badges if coverage has not evolved', async () => {
     const reportPath = './coverage/coverage-summary.json';
 
-    await mockProcess({
-      env: {
-        GITHUB_HEAD_REF: branchName,
-      },
-    });
+    process.env.GITHUB_HEAD_REF = branchName;
+    process.env.GITHUB_REF_NAME = undefined;
 
     getInput.calledWith('branches').mockReturnValueOnce('main,master');
     getInput.calledWith('commit-user-email').mockReturnValueOnce('');
@@ -249,11 +237,8 @@ describe('actionWorkflow effect function', () => {
   it('should generate badges from a single report', async () => {
     const reportPath = './coverage/coverage-summary.json';
 
-    await mockProcess({
-      env: {
-        GITHUB_HEAD_REF: branchName,
-      },
-    });
+    process.env.GITHUB_HEAD_REF = branchName;
+    process.env.GITHUB_REF_NAME = undefined;
 
     getInput.calledWith('branches').mockReturnValueOnce('main,master');
     getInput.calledWith('commit-user-email').mockReturnValueOnce('');
@@ -339,11 +324,8 @@ describe('actionWorkflow effect function', () => {
   });
 
   it('should generate badges from several wildcard paths', async () => {
-    await mockProcess({
-      env: {
-        GITHUB_HEAD_REF: branchName,
-      },
-    });
+    process.env.GITHUB_HEAD_REF = branchName;
+    process.env.GITHUB_REF_NAME = undefined;
 
     getInput.calledWith('branches').mockReturnValueOnce('main,master');
     getInput.calledWith('commit-user-email').mockReturnValueOnce('');
