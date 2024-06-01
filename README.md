@@ -82,7 +82,7 @@ module.exports = {
 
 If set to `true`, badges won't be committed by the github action.
 
-> Default value: *false**
+> Default value: **false**
 
 ### 🔶 `branches`
 
@@ -96,9 +96,13 @@ The branch on which generated badges should be pushed. If unset, the current bra
 
 ### 🔶 `coverage-summary-path`
 
-Jest coverage summary path (json-summary). Defining this may be useful if you need to run this action on a monorepo.
+Jest coverage summary paths (json-summary). Defining this may be useful if you need to run this action on a monorepo. Can be an array of glob paths.
 
-> Default value: **./coverage/coverage-summary.json**
+> Default value:
+
+```yaml |
+./coverage/coverage-summary.json
+```
 
 ### 🔶 `badges-icon`
 
@@ -140,7 +144,7 @@ Let's first define an npm script to run jest in package.json, specifying the cov
     // in case you use jest
     "test-ci": "jest --ci --coverage",
     // or if you use vitest ...
-    "test-ci": "vitest --coverage --run",
+    "test-ci": "vitest --coverage --run"
   }
 }
 ```
@@ -188,7 +192,21 @@ In case you need to define a custom path for the coverage summary file, you can 
     - name: ⚙️ Generating coverage badges
       uses: jpb06/coverage-badges-action@latest
         with:
-          coverage-summary-path: ./my-module/coverage/coverage-summary.json
+          coverage-summary-path: |
+            ./my-module/coverage/coverage-summary.json
+```
+
+### 🔶 Generating badges from several subpaths for `coverage-summary-path` to generate badges from several reports (several apps in a monorepo for example):
+
+You may use an array of wildcard glob paths for
+
+```yaml
+    [...]
+    - name: ⚙️ Generating coverage badges
+      uses: jpb06/coverage-badges-action@latest
+        with:
+          coverage-summary-path: |
+            ./my-module/coverage/coverage-summary.json
 ```
 
 ### 🔶 Pushing generated badges to a custom branch
@@ -212,9 +230,9 @@ jobs:
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
-      
+
       - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
           version: latest
 
@@ -239,7 +257,7 @@ jobs:
         run: pnpm test-ci
 
       - name: ⚙️ Generating coverage badges
-        uses: ./
+        uses: jpb06/coverage-badges-action@latest
         with:
           branches: '*'
           target-branch: badges
