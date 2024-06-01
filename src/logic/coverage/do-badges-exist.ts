@@ -24,12 +24,12 @@ export const doBadgesExist = (outputPath: string, paths: ValidatedPath[]) =>
   pipe(
     Effect.forEach(
       paths,
-      ({ outputPath: outputSubPath }) =>
+      ({ subPath }) =>
         pipe(
           Effect.all(
             files.map((file) =>
               pathExistsEffect(
-                `${outputPath}/${maybeAddSubPath(outputSubPath)}${file}`,
+                `${outputPath}/${maybeAddSubPath(subPath)}${file}`,
               ),
             ),
             {

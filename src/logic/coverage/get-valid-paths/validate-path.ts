@@ -1,11 +1,11 @@
 import { Effect } from 'effect';
+import { type FsError } from 'node-coverage-badges';
 
-import { type FsError } from '../../../effects/fs/errors/fs.error';
 import { isCoverageReportAvailableForFile } from '../is-coverage-report-available-for-file';
 
 export interface ValidatedPath {
   path: string;
-  outputPath?: string;
+  subPath?: string;
 }
 
 export const validatePath =
@@ -22,7 +22,7 @@ export const validatePath =
         const pathChunks = maybeGlobPath.split('**');
         const regex = new RegExp(`^${pathChunks[0]}(.*)${pathChunks[1]}$`);
 
-        return { path, outputPath: regex.exec(path)?.[1] };
+        return { path, subPath: regex.exec(path)?.[1] };
       }
 
       // assuming we get something ending with '/coverage/coverage-summary.json' ...
@@ -34,6 +34,6 @@ export const validatePath =
 
       return {
         path,
-        outputPath: hasSubpath ? subPath : undefined,
+        subPath: hasSubpath ? subPath : undefined,
       };
     });

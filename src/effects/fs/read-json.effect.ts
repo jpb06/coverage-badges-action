@@ -1,7 +1,6 @@
 import { Effect } from 'effect';
 import { readJson as fsReadJson } from 'fs-extra';
-
-import { FsError } from './errors/fs.error';
+import { FsError } from 'node-coverage-badges';
 
 export const readJsonEffect = <T>(path: string) =>
   Effect.tryPromise<T, FsError>({

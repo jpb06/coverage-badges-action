@@ -3,7 +3,7 @@ import { Effect } from 'effect';
 import { TaggedError } from 'effect/Data';
 
 export class BranchNotAllowedForGenerationError extends TaggedError(
-  'BranchNotAllowedForGeneration',
+  'branch-not-allowed-for-generation',
 )<{
   cause?: unknown;
   message?: string;

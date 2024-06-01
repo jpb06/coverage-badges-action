@@ -11,7 +11,6 @@ export const hasCoverageEvolved = (badgesExist: boolean, outputPath: string) =>
     const code = yield* execEffect('git diff', ['--quiet', `${outputPath}/*`], {
       ignoreReturnCode: true,
     });
-
     const hasChanged = code === 1;
 
     return hasChanged;
