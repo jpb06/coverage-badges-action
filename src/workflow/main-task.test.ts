@@ -359,10 +359,19 @@ describe('actionWorkflow effect function', () => {
 
     await Effect.runPromise(mainTask());
 
-    expect(info).toHaveBeenCalledTimes(3);
+    expect(info).toHaveBeenCalledTimes(6);
     expect(info).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
-    expect(info).toHaveBeenNthCalledWith(2, '🚀 Generating badges ...');
-    expect(info).toHaveBeenNthCalledWith(3, '🚀 Pushing badges to the repo');
+    expect(info).toHaveBeenNthCalledWith(2, `✅ Found 2 summary files`);
+    expect(info).toHaveBeenNthCalledWith(
+      3,
+      '📁 ./apps/one/coverage/coverage-summary.json',
+    );
+    expect(info).toHaveBeenNthCalledWith(
+      4,
+      '📁 ./apps/two/coverage/coverage-summary.json',
+    );
+    expect(info).toHaveBeenNthCalledWith(5, '🚀 Generating badges ...');
+    expect(info).toHaveBeenNthCalledWith(6, '🚀 Pushing badges to the repo');
 
     expect(generateBadgesEffect).toHaveBeenCalledTimes(2);
     expect(generateBadgesEffect).toHaveBeenNthCalledWith(

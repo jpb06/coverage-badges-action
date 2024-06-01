@@ -9,6 +9,12 @@ export const generateBadges = (
   outputPath: string,
 ) =>
   Effect.gen(function* () {
+    if (summaryFilesPaths.length > 1) {
+      info(`✅ Found ${summaryFilesPaths.length} summary files`);
+      summaryFilesPaths.forEach(({ path }) => {
+        info(`📁 ${path}`);
+      });
+    }
     info(`🚀 Generating badges ...`);
     const badgesIconInput = getInput('badges-icon');
     const badgesIcon = badgesIconInput === '' ? undefined : badgesIconInput;
