@@ -25,6 +25,7 @@ export const getCurrentBranch = Effect.gen(function* () {
   }
 
   info(`ℹ️ Current branch is ${currentBranch}`);
+
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return yield* Effect.succeed(currentBranch!);
 });

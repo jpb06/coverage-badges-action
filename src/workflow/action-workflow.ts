@@ -1,7 +1,7 @@
-import { Effect } from 'effect';
+import { runPromise } from 'effect-errors';
 
 import { catchMainTaskErrors } from './catch-main-task-errors';
 
 export const promisifiedActionWorkflow = async (): Promise<void> => {
-  await Effect.runPromise(catchMainTaskErrors());
+  await runPromise(catchMainTaskErrors());
 };

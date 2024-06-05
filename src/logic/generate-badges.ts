@@ -11,8 +11,8 @@ export const generateBadges = (
   Effect.gen(function* () {
     if (summaryFilesPaths.length > 1) {
       info(`✅ Found ${summaryFilesPaths.length} summary files`);
-      summaryFilesPaths.forEach(({ path }) => {
-        info(`📁 ${path}`);
+      summaryFilesPaths.forEach(({ path, subPath }) => {
+        info(`📁 ${path} (subPath = ${subPath})`);
       });
     }
     info(`🚀 Generating badges ...`);
@@ -21,14 +21,12 @@ export const generateBadges = (
 
     yield* Effect.forEach(
       summaryFilesPaths,
-      ({ path, subPath }) =>
-        generateBadgesEffect(
-          path,
-          subPath !== undefined ? `${outputPath}/${subPath}` : outputPath,
-          badgesIcon,
-        ),
-      {
-        concurrency: 'unbounded',
+      ({ path, subPath }) => {
+        const writePath =
+          subPath !== undefined ? `${outputPath}/${subPath}` : outputPath;
+
+        return generateBadgesEffect(path, writePath, badgesIcon);
       },
+      { concurrency: 'unbounded' },
     );
   });

@@ -338,8 +338,8 @@ describe('actionWorkflow effect function', () => {
       .mockReturnValueOnce(['./apps/**/coverage/coverage-summary.json']);
 
     glob.mockResolvedValueOnce([
-      './apps/one/coverage/coverage-summary.json',
-      './apps/two/coverage/coverage-summary.json',
+      'apps/one/coverage/coverage-summary.json',
+      'apps/two/coverage/coverage-summary.json',
     ]);
     pathExists.mockResolvedValue(true as never);
     readJson.mockResolvedValue(summaryFileMockData);
@@ -364,11 +364,11 @@ describe('actionWorkflow effect function', () => {
     expect(info).toHaveBeenNthCalledWith(2, `✅ Found 2 summary files`);
     expect(info).toHaveBeenNthCalledWith(
       3,
-      '📁 ./apps/one/coverage/coverage-summary.json',
+      '📁 apps/one/coverage/coverage-summary.json (subPath = one)',
     );
     expect(info).toHaveBeenNthCalledWith(
       4,
-      '📁 ./apps/two/coverage/coverage-summary.json',
+      '📁 apps/two/coverage/coverage-summary.json (subPath = two)',
     );
     expect(info).toHaveBeenNthCalledWith(5, '🚀 Generating badges ...');
     expect(info).toHaveBeenNthCalledWith(6, '🚀 Pushing badges to the repo');
@@ -376,13 +376,13 @@ describe('actionWorkflow effect function', () => {
     expect(generateBadgesEffect).toHaveBeenCalledTimes(2);
     expect(generateBadgesEffect).toHaveBeenNthCalledWith(
       1,
-      './apps/one/coverage/coverage-summary.json',
+      'apps/one/coverage/coverage-summary.json',
       './badges/one',
       undefined,
     );
     expect(generateBadgesEffect).toHaveBeenNthCalledWith(
       2,
-      './apps/two/coverage/coverage-summary.json',
+      'apps/two/coverage/coverage-summary.json',
       './badges/two',
       undefined,
     );
