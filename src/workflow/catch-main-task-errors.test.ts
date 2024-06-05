@@ -10,7 +10,7 @@ import { mainTask } from './main-task';
 vi.mock('./main-task');
 
 describe('catchMainTaskErrors effect', () => {
-  const { info, setFailed } = mockActionsCore();
+  const { info } = mockActionsCore();
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -33,7 +33,7 @@ describe('catchMainTaskErrors effect', () => {
     expect(info).toHaveBeenCalledWith(errorMessage);
   });
 
-  it('should call setFailed when any other effect error occurs', async () => {
+  it('should fail', async () => {
     const errorMessage = 'error-message';
     const effect = Effect.fail(
       new GithubActionError({
@@ -44,26 +44,11 @@ describe('catchMainTaskErrors effect', () => {
 
     const { catchMainTaskErrors } = await import('./catch-main-task-errors');
 
-    await Effect.runPromise(catchMainTaskErrors());
-
-    expect(info).toHaveBeenCalledTimes(0);
-    expect(setFailed).toHaveBeenCalledTimes(1);
-    expect(setFailed).toHaveBeenCalledWith(errorMessage);
-  });
-
-  it('should call setFailed with a generic error', async () => {
-    const errorMessage = 'error-message';
-    const effect = Effect.sync(() => {
-      throw new Error(errorMessage);
+    await expect(catchMainTaskErrors()).toFailWithTag({
+      _tag: 'github-action-error',
+      message: errorMessage,
     });
-    vi.mocked(mainTask).mockReturnValueOnce(effect);
-
-    const { catchMainTaskErrors } = await import('./catch-main-task-errors');
-
-    await Effect.runPromise(catchMainTaskErrors());
 
     expect(info).toHaveBeenCalledTimes(0);
-    expect(setFailed).toHaveBeenCalledTimes(1);
-    expect(setFailed).toHaveBeenCalledWith(new Error(errorMessage));
   });
 });
