@@ -40,3 +40,5 @@ jobs:
 
       - name: ⚙️ Generating coverage badges
         uses: jpb06/coverage-badges-action@latest
+        with:
+          badges-icon: vitest
