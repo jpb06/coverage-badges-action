@@ -14,8 +14,8 @@
   },
   "scripts": {
     "cleanDist": "rimraf ./dist && rimraf ./lib",
-    "build": "pnpm cleanDist && tsc --project tsconfig.prod.json && esbuild lib/main.js --bundle --platform=node --format=cjs --external:./node_modules/* --minify --outfile=dist/index.js",
-    "build-ncc": "pnpm cleanDist && tsc --project tsconfig.prod.json && ncc build -m",
+    "build": "pnpm cleanDist && tsc --project tsconfig.prod.json && ncc build -m",
+    "build-esbuild": "pnpm cleanDist && tsc --project tsconfig.prod.json && esbuild lib/main.js --bundle --platform=node --format=cjs --external:./node_modules/* --minify --outfile=dist/index.js",
     "lint": "eslint ./src",
     "type-check": "tsc --noEmit ",
     "test": "vitest",
