@@ -20,7 +20,7 @@ export const validatePath =
       const isGlobPath = maybeGlobPath.includes('**');
       if (isGlobPath) {
         const pathChunks = maybeGlobPath.split('**');
-        const pattern = `^${pathChunks[0].slice(2)}(.*)${pathChunks[1]}$`;
+        const pattern = `^${pathChunks[0].startsWith('./') ? pathChunks[0].slice(2) : pathChunks[0]}(.*)${pathChunks[1]}$`;
         const regex = new RegExp(pattern);
 
         return { path, subPath: regex.exec(path)?.[1] };
