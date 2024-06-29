@@ -40,7 +40,7 @@ describe('validatePath effect', () => {
     });
   });
 
-  it.only('should handle glob paths not starting with ./', async () => {
+  it('should handle glob paths not starting with ./', async () => {
     const globPath = 'apps/**/coverage/coverage-summary.json';
     const resolvedPath = 'apps/front/coverage/coverage-summary.json';
 
