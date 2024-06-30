@@ -1,4 +1,4 @@
-import { Effect } from 'effect';
+import { runPromise } from 'effect-errors';
 import { pathExists, readJson } from 'fs-extra';
 import { describe, expect, vi, it } from 'vitest';
 
@@ -15,9 +15,7 @@ describe('isCoverageReportAvailable function', () => {
   it('should return false if coverage report does not exist', async () => {
     vi.mocked(pathExists).mockImplementationOnce(() => false as never);
 
-    const result = await Effect.runPromise(
-      isCoverageReportAvailableForFile(path),
-    );
+    const result = await runPromise(isCoverageReportAvailableForFile(path));
 
     expect(result).toBe(false);
   });
@@ -26,9 +24,7 @@ describe('isCoverageReportAvailable function', () => {
     vi.mocked(pathExists).mockImplementationOnce(() => true as never);
     vi.mocked(readJson).mockImplementationOnce(() => undefined as never);
 
-    const result = await Effect.runPromise(
-      isCoverageReportAvailableForFile(path),
-    );
+    const result = await runPromise(isCoverageReportAvailableForFile(path));
 
     expect(result).toBe(false);
   });
@@ -38,9 +34,7 @@ describe('isCoverageReportAvailable function', () => {
     const emptyFn = () => ({});
     vi.mocked(readJson).mockImplementationOnce(emptyFn as never);
 
-    const result = await Effect.runPromise(
-      isCoverageReportAvailableForFile(path),
-    );
+    const result = await runPromise(isCoverageReportAvailableForFile(path));
 
     expect(result).toBe(false);
   });
@@ -50,9 +44,7 @@ describe('isCoverageReportAvailable function', () => {
     const summary = { total: { branches: { pct: 20 } } };
     vi.mocked(readJson).mockImplementationOnce(() => summary as never);
 
-    const result = await Effect.runPromise(
-      isCoverageReportAvailableForFile(path),
-    );
+    const result = await runPromise(isCoverageReportAvailableForFile(path));
 
     expect(result).toBe(false);
   });
@@ -69,9 +61,7 @@ describe('isCoverageReportAvailable function', () => {
     };
     vi.mocked(readJson).mockImplementationOnce(() => summary as never);
 
-    const result = await Effect.runPromise(
-      isCoverageReportAvailableForFile(path),
-    );
+    const result = await runPromise(isCoverageReportAvailableForFile(path));
 
     expect(result).toBe(true);
   });

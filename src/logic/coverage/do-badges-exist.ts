@@ -43,4 +43,10 @@ export const doBadgesExist = (outputPath: string, paths: ValidatedPath[]) =>
       },
     ),
     Effect.map((result) => result.every((allExist) => allExist)),
+    Effect.withSpan('doBadgesExist', {
+      attributes: {
+        outputPath,
+        paths,
+      },
+    }),
   );

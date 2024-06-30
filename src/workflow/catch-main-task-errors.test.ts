@@ -1,4 +1,5 @@
 import { Effect } from 'effect';
+import { runPromise } from 'effect-errors';
 import { describe, expect, it, vi, afterEach } from 'vitest';
 
 import { GithubActionError } from '../effects/github/errors/github-action.error';
@@ -27,7 +28,7 @@ describe('catchMainTaskErrors effect', () => {
 
     const { catchMainTaskErrors } = await import('./catch-main-task-errors');
 
-    await Effect.runPromise(catchMainTaskErrors());
+    await runPromise(catchMainTaskErrors());
 
     expect(info).toHaveBeenCalledTimes(1);
     expect(info).toHaveBeenCalledWith(errorMessage);

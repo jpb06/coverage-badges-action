@@ -1,5 +1,5 @@
 import { info, getInput } from '@actions/core';
-import { Effect } from 'effect';
+import { Effect, pipe } from 'effect';
 import {
   generateBadgesEffect,
   generateBadgesFromValuesEffect,
@@ -12,36 +12,44 @@ export const generateBadges = (
   summaryFilesPaths: ValidatedPath[],
   outputPath: string,
 ) =>
-  Effect.gen(function* () {
-    if (summaryFilesPaths.length > 1) {
-      info(`✅ Found ${summaryFilesPaths.length} summary files`);
-      summaryFilesPaths.forEach(({ path, subPath }) => {
-        info(`📁 ${path} (subPath = ${subPath})`);
-      });
-    }
-    info(`🚀 Generating badges ...`);
-    const badgesIconInput = getInput('badges-icon');
-    const badgesIcon = badgesIconInput === '' ? undefined : badgesIconInput;
+  pipe(
+    Effect.gen(function* () {
+      if (summaryFilesPaths.length > 1) {
+        info(`✅ Found ${summaryFilesPaths.length} summary files`);
+        summaryFilesPaths.forEach(({ path, subPath }) => {
+          info(`📁 ${path} (subPath = ${subPath})`);
+        });
+      }
+      info(`🚀 Generating badges ...`);
+      const badgesIconInput = getInput('badges-icon');
+      const badgesIcon = badgesIconInput === '' ? undefined : badgesIconInput;
 
-    yield* Effect.forEach(
-      summaryFilesPaths,
-      ({ path, subPath }) => {
-        const writePath =
-          subPath !== undefined ? `${outputPath}/${subPath}` : outputPath;
+      yield* Effect.forEach(
+        summaryFilesPaths,
+        ({ path, subPath }) => {
+          const writePath =
+            subPath !== undefined ? `${outputPath}/${subPath}` : outputPath;
 
-        return generateBadgesEffect(path, writePath, badgesIcon);
+          return generateBadgesEffect(path, writePath, badgesIcon);
+        },
+        { concurrency: 'unbounded' },
+      );
+
+      if (summaryFilesPaths.length > 1) {
+        const averageValues = yield* mergeSummaryReports(
+          summaryFilesPaths.map((v) => v.path),
+        );
+        yield* generateBadgesFromValuesEffect(
+          averageValues,
+          `${outputPath}/coverage-average`,
+          badgesIcon,
+        );
+      }
+    }),
+    Effect.withSpan('generateBadges', {
+      attributes: {
+        summaryFilesPaths,
+        outputPath,
       },
-      { concurrency: 'unbounded' },
-    );
-
-    if (summaryFilesPaths.length > 1) {
-      const averageValues = yield* mergeSummaryReports(
-        summaryFilesPaths.map((v) => v.path),
-      );
-      yield* generateBadgesFromValuesEffect(
-        averageValues,
-        `${outputPath}/coverage-average`,
-        badgesIcon,
-      );
-    }
-  });
+    }),
+  );

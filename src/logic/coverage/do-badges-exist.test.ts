@@ -1,4 +1,4 @@
-import { Effect } from 'effect';
+import { runPromise } from 'effect-errors';
 import { pathExists } from 'fs-extra';
 import { describe, expect, vi, it } from 'vitest';
 
@@ -19,7 +19,7 @@ describe('doBadgesExist function', () => {
       .mockImplementationOnce(() => true as never)
       .mockImplementationOnce(() => true as never);
 
-    const result = await Effect.runPromise(
+    const result = await runPromise(
       doBadgesExist(outputPath, [{ path: './coverage/coverage-summary.json' }]),
     );
 
@@ -34,7 +34,7 @@ describe('doBadgesExist function', () => {
       .mockImplementationOnce(() => true as never)
       .mockImplementationOnce(() => true as never);
 
-    const result = await Effect.runPromise(
+    const result = await runPromise(
       doBadgesExist(outputPath, [{ path: './coverage/coverage-summary.json' }]),
     );
 

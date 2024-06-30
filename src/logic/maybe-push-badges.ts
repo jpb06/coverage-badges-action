@@ -1,5 +1,5 @@
 import { info } from '@actions/core';
-import { Effect } from 'effect';
+import { Effect, pipe } from 'effect';
 
 import { hasCoverageEvolved } from './coverage/has-coverage-evolved';
 import { pushBadges } from './git/push-badges';
@@ -12,21 +12,31 @@ export const maybePushBadges = (
   outputPath: string,
   currentBranch: string,
 ) =>
-  Effect.gen(function* () {
-    if (!shouldCommit) {
-      info("ℹ️ `no-commit` set to true: badges won't be committed");
-      return;
-    }
+  pipe(
+    Effect.gen(function* () {
+      if (!shouldCommit) {
+        info("ℹ️ `no-commit` set to true: badges won't be committed");
+        return;
+      }
 
-    const hasEvolved = yield* hasCoverageEvolved(badgesExist, outputPath);
-    if (!hasEvolved) {
-      info('✅ Coverage has not evolved, no action required.');
-      return;
-    }
+      const hasEvolved = yield* hasCoverageEvolved(badgesExist, outputPath);
+      if (!hasEvolved) {
+        info('✅ Coverage has not evolved, no action required.');
+        return;
+      }
 
-    info('🚀 Pushing badges to the repo');
-    yield* setGitConfig();
+      info('🚀 Pushing badges to the repo');
+      yield* setGitConfig();
 
-    const targetBranch = getTargetBranch(currentBranch);
-    yield* pushBadges(targetBranch, outputPath);
-  });
+      const targetBranch = getTargetBranch(currentBranch);
+      yield* pushBadges(targetBranch, outputPath);
+    }),
+    Effect.withSpan('maybePushBadges', {
+      attributes: {
+        shouldCommit,
+        badgesExist,
+        outputPath,
+        currentBranch,
+      },
+    }),
+  );

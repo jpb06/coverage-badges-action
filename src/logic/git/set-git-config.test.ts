@@ -1,7 +1,7 @@
 import { getInput } from '@actions/core';
 import { exec } from '@actions/exec';
 import { context } from '@actions/github';
-import { Effect } from 'effect';
+import { runPromise } from 'effect-errors';
 import { describe, beforeEach, expect, vi, it } from 'vitest';
 
 import { setGitConfig } from './set-git-config';
@@ -18,7 +18,7 @@ describe('setGitConfig function', () => {
   it('should use default values for commit user', async () => {
     vi.mocked(getInput).mockReturnValue('');
 
-    await Effect.runPromise(setGitConfig());
+    await runPromise(setGitConfig());
 
     expect(exec).toHaveBeenCalledTimes(2);
     expect(exec).toHaveBeenNthCalledWith(
@@ -40,7 +40,7 @@ describe('setGitConfig function', () => {
     const name = 'yolo bro';
     vi.mocked(getInput).mockReturnValueOnce(email).mockReturnValueOnce(name);
 
-    await Effect.runPromise(setGitConfig());
+    await runPromise(setGitConfig());
 
     expect(exec).toHaveBeenCalledTimes(2);
     expect(exec).toHaveBeenNthCalledWith(
