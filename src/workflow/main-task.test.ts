@@ -157,7 +157,7 @@ describe('actionWorkflow effect function', () => {
 
     const { mainTask } = await import('./main-task');
 
-    await Effect.runPromise(mainTask());
+    await runPromise(mainTask());
 
     expect(info).toHaveBeenCalledTimes(3);
     expect(info).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
@@ -211,7 +211,7 @@ describe('actionWorkflow effect function', () => {
 
     const { mainTask } = await import('./main-task');
 
-    await Effect.runPromise(mainTask());
+    await runPromise(mainTask());
 
     expect(info).toHaveBeenCalledTimes(3);
     expect(info).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
@@ -271,7 +271,7 @@ describe('actionWorkflow effect function', () => {
 
     const { mainTask } = await import('./main-task');
 
-    await Effect.runPromise(mainTask());
+    await runPromise(mainTask());
 
     expect(info).toHaveBeenCalledTimes(3);
     expect(info).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');

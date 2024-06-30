@@ -1,4 +1,4 @@
-import { Effect } from 'effect';
+import { runPromise } from 'effect-errors';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { mockActionsCore } from '../../tests/mocks';
@@ -32,7 +32,7 @@ describe('getCurrentBranch function', () => {
 
     const { getCurrentBranch } = await import('./get-current-branch');
 
-    const result = await Effect.runPromise(getCurrentBranch);
+    const result = await runPromise(getCurrentBranch);
 
     expect(result).toBe(branchName);
     expect(info).toHaveBeenCalledWith(`ℹ️ Current branch is ${branchName}`);
@@ -45,7 +45,7 @@ describe('getCurrentBranch function', () => {
 
     const { getCurrentBranch } = await import('./get-current-branch');
 
-    const result = await Effect.runPromise(getCurrentBranch);
+    const result = await runPromise(getCurrentBranch);
 
     expect(result).toBe(branchName);
     expect(info).toHaveBeenCalledWith(`ℹ️ Current branch is ${branchName}`);

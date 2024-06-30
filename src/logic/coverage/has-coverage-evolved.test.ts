@@ -1,5 +1,5 @@
 import { exec } from '@actions/exec';
-import { Effect } from 'effect';
+import { runPromise } from 'effect-errors';
 import { describe, expect, vi, it } from 'vitest';
 
 import { hasCoverageEvolved } from './has-coverage-evolved';
@@ -10,9 +10,7 @@ describe('hasCoverageEvolved function', () => {
   const outputPath = './badges';
 
   it('should return true if coverage folder does not exist', async () => {
-    const result = await Effect.runPromise(
-      hasCoverageEvolved(false, outputPath),
-    );
+    const result = await runPromise(hasCoverageEvolved(false, outputPath));
 
     expect(result).toBe(true);
   });
@@ -20,9 +18,7 @@ describe('hasCoverageEvolved function', () => {
   it('should return true if diff returns one', async () => {
     vi.mocked(exec).mockResolvedValueOnce(1);
 
-    const result = await Effect.runPromise(
-      hasCoverageEvolved(true, outputPath),
-    );
+    const result = await runPromise(hasCoverageEvolved(true, outputPath));
 
     expect(result).toBe(true);
   });
@@ -30,9 +26,7 @@ describe('hasCoverageEvolved function', () => {
   it('should return false if diff returns zero', async () => {
     vi.mocked(exec).mockResolvedValueOnce(0);
 
-    const result = await Effect.runPromise(
-      hasCoverageEvolved(true, outputPath),
-    );
+    const result = await runPromise(hasCoverageEvolved(true, outputPath));
 
     expect(result).toBe(false);
   });

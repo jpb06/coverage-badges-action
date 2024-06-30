@@ -1,5 +1,6 @@
 import { getInput, info } from '@actions/core';
 import { Effect } from 'effect';
+import { runSync } from 'effect-errors';
 import { describe, afterEach, expect, vi, it } from 'vitest';
 
 import { checkBranchStatus } from './check-branch-status';
@@ -15,7 +16,7 @@ describe('isBranchValidForBadgesGeneration function', () => {
     vi.mocked(getInput).mockReturnValueOnce('');
 
     expect(() => {
-      Effect.runSync(checkBranchStatus('master', true));
+      runSync(checkBranchStatus('master', true));
     }).not.toThrow();
     expect(info).toHaveBeenCalledTimes(1);
   });
@@ -24,7 +25,7 @@ describe('isBranchValidForBadgesGeneration function', () => {
     vi.mocked(getInput).mockReturnValueOnce('');
 
     expect(() => {
-      Effect.runSync(checkBranchStatus('main', true));
+      runSync(checkBranchStatus('main', true));
     }).not.toThrow();
     expect(info).toHaveBeenCalledTimes(1);
   });

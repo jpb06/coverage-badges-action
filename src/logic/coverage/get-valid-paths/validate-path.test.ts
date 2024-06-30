@@ -1,4 +1,4 @@
-import { Effect } from 'effect';
+import { runPromise } from 'effect-errors';
 import { describe, expect, it } from 'vitest';
 
 import { summaryFileMockData } from '../../../tests/mock-data/summary-file.mock';
@@ -12,7 +12,7 @@ describe('validatePath effect', () => {
 
     const { validatePath } = await import('./validate-path');
 
-    const result = await Effect.runPromise(
+    const result = await runPromise(
       validatePath('./cool/story/bro/coverage/coverage-summary.json')(
         './cool/story/bro/coverage/coverage-summary.json',
       ),
@@ -30,9 +30,7 @@ describe('validatePath effect', () => {
 
     const { validatePath } = await import('./validate-path');
 
-    const result = await Effect.runPromise(
-      validatePath(globPath)(resolvedPath),
-    );
+    const result = await runPromise(validatePath(globPath)(resolvedPath));
 
     expect(result).toStrictEqual({
       path: 'apps/front/coverage/coverage-summary.json',
@@ -49,9 +47,7 @@ describe('validatePath effect', () => {
 
     const { validatePath } = await import('./validate-path');
 
-    const result = await Effect.runPromise(
-      validatePath(globPath)(resolvedPath),
-    );
+    const result = await runPromise(validatePath(globPath)(resolvedPath));
 
     expect(result).toStrictEqual({
       path: 'apps/front/coverage/coverage-summary.json',
@@ -68,9 +64,7 @@ describe('validatePath effect', () => {
 
     const { validatePath } = await import('./validate-path');
 
-    const result = await Effect.runPromise(
-      validatePath(globPath)(resolvedPath),
-    );
+    const result = await runPromise(validatePath(globPath)(resolvedPath));
 
     expect(result).toStrictEqual({
       path: 'apps/front/coverage/coverage-summary.json',

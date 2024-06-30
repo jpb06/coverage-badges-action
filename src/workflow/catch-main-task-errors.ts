@@ -11,4 +11,5 @@ export const catchMainTaskErrors = () =>
         info(cause.message);
       }),
     ),
+    Effect.withSpan('catchMainTaskErrors'),
   );

@@ -1,6 +1,6 @@
 import { getInput } from '@actions/core';
 import { exec } from '@actions/exec';
-import { Effect } from 'effect';
+import { runPromise } from 'effect-errors';
 import { describe, beforeEach, expect, vi, it } from 'vitest';
 
 import { pushBadges } from './push-badges';
@@ -18,7 +18,7 @@ describe('pushBadges function', () => {
 
     vi.mocked(getInput).mockReturnValueOnce('Updating coverage badges');
 
-    await Effect.runPromise(pushBadges(branchName));
+    await runPromise(pushBadges(branchName));
 
     expect(exec).toHaveBeenCalledTimes(5);
     expect(exec).toHaveBeenNthCalledWith(
