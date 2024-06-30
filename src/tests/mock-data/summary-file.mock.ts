@@ -1,8 +1,13 @@
-export const summaryFileMockData = {
+export const summaryFileMockData = (
+  branches: number,
+  functions: number,
+  lines: number,
+  statements: number,
+) => ({
   total: {
-    branches: { total: 535, covered: 343, skipped: 0, pct: 64.11 },
-    functions: { total: 535, covered: 343, skipped: 0, pct: 64.11 },
-    lines: { total: 535, covered: 343, skipped: 0, pct: 64.11 },
-    statements: { total: 535, covered: 343, skipped: 0, pct: 64.11 },
+    branches: { pct: branches },
+    functions: { pct: functions },
+    lines: { pct: lines },
+    statements: { pct: statements },
   },
-};
+});

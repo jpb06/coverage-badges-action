@@ -8,7 +8,13 @@ export default defineConfig({
       reporter: ['text', 'json', 'html', 'lcov', 'json-summary'],
       all: true,
       include: ['src/**/*.ts'],
-      exclude: ['src/**/*.type.ts', 'src/temp', 'src/main.ts', 'src/types'],
+      exclude: [
+        'src/**/*.type.ts',
+        'src/temp',
+        'src/main.ts',
+        'src/types',
+        'src/tests',
+      ],
     },
   },
 });

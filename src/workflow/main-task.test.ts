@@ -1,5 +1,9 @@
 import { Effect } from 'effect';
-import { generateBadgesEffect } from 'node-coverage-badges';
+import { runPromise } from 'effect-errors';
+import {
+  generateBadgesEffect,
+  generateBadgesFromValuesEffect,
+} from 'node-coverage-badges';
 import { describe, expect, vi, it, afterEach, beforeAll } from 'vitest';
 import { anyObject, arrayIncludes } from 'vitest-mock-extended';
 
@@ -138,7 +142,7 @@ describe('actionWorkflow effect function', () => {
 
     glob.mockResolvedValueOnce([reportPath]);
     pathExists.mockResolvedValue(true as never);
-    readJson.mockResolvedValue(summaryFileMockData);
+    readJson.mockResolvedValue(summaryFileMockData(10, 20, 30, 40));
     exec
       .calledWith(
         'git diff',
@@ -192,7 +196,7 @@ describe('actionWorkflow effect function', () => {
 
     glob.mockResolvedValueOnce([reportPath]);
     pathExists.mockResolvedValue(true as never);
-    readJson.mockResolvedValue(summaryFileMockData);
+    readJson.mockResolvedValue(summaryFileMockData(10, 20, 30, 40));
     exec
       .calledWith(
         'git diff',
@@ -252,7 +256,7 @@ describe('actionWorkflow effect function', () => {
 
     glob.mockResolvedValueOnce([reportPath]);
     pathExists.mockResolvedValue(true as never);
-    readJson.mockResolvedValue(summaryFileMockData);
+    readJson.mockResolvedValue(summaryFileMockData(10, 20, 30, 40));
     exec
       .calledWith(
         'git diff',
@@ -342,7 +346,12 @@ describe('actionWorkflow effect function', () => {
       'apps/two/coverage/coverage-summary.json',
     ]);
     pathExists.mockResolvedValue(true as never);
-    readJson.mockResolvedValue(summaryFileMockData);
+    readJson
+      .mockResolvedValueOnce(summaryFileMockData(10, 20, 30, 40))
+      .mockResolvedValueOnce(summaryFileMockData(50, 60, 70, 80))
+      .mockResolvedValueOnce(summaryFileMockData(10, 20, 30, 40))
+      .mockResolvedValueOnce(summaryFileMockData(50, 60, 70, 80));
+
     exec
       .calledWith(
         'git diff',
@@ -354,10 +363,13 @@ describe('actionWorkflow effect function', () => {
     vi.mocked(generateBadgesEffect).mockImplementation(() =>
       Effect.succeed(true),
     );
+    vi.mocked(generateBadgesFromValuesEffect).mockImplementation(() =>
+      Effect.succeed(true),
+    );
 
     const { mainTask } = await import('./main-task');
 
-    await Effect.runPromise(mainTask());
+    await runPromise(mainTask());
 
     expect(info).toHaveBeenCalledTimes(6);
     expect(info).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
@@ -384,6 +396,28 @@ describe('actionWorkflow effect function', () => {
       2,
       'apps/two/coverage/coverage-summary.json',
       './badges/two',
+      undefined,
+    );
+
+    expect(generateBadgesFromValuesEffect).toHaveBeenCalledTimes(1);
+    expect(generateBadgesFromValuesEffect).toHaveBeenCalledWith(
+      {
+        total: {
+          branches: {
+            pct: 30,
+          },
+          functions: {
+            pct: 40,
+          },
+          lines: {
+            pct: 50,
+          },
+          statements: {
+            pct: 60,
+          },
+        },
+      },
+      './badges/coverage-average',
       undefined,
     );
 

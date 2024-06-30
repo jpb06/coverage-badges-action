@@ -30,8 +30,8 @@ importers:
         specifier: ^10.4.2
         version: 10.4.2
       node-coverage-badges:
-        specifier: ^1.0.12
-        version: 1.0.12
+        specifier: ^1.1.0
+        version: 1.1.0
       ts-pattern:
         specifier: ^5.2.0
         version: 5.2.0
@@ -94,8 +94,8 @@ importers:
         specifier: ^0.5.4
         version: 0.5.4(@typescript-eslint/eslint-plugin@7.14.1(@typescript-eslint/parser@7.14.1(eslint@9.6.0)(typescript@5.5.2))(eslint@9.6.0)(typescript@5.5.2))(eslint@9.6.0)(typescript@5.5.2)(vitest@1.6.0(@types/node@20.14.9))
       globals:
-        specifier: ^15.6.0
-        version: 15.6.0
+        specifier: ^15.7.0
+        version: 15.7.0
       prettier:
         specifier: 3.3.2
         version: 3.3.2
@@ -106,8 +106,8 @@ importers:
         specifier: 5.0.7
         version: 5.0.7
       tsx:
-        specifier: ^4.15.8
-        version: 4.15.8
+        specifier: ^4.16.0
+        version: 4.16.0
       typescript:
         specifier: 5.5.2
         version: 5.5.2
@@ -1620,8 +1620,8 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@15.6.0:
-    resolution: {integrity: sha512-UzcJi88Hw//CurUIRa9Jxb0vgOCcuD/MNjwmXp633cyaRKkCWACkoqHCtfZv43b1kqXGg/fpOa8bwgacCeXsVg==}
+  globals@15.7.0:
+    resolution: {integrity: sha512-ivatRXWwKC6ImcdKO7dOwXuXR5XFrdwo45qFwD7D0qOkEPzzJdLXC3BHceBdyrPOD3p1suPaWi4Y4NMm2D++AQ==}
     engines: {node: '>=18'}
 
   globalthis@1.0.4:
@@ -2019,8 +2019,8 @@ packages:
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
-  node-coverage-badges@1.0.12:
-    resolution: {integrity: sha512-YPIAI+TnCG4s6RBBqzTGiNoKrDp05i5jc18oSOl06tT5Y+o3QWgvSE5EU9+E3jwOHEV6oWu4tS5NU1Usr8WNUw==}
+  node-coverage-badges@1.1.0:
+    resolution: {integrity: sha512-7Jg19iit4kykd9yXpLkMYJb3EjTbInPitNmzKnIVrVlvkD5qQGZ7QG6D3D5N+fN//0LqL2Gp4qub8NglH9GYGA==}
     engines: {node: 20.x}
     hasBin: true
 
@@ -2421,8 +2421,8 @@ packages:
   tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
-  tsx@4.15.8:
-    resolution: {integrity: sha512-B8dMlbbkZPW0GQ7wafyy2TGXyoGYW0IURfWkM1h/WzgG5lxxRoeDU2VbMURmmjwGaCsoKROVTLmQQPe/s2TnLw==}
+  tsx@4.16.0:
+    resolution: {integrity: sha512-MPgN+CuY+4iKxGoJNPv+1pyo5YWZAQ5XfsyobUG+zoKG7IkvCPLZDEyoIb8yLS2FcWci1nlxAqmvPlFWD5AFiQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -4006,7 +4006,7 @@ snapshots:
       eslint: 9.6.0
       eslint-plugin-es-x: 7.7.0(eslint@9.6.0)
       get-tsconfig: 4.7.5
-      globals: 15.6.0
+      globals: 15.7.0
       ignore: 5.3.1
       minimatch: 9.0.5
       semver: 7.6.2
@@ -4269,7 +4269,7 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@15.6.0: {}
+  globals@15.7.0: {}
 
   globalthis@1.0.4:
     dependencies:
@@ -4635,7 +4635,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  node-coverage-badges@1.0.12:
+  node-coverage-badges@1.1.0:
     dependencies:
       axios: 1.7.2
       chalk: 4.1.2
@@ -5038,7 +5038,7 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsx@4.15.8:
+  tsx@4.16.0:
     dependencies:
       esbuild: 0.21.5
       get-tsconfig: 4.7.5
