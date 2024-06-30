@@ -41,7 +41,7 @@ jobs:
       - name: ⚙️ Generating coverage badges
         uses: ./
         with:
-          branches: test-glob-path
+          branches: summaries-average-manual-test
           coverage-summary-path: |
             ./apps/**/coverage/coverage-summary.json
           badges-icon: vitest
