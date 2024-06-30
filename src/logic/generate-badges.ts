@@ -1,8 +1,12 @@
 import { info, getInput } from '@actions/core';
 import { Effect } from 'effect';
-import { generateBadgesEffect } from 'node-coverage-badges';
+import {
+  generateBadgesEffect,
+  generateBadgesFromValuesEffect,
+} from 'node-coverage-badges';
 
 import { type ValidatedPath } from './coverage/get-valid-paths/validate-path';
+import { mergeSummaryReports } from './coverage/summary-merging/merge-summary-reports';
 
 export const generateBadges = (
   summaryFilesPaths: ValidatedPath[],
@@ -29,4 +33,15 @@ export const generateBadges = (
       },
       { concurrency: 'unbounded' },
     );
+
+    if (summaryFilesPaths.length > 1) {
+      const averageValues = yield* mergeSummaryReports(
+        summaryFilesPaths.map((v) => v.path),
+      );
+      yield* generateBadgesFromValuesEffect(
+        averageValues,
+        `${outputPath}/coverage-average`,
+        badgesIcon,
+      );
+    }
   });

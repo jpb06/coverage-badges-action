@@ -1,17 +1,11 @@
 import { Effect } from 'effect';
-import {
-  type CoverageSummary,
-  type FileCoverageTotal,
-} from 'node-coverage-badges';
+import { type FileCoverageTotal } from 'node-coverage-badges';
 
 import { pathExistsEffect, readJsonEffect } from '../../effects/fs';
+import { type CoverageReport } from '../types/coverage-report.type';
 
 const isPercentageUndefined = (element?: FileCoverageTotal) =>
   element?.pct === undefined;
-
-interface CoverageReport {
-  total?: CoverageSummary;
-}
 
 export const isCoverageReportAvailableForFile = (coverageSummaryPath: string) =>
   Effect.gen(function* () {

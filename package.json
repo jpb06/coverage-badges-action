@@ -33,7 +33,7 @@
     "effect-errors": "^1.4.10",
     "fs-extra": "11.2.0",
     "glob": "^10.4.2",
-    "node-coverage-badges": "^1.0.12",
+    "node-coverage-badges": "^1.1.0",
     "ts-pattern": "^5.2.0"
   },
   "devDependencies": {
@@ -56,11 +56,11 @@
     "eslint-plugin-markdown": "^5.0.0",
     "eslint-plugin-prettier": "5.1.3",
     "eslint-plugin-vitest": "^0.5.4",
-    "globals": "^15.6.0",
+    "globals": "^15.7.0",
     "prettier": "3.3.2",
     "readme-package-icons": "1.1.14",
     "rimraf": "5.0.7",
-    "tsx": "^4.15.8",
+    "tsx": "^4.16.0",
     "typescript": "5.5.2",
     "typescript-eslint": "^7.14.1",
     "vitest": "^1.6.0",

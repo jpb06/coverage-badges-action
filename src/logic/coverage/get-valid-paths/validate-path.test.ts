@@ -26,7 +26,7 @@ describe('validatePath effect', () => {
     const resolvedPath = 'apps/front/coverage/coverage-summary.json';
 
     pathExists.mockReturnValueOnce(true as never);
-    readJson.mockResolvedValue(summaryFileMockData);
+    readJson.mockResolvedValue(summaryFileMockData(10, 20, 30, 40));
 
     const { validatePath } = await import('./validate-path');
 
@@ -45,7 +45,7 @@ describe('validatePath effect', () => {
     const resolvedPath = 'apps/front/coverage/coverage-summary.json';
 
     pathExists.mockReturnValueOnce(true as never);
-    readJson.mockResolvedValue(summaryFileMockData);
+    readJson.mockResolvedValue(summaryFileMockData(10, 20, 30, 40));
 
     const { validatePath } = await import('./validate-path');
 
@@ -64,7 +64,7 @@ describe('validatePath effect', () => {
     const resolvedPath = 'apps/front/coverage/coverage-summary.json';
 
     pathExists.mockReturnValueOnce(true as never);
-    readJson.mockResolvedValue(summaryFileMockData);
+    readJson.mockResolvedValue(summaryFileMockData(10, 20, 30, 40));
 
     const { validatePath } = await import('./validate-path');
 
