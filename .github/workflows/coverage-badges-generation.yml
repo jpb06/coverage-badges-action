@@ -37,6 +37,6 @@ jobs:
         run: bun test-ci
 
       - name: ⚙️ Generating coverage badges
-        uses: jpb06/coverage-badges-action@latest
+        uses: ./
         with:
           badges-icon: vitest
