@@ -1,25 +1,56 @@
 {
-  "compilerOptions": {
-    "target": "es2015",
-    "moduleResolution": "node",
-    "module": "commonjs",
-    "outDir": "./lib",
-    "rootDir": "./src",
-    "declaration": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "esModuleInterop": true,
-    "allowJs": false,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmitOnError": true,
-    "removeComments": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true
-  },
-  "include": ["src", "eslint.config.mjs"],
-  "exclude": ["node_modules", "lib"]
+	"exclude": ["node_modules", "dist", "./vite.config.mts"],
+	"compilerOptions": {
+		// Enable latest features
+		"lib": ["ES2023", "ES2023.Array", "DOM", "DOM.Iterable"],
+		"types": ["node"],
+		"target": "ESNext",
+		"module": "NodeNext",
+		"moduleDetection": "force",
+		"allowJs": false,
+		"incremental": false,
+		"composite": false,
+
+		"moduleResolution": "NodeNext",
+		"noEmit": true,
+
+		// Best practices
+		"strict": true,
+		"skipLibCheck": true,
+		"noFallthroughCasesInSwitch": true,
+		"downlevelIteration": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noImplicitReturns": false,
+		"noUnusedLocals": true,
+		"noUnusedParameters": false,
+		"noEmitOnError": false,
+		"noErrorTruncation": false,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noUncheckedIndexedAccess": false,
+		"strictNullChecks": true,
+		"exactOptionalPropertyTypes": true,
+		"noPropertyAccessFromIndexSignature": false,
+
+		// alias
+		"rootDir": "./src",
+		"paths": {
+			"@effects/env": ["./src/effects/env/index.ts"],
+			"@effects/errors": ["./src/effects/errors-reporting/index.ts"],
+			"@effects/deps/fs/*": ["./src/effects/dependencies/fs/*"],
+			"@effects/deps/github-actions": [
+				"./src/effects/dependencies/github-actions/index.ts"
+			],
+			"@effects/deps/glob": ["./src/effects/dependencies/glob/index.ts"],
+			"@effects/deps/logger": ["./src/effects/dependencies/logger/index.ts"],
+			"@effects/deps/octokit": ["./src/effects/dependencies/octokit/index.ts"],
+			"@tests/mock-data": ["./src/tests/mock-data/index.ts"],
+			"@tests/layers": ["./src/tests/layers/index.ts"],
+			"@type/*": ["./src/types/*"]
+		}
+	}
 }

@@ -1,22 +1,27 @@
-import { info, warning } from '@actions/core';
 import { Effect, pipe } from 'effect';
 
-import { GithubMissingCurrentBranchError } from './errors/github-missing-current-branch.error';
+import { GithubActions } from '@effects/deps/github-actions';
+import { getGithubEnv } from '@effects/env';
+
+import { GithubMissingCurrentBranchError } from './errors/github-missing-current-branch.error.js';
 
 const isEmpty = (value: string | undefined) =>
   value === undefined || value === 'undefined' || value === '';
 
 export const getCurrentBranch = pipe(
   Effect.gen(function* () {
-    let currentBranch = process.env.GITHUB_HEAD_REF;
+    const { githubHeadRef, githubRefName } = yield* getGithubEnv;
+    let currentBranch = githubHeadRef;
 
     if (isEmpty(currentBranch)) {
-      currentBranch = process.env.GITHUB_REF_NAME;
+      currentBranch = githubRefName;
     }
 
+    const { warning, info } = yield* GithubActions;
+
     if (isEmpty(currentBranch)) {
-      warning(`🗯️ GITHUB_HEAD_REF: ${process.env.GITHUB_HEAD_REF}`);
-      warning(`🗯️ GITHUB_REF_NAME: ${process.env.GITHUB_REF_NAME}`);
+      yield* warning(`🗯️ GITHUB_HEAD_REF: ${githubHeadRef}`);
+      yield* warning(`🗯️ GITHUB_REF_NAME: ${githubRefName}`);
 
       return yield* Effect.fail(
         new GithubMissingCurrentBranchError({
@@ -25,9 +30,9 @@ export const getCurrentBranch = pipe(
       );
     }
 
-    info(`ℹ️ Current branch is ${currentBranch}`);
+    yield* info(`ℹ️ Current branch is ${currentBranch}`);
 
     return yield* Effect.succeed(currentBranch);
   }),
-  Effect.withSpan('getCurrentBranch'),
+  Effect.withSpan('get-current-branch'),
 );

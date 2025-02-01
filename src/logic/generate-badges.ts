@@ -1,12 +1,13 @@
-import { info, getInput } from '@actions/core';
 import { Effect, pipe } from 'effect';
 import {
   generateBadgesEffect,
   generateBadgesFromValuesEffect,
 } from 'node-coverage-badges';
 
-import { type ValidatedPath } from './coverage/get-valid-paths/validate-path';
-import { mergeSummaryReports } from './coverage/summary-merging/merge-summary-reports';
+import { GithubActions } from '@effects/deps/github-actions';
+
+import type { ValidatedPath } from './coverage/get-valid-paths/index.js';
+import { mergeSummaryReports } from './coverage/summary-merging/merge-summary-reports.js';
 
 export const generateBadges = (
   summaryFilesPaths: ValidatedPath[],
@@ -14,14 +15,19 @@ export const generateBadges = (
 ) =>
   pipe(
     Effect.gen(function* () {
+      const { getInput, info } = yield* GithubActions;
+
       if (summaryFilesPaths.length > 1) {
-        info(`✅ Found ${summaryFilesPaths.length} summary files`);
-        summaryFilesPaths.forEach(({ path, subPath }) => {
-          info(`📁 ${path} (subPath = ${subPath})`);
-        });
+        yield* info(`✅ Found ${summaryFilesPaths.length} summary files`);
+        yield* Effect.forEach(
+          summaryFilesPaths,
+          ({ path, subPath }) => info(`📁 ${path} (subPath = ${subPath})`),
+          { concurrency: 'unbounded' },
+        );
       }
-      info(`🚀 Generating badges ...`);
-      const badgesIconInput = getInput('badges-icon');
+
+      yield* info('🚀 Generating badges ...');
+      const badgesIconInput = yield* getInput('badges-icon');
       const badgesIcon = badgesIconInput === '' ? undefined : badgesIconInput;
 
       yield* Effect.forEach(
@@ -46,7 +52,7 @@ export const generateBadges = (
         );
       }
     }),
-    Effect.withSpan('generateBadges', {
+    Effect.withSpan('generate-badges', {
       attributes: {
         summaryFilesPaths,
         outputPath,

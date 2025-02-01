@@ -32,7 +32,7 @@ inputs:
     default: './badges'
 
 runs:
-  using: 'node20'
+  using: 'node22'
   main: 'dist/index.js'
 
 branding:

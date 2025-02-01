@@ -1,8 +1,0 @@
-import { type SummaryKeys } from './summary-keys.type';
-
-const sumArray = (array: number[]) => array.reduce((total, n) => total + n, 0);
-
-export const getAverage = (
-  key: SummaryKeys,
-  sums: Record<SummaryKeys, number[]>,
-) => sumArray(sums[key]) / sums[key].length;

@@ -1,10 +1,10 @@
 import { Effect, pipe } from 'effect';
 
-import { readJsonEffect } from '../../../effects/fs';
-import { type CoverageReport } from '../../types/coverage-report.type';
+import { readJsonEffect } from '@effects/deps/fs/read-json/index.js';
+import type { CoverageReport } from '@type/coverage-report.type.js';
 
-import { getAverage } from './get-average';
-import { maybeAdd } from './maybe-add';
+import { getAverage } from './logic/get-average.js';
+import { maybeAdd } from './logic/maybe-add.js';
 
 export const mergeSummaryReports = (summaryPaths: string[]) =>
   pipe(
@@ -21,7 +21,7 @@ export const mergeSummaryReports = (summaryPaths: string[]) =>
         branches: [] as number[],
       };
       const sums = summariesData
-        .filter((d) => d.total !== undefined)
+        .filter((d): d is CoverageReport => d !== null && d.total !== undefined)
         .map((d) => d.total)
         .reduce((acc, curr) => {
           maybeAdd('branches', acc, curr);
@@ -41,7 +41,7 @@ export const mergeSummaryReports = (summaryPaths: string[]) =>
         },
       };
     }),
-    Effect.withSpan('mergeSummaryReports', {
+    Effect.withSpan('merge-summary-reports', {
       attributes: {
         summaryPaths,
       },

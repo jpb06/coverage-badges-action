@@ -1,34 +1,28 @@
-import { Effect } from 'effect';
+import { NodeFileSystem } from '@effect/platform-node';
+import { Effect, Layer, pipe } from 'effect';
 import { runPromise } from 'effect-errors';
 import {
   generateBadgesEffect,
   generateBadgesFromValuesEffect,
 } from 'node-coverage-badges';
-import { describe, expect, vi, it, afterEach, beforeAll } from 'vitest';
-import { anyObject, arrayIncludes } from 'vitest-mock-extended';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import { anyObject, arrayIncludes, mockFn } from 'vitest-mock-extended';
 
-import { summaryFileMockData } from '../tests/mock-data/summary-file.mock';
-import {
-  mockActionsCore,
-  mockGlob,
-  mockFsExtra,
-  mockActionsExec,
-  mockActionsGithub,
-} from '../tests/mocks';
+import { globEffect } from '@effects/deps/glob';
+import { makeFsTestLayer, makeGithubActionsTestLayer } from '@tests/layers';
+import { summaryFileMockData } from '@tests/mock-data';
+
+import { mainTask } from './main-task.js';
 
 vi.mock('node-coverage-badges');
+vi.mock('@effects/deps/glob');
 
-describe('actionWorkflow effect function', () => {
-  const { info, warning, getInput, getMultilineInput } = mockActionsCore();
-  const { exec } = mockActionsExec();
-  const { glob } = mockGlob();
-  const { context } = mockActionsGithub();
-  const { pathExists, readJson } = mockFsExtra();
-
+describe('mainTask function', () => {
   const branchName = 'main';
   const targetBranch = 'targetBranch';
   const outputPath = './badges';
   const commitMessage = 'chore: badges';
+  const actor = 'yolobro';
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -37,22 +31,30 @@ describe('actionWorkflow effect function', () => {
   beforeAll(() => {
     process.env.GITHUB_HEAD_REF = undefined;
     process.env.GITHUB_REF_NAME = undefined;
-
-    context.actor = 'actor';
   });
 
   it('should fail if current branch could not be computed', async () => {
     process.env.GITHUB_HEAD_REF = undefined;
     process.env.GITHUB_REF_NAME = undefined;
 
-    const { mainTask } = await import('./main-task');
+    const { GithubActionsTestLayer, warningMock } = makeGithubActionsTestLayer({
+      getInput: Effect.succeed(''),
+      warning: Effect.void,
+    });
 
-    await expect(mainTask()).toFailWithTag({
+    const program = pipe(
+      mainTask(),
+      Effect.provide(
+        Layer.mergeAll(GithubActionsTestLayer, NodeFileSystem.layer),
+      ),
+    );
+
+    await expect(program).toFailWithTag({
       _tag: 'github-missing-current-branch',
       message: '🚨 Unable to get current branch from github event.',
     });
 
-    expect(warning).toHaveBeenCalledTimes(2);
+    expect(warningMock).toHaveBeenCalledTimes(2);
   });
 
   it('should fail if branch is not allowed, from allowed branches default value', async () => {
@@ -60,24 +62,37 @@ describe('actionWorkflow effect function', () => {
     process.env.GITHUB_HEAD_REF = branchName;
     process.env.GITHUB_REF_NAME = undefined;
 
-    getInput.calledWith('branches').mockReturnValueOnce('');
+    const getInputMock = mockFn();
+    getInputMock.calledWith('no-commit').mockReturnValueOnce('');
+    getInputMock.calledWith('branches').mockReturnValue(Effect.succeed(''));
 
-    const { mainTask } = await import('./main-task');
-
-    await expect(mainTask()).toFailWithTag({
-      _tag: 'branch-not-allowed-for-generation',
-      message:
-        '🛑 Current branch does not belong to the branches allowed for badges generation, task dropped.',
+    const { GithubActionsTestLayer, infoMock } = makeGithubActionsTestLayer({
+      getInput: getInputMock,
+      warning: Effect.void,
+      info: Effect.void,
     });
 
-    expect(info).toHaveBeenCalledTimes(2);
-    expect(info).toHaveBeenNthCalledWith(
+    const program = pipe(
+      mainTask(),
+      Effect.provide(
+        Layer.mergeAll(GithubActionsTestLayer, NodeFileSystem.layer),
+      ),
+    );
+
+    await runPromise(program);
+
+    expect(infoMock).toHaveBeenCalledTimes(3);
+    expect(infoMock).toHaveBeenNthCalledWith(
       1,
       `ℹ️ Current branch is ${branchName}`,
     );
-    expect(info).toHaveBeenNthCalledWith(
+    expect(infoMock).toHaveBeenNthCalledWith(
       2,
-      `ℹ️ No branches specified, defaulting to master and main`,
+      'ℹ️ No branches specified, defaulting to master and main',
+    );
+    expect(infoMock).toHaveBeenNthCalledWith(
+      3,
+      '🛑 Current branch does not belong to the branches allowed for badges generation, task dropped.',
     );
   });
 
@@ -86,18 +101,36 @@ describe('actionWorkflow effect function', () => {
     process.env.GITHUB_HEAD_REF = branchName;
     process.env.GITHUB_REF_NAME = undefined;
 
-    getInput.calledWith('branches').mockReturnValueOnce('bro,awoowoo');
+    const getInputMock = mockFn();
+    getInputMock.calledWith('no-commit').mockReturnValueOnce('');
+    getInputMock
+      .calledWith('branches')
+      .mockReturnValue(Effect.succeed('bro,awoowoo'));
 
-    const { mainTask } = await import('./main-task');
-
-    await expect(mainTask()).toFailWithTag({
-      _tag: 'branch-not-allowed-for-generation',
-      message:
-        '🛑 Current branch does not belong to the branches allowed for badges generation, task dropped.',
+    const { GithubActionsTestLayer, infoMock } = makeGithubActionsTestLayer({
+      getInput: getInputMock,
+      warning: Effect.void,
+      info: Effect.void,
     });
 
-    expect(info).toHaveBeenCalledTimes(1);
-    expect(info).toHaveBeenCalledWith(`ℹ️ Current branch is ${branchName}`);
+    const program = pipe(
+      mainTask(),
+      Effect.provide(
+        Layer.mergeAll(GithubActionsTestLayer, NodeFileSystem.layer),
+      ),
+    );
+
+    await runPromise(program);
+
+    expect(infoMock).toHaveBeenCalledTimes(2);
+    expect(infoMock).toHaveBeenNthCalledWith(
+      1,
+      `ℹ️ Current branch is ${branchName}`,
+    );
+    expect(infoMock).toHaveBeenNthCalledWith(
+      2,
+      '🛑 Current branch does not belong to the branches allowed for badges generation, task dropped.',
+    );
   });
 
   it('should fail if there is no coverage report (single file)', async () => {
@@ -105,18 +138,37 @@ describe('actionWorkflow effect function', () => {
     process.env.GITHUB_HEAD_REF = branchName;
     process.env.GITHUB_REF_NAME = undefined;
 
-    getInput.calledWith('branches').mockReturnValueOnce('main,master');
-    getMultilineInput
-      .calledWith('coverage-summary-path')
-      .mockReturnValueOnce(['./coverage/coverage-summary.json']);
-    glob.mockReturnValueOnce(
-      Promise.resolve(['./coverage/coverage-summary.json']),
+    const getInputMock = mockFn();
+    getInputMock.calledWith('no-commit').mockReturnValueOnce('');
+    getInputMock
+      .calledWith('branches')
+      .mockReturnValue(Effect.succeed('main,master'));
+
+    const { GithubActionsTestLayer } = makeGithubActionsTestLayer({
+      getInput: getInputMock,
+      getMultilineInput: mockFn()
+        .calledWith('coverage-summary-path')
+        .mockReturnValueOnce(
+          Effect.succeed(['./coverage/coverage-summary.json']),
+        ),
+      warning: Effect.void,
+      info: Effect.void,
+    });
+
+    const { FsTestLayer } = makeFsTestLayer({
+      exists: Effect.succeed(false),
+    });
+
+    vi.mocked(globEffect).mockReturnValueOnce(
+      Effect.succeed(['./coverage/coverage-summary.json']),
     );
-    pathExists.mockResolvedValue(false as never);
 
-    const { mainTask } = await import('./main-task');
+    const program = pipe(
+      mainTask(),
+      Effect.provide(Layer.mergeAll(GithubActionsTestLayer, FsTestLayer)),
+    );
 
-    await expect(mainTask()).toFailWithTag({
+    await expect(program).toFailWithTag({
       _tag: 'no-json-summaries-provided',
       message:
         '❌ No valid coverage reports provided. Perhaps you forgot to run tests or to add `json-summary` to coverageReporters in your test runner config?',
@@ -129,40 +181,72 @@ describe('actionWorkflow effect function', () => {
     process.env.GITHUB_HEAD_REF = branchName;
     process.env.GITHUB_REF_NAME = undefined;
 
-    getInput.calledWith('no-commit').mockReturnValueOnce('true');
-    getInput.calledWith('branches').mockReturnValueOnce('main,master');
-    getInput.calledWith('commit-user-email').mockReturnValueOnce('');
-    getInput.calledWith('commit-user').mockReturnValueOnce('');
-    getInput.calledWith('target-branch').mockReturnValueOnce(targetBranch);
-    getInput.calledWith('output-folder').mockReturnValueOnce(outputPath);
-    getInput.calledWith('commit-message').mockReturnValueOnce(commitMessage);
-    getMultilineInput
-      .calledWith('coverage-summary-path')
-      .mockReturnValueOnce([reportPath]);
+    const getInputMock = mockFn();
+    getInputMock
+      .calledWith('badges-icon')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('no-commit')
+      .mockReturnValueOnce(Effect.succeed('true'));
+    getInputMock
+      .calledWith('branches')
+      .mockReturnValueOnce(Effect.succeed('main,master'));
+    getInputMock
+      .calledWith('commit-user-email')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('commit-user')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('target-branch')
+      .mockReturnValueOnce(Effect.succeed(targetBranch));
+    getInputMock
+      .calledWith('output-folder')
+      .mockReturnValueOnce(Effect.succeed(outputPath));
+    getInputMock
+      .calledWith('commit-message')
+      .mockReturnValueOnce(Effect.succeed(commitMessage));
 
-    glob.mockResolvedValueOnce([reportPath]);
-    pathExists.mockResolvedValue(true as never);
-    readJson.mockResolvedValue(summaryFileMockData(10, 20, 30, 40));
-    exec
-      .calledWith(
-        'git diff',
-        arrayIncludes(`${outputPath}/*`) as never,
-        anyObject() as never,
-      )
-      .mockResolvedValue(1 as never);
+    const { GithubActionsTestLayer, infoMock, execMock } =
+      makeGithubActionsTestLayer({
+        info: Effect.void,
+        getInput: getInputMock,
+        getMultilineInput: mockFn()
+          .calledWith('coverage-summary-path')
+          .mockReturnValueOnce(Effect.succeed([reportPath])),
+        exec: mockFn()
+          .calledWith('git diff', arrayIncludes(`${outputPath}/*`), anyObject())
+          .mockReturnValueOnce(Effect.succeed(1)),
+      });
 
+    const { FsTestLayer } = makeFsTestLayer({
+      exists: Effect.succeed(true),
+      readFileString: Effect.succeed(
+        summaryFileMockData({
+          branches: 10,
+          functions: 20,
+          lines: 30,
+          statements: 40,
+        }),
+      ),
+    });
+
+    vi.mocked(globEffect).mockReturnValueOnce(Effect.succeed([reportPath]));
     vi.mocked(generateBadgesEffect).mockImplementation(() =>
       Effect.succeed(true),
     );
 
-    const { mainTask } = await import('./main-task');
+    const program = pipe(
+      mainTask(),
+      Effect.provide(Layer.mergeAll(GithubActionsTestLayer, FsTestLayer)),
+    );
 
-    await runPromise(mainTask());
+    await runPromise(program, { stripCwd: true, hideStackTrace: true });
 
-    expect(info).toHaveBeenCalledTimes(3);
-    expect(info).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
-    expect(info).toHaveBeenNthCalledWith(2, '🚀 Generating badges ...');
-    expect(info).toHaveBeenNthCalledWith(
+    expect(infoMock).toHaveBeenCalledTimes(3);
+    expect(infoMock).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
+    expect(infoMock).toHaveBeenNthCalledWith(2, '🚀 Generating badges ...');
+    expect(infoMock).toHaveBeenNthCalledWith(
       3,
       "ℹ️ `no-commit` set to true: badges won't be committed",
     );
@@ -175,7 +259,7 @@ describe('actionWorkflow effect function', () => {
       undefined,
     );
 
-    expect(exec).toHaveBeenCalledTimes(0);
+    expect(execMock).toHaveBeenCalledTimes(0);
   });
 
   it('should not push badges if coverage has not evolved', async () => {
@@ -184,39 +268,72 @@ describe('actionWorkflow effect function', () => {
     process.env.GITHUB_HEAD_REF = branchName;
     process.env.GITHUB_REF_NAME = undefined;
 
-    getInput.calledWith('branches').mockReturnValueOnce('main,master');
-    getInput.calledWith('commit-user-email').mockReturnValueOnce('');
-    getInput.calledWith('commit-user').mockReturnValueOnce('');
-    getInput.calledWith('target-branch').mockReturnValueOnce(targetBranch);
-    getInput.calledWith('output-folder').mockReturnValueOnce(outputPath);
-    getInput.calledWith('commit-message').mockReturnValueOnce(commitMessage);
-    getMultilineInput
-      .calledWith('coverage-summary-path')
-      .mockReturnValueOnce([reportPath]);
+    const getInputMock = mockFn();
+    getInputMock
+      .calledWith('badges-icon')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('no-commit')
+      .mockReturnValueOnce(Effect.succeed('false'));
+    getInputMock
+      .calledWith('branches')
+      .mockReturnValueOnce(Effect.succeed('main,master'));
+    getInputMock
+      .calledWith('commit-user-email')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('commit-user')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('target-branch')
+      .mockReturnValueOnce(Effect.succeed(targetBranch));
+    getInputMock
+      .calledWith('output-folder')
+      .mockReturnValueOnce(Effect.succeed(outputPath));
+    getInputMock
+      .calledWith('commit-message')
+      .mockReturnValueOnce(Effect.succeed(commitMessage));
 
-    glob.mockResolvedValueOnce([reportPath]);
-    pathExists.mockResolvedValue(true as never);
-    readJson.mockResolvedValue(summaryFileMockData(10, 20, 30, 40));
-    exec
-      .calledWith(
-        'git diff',
-        arrayIncludes(`${outputPath}/*`) as never,
-        anyObject() as never,
-      )
-      .mockResolvedValue(0 as never);
+    const { GithubActionsTestLayer, infoMock, execMock } =
+      makeGithubActionsTestLayer({
+        info: Effect.void,
+        getInput: getInputMock,
+        getMultilineInput: mockFn()
+          .calledWith('coverage-summary-path')
+          .mockReturnValueOnce(Effect.succeed([reportPath])),
+        exec: mockFn()
+          .calledWith('git diff', arrayIncludes(`${outputPath}/*`), anyObject())
+          .mockReturnValueOnce(Effect.succeed(0)),
+      });
 
+    const { FsTestLayer } = makeFsTestLayer({
+      exists: Effect.succeed(true),
+      readFileString: Effect.succeed(
+        summaryFileMockData({
+          branches: 10,
+          functions: 20,
+          lines: 30,
+          statements: 40,
+        }),
+      ),
+    });
+
+    vi.mocked(globEffect).mockReturnValueOnce(Effect.succeed([reportPath]));
     vi.mocked(generateBadgesEffect).mockImplementation(() =>
       Effect.succeed(true),
     );
 
-    const { mainTask } = await import('./main-task');
+    const program = pipe(
+      mainTask(),
+      Effect.provide(Layer.mergeAll(GithubActionsTestLayer, FsTestLayer)),
+    );
 
-    await runPromise(mainTask());
+    await runPromise(program, { stripCwd: true, hideStackTrace: true });
 
-    expect(info).toHaveBeenCalledTimes(3);
-    expect(info).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
-    expect(info).toHaveBeenNthCalledWith(2, '🚀 Generating badges ...');
-    expect(info).toHaveBeenNthCalledWith(
+    expect(infoMock).toHaveBeenCalledTimes(3);
+    expect(infoMock).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
+    expect(infoMock).toHaveBeenNthCalledWith(2, '🚀 Generating badges ...');
+    expect(infoMock).toHaveBeenNthCalledWith(
       3,
       '✅ Coverage has not evolved, no action required.',
     );
@@ -229,8 +346,8 @@ describe('actionWorkflow effect function', () => {
       undefined,
     );
 
-    expect(exec).toHaveBeenCalledTimes(1);
-    expect(exec).toHaveBeenNthCalledWith(
+    expect(execMock).toHaveBeenCalledTimes(1);
+    expect(execMock).toHaveBeenNthCalledWith(
       1,
       'git diff',
       ['--quiet', `${outputPath}/*`],
@@ -244,39 +361,76 @@ describe('actionWorkflow effect function', () => {
     process.env.GITHUB_HEAD_REF = branchName;
     process.env.GITHUB_REF_NAME = undefined;
 
-    getInput.calledWith('branches').mockReturnValueOnce('main,master');
-    getInput.calledWith('commit-user-email').mockReturnValueOnce('');
-    getInput.calledWith('commit-user').mockReturnValueOnce('');
-    getInput.calledWith('target-branch').mockReturnValueOnce(targetBranch);
-    getInput.calledWith('output-folder').mockReturnValueOnce(outputPath);
-    getInput.calledWith('commit-message').mockReturnValueOnce(commitMessage);
-    getMultilineInput
-      .calledWith('coverage-summary-path')
-      .mockReturnValueOnce([reportPath]);
+    const getInputMock = mockFn();
+    getInputMock
+      .calledWith('badges-icon')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('no-commit')
+      .mockReturnValueOnce(Effect.succeed('false'));
+    getInputMock
+      .calledWith('branches')
+      .mockReturnValueOnce(Effect.succeed('main,master'));
+    getInputMock
+      .calledWith('commit-user-email')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('commit-user')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('target-branch')
+      .mockReturnValueOnce(Effect.succeed(targetBranch));
+    getInputMock
+      .calledWith('output-folder')
+      .mockReturnValueOnce(Effect.succeed(outputPath));
+    getInputMock
+      .calledWith('commit-message')
+      .mockReturnValueOnce(Effect.succeed(commitMessage));
 
-    glob.mockResolvedValueOnce([reportPath]);
-    pathExists.mockResolvedValue(true as never);
-    readJson.mockResolvedValue(summaryFileMockData(10, 20, 30, 40));
-    exec
-      .calledWith(
-        'git diff',
-        arrayIncludes(`${outputPath}/*`) as never,
-        anyObject() as never,
-      )
-      .mockResolvedValue(1 as never);
+    const { GithubActionsTestLayer, infoMock, execMock } =
+      makeGithubActionsTestLayer({
+        info: Effect.void,
+        getInput: getInputMock,
+        getMultilineInput: mockFn()
+          .calledWith('coverage-summary-path')
+          .mockReturnValueOnce(Effect.succeed([reportPath])),
+        exec: mockFn()
+          .calledWith('git diff', arrayIncludes(`${outputPath}/*`), anyObject())
+          .mockReturnValue(Effect.succeed(1)),
+        getActor: Effect.succeed(actor),
+      });
 
+    const { FsTestLayer } = makeFsTestLayer({
+      exists: Effect.succeed(true),
+      readFileString: Effect.succeed(
+        summaryFileMockData({
+          branches: 10,
+          functions: 20,
+          lines: 30,
+          statements: 40,
+        }),
+      ),
+    });
+
+    vi.mocked(globEffect).mockReturnValueOnce(Effect.succeed([reportPath]));
     vi.mocked(generateBadgesEffect).mockImplementation(() =>
       Effect.succeed(true),
     );
 
-    const { mainTask } = await import('./main-task');
+    const program = pipe(
+      mainTask(),
+      Effect.provide(Layer.mergeAll(GithubActionsTestLayer, FsTestLayer)),
+    );
 
-    await runPromise(mainTask());
+    await runPromise(program, { stripCwd: true, hideStackTrace: true });
 
-    expect(info).toHaveBeenCalledTimes(3);
-    expect(info).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
-    expect(info).toHaveBeenNthCalledWith(2, '🚀 Generating badges ...');
-    expect(info).toHaveBeenNthCalledWith(3, '🚀 Pushing badges to the repo');
+    expect(infoMock).toHaveBeenCalledTimes(3);
+    expect(infoMock).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
+    expect(infoMock).toHaveBeenNthCalledWith(2, '🚀 Generating badges ...');
+    expect(infoMock).toHaveBeenNthCalledWith(
+      3,
+      '🚀 Pushing badges to the repo',
+    );
 
     expect(generateBadgesEffect).toHaveBeenCalledTimes(1);
     expect(generateBadgesEffect).toHaveBeenNthCalledWith(
@@ -286,80 +440,130 @@ describe('actionWorkflow effect function', () => {
       undefined,
     );
 
-    expect(exec).toHaveBeenCalledTimes(8);
-    expect(exec).toHaveBeenNthCalledWith(
+    expect(execMock).toHaveBeenCalledTimes(8);
+    expect(execMock).toHaveBeenNthCalledWith(
       1,
       'git diff',
       ['--quiet', `${outputPath}/*`],
       { ignoreReturnCode: true },
     );
-    expect(exec).toHaveBeenNthCalledWith(
-      2,
-      'git config',
-      ['--global', 'user.name', context.actor],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(
-      3,
-      'git config',
-      ['--global', 'user.email', `${context.actor}@users.noreply.github.com`],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(
-      4,
-      'git checkout',
-      [targetBranch],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(5, 'git status', undefined, undefined);
-    expect(exec).toHaveBeenNthCalledWith(6, 'git add', [outputPath], undefined);
-    expect(exec).toHaveBeenNthCalledWith(
-      7,
-      'git commit',
-      ['-m', commitMessage],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(
-      8,
-      'git push origin targetBranch',
-      undefined,
-      undefined,
-    );
+    expect(execMock).toHaveBeenNthCalledWith(2, 'git config', [
+      '--global',
+      'user.name',
+      actor,
+    ]);
+    expect(execMock).toHaveBeenNthCalledWith(3, 'git config', [
+      '--global',
+      'user.email',
+      `${actor}@users.noreply.github.com`,
+    ]);
+    expect(execMock).toHaveBeenNthCalledWith(4, 'git checkout', [targetBranch]);
+    expect(execMock).toHaveBeenNthCalledWith(5, 'git status');
+    expect(execMock).toHaveBeenNthCalledWith(6, 'git add', [outputPath]);
+    expect(execMock).toHaveBeenNthCalledWith(7, 'git commit', [
+      '-m',
+      commitMessage,
+    ]);
+    expect(execMock).toHaveBeenNthCalledWith(8, 'git push origin targetBranch');
   });
 
   it('should generate badges from several wildcard paths', async () => {
     process.env.GITHUB_HEAD_REF = branchName;
     process.env.GITHUB_REF_NAME = undefined;
 
-    getInput.calledWith('branches').mockReturnValueOnce('main,master');
-    getInput.calledWith('commit-user-email').mockReturnValueOnce('');
-    getInput.calledWith('commit-user').mockReturnValueOnce('');
-    getInput.calledWith('target-branch').mockReturnValueOnce(targetBranch);
-    getInput.calledWith('output-folder').mockReturnValueOnce(outputPath);
-    getInput.calledWith('commit-message').mockReturnValueOnce(commitMessage);
-    getMultilineInput
-      .calledWith('coverage-summary-path')
-      .mockReturnValueOnce(['./apps/**/coverage/coverage-summary.json']);
+    const getInputMock = mockFn();
+    getInputMock
+      .calledWith('badges-icon')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('no-commit')
+      .mockReturnValueOnce(Effect.succeed('false'));
+    getInputMock
+      .calledWith('branches')
+      .mockReturnValueOnce(Effect.succeed('main,master'));
+    getInputMock
+      .calledWith('commit-user-email')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('commit-user')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('target-branch')
+      .mockReturnValueOnce(Effect.succeed(targetBranch));
+    getInputMock
+      .calledWith('output-folder')
+      .mockReturnValueOnce(Effect.succeed(outputPath));
+    getInputMock
+      .calledWith('commit-message')
+      .mockReturnValueOnce(Effect.succeed(commitMessage));
 
-    glob.mockResolvedValueOnce([
-      'apps/one/coverage/coverage-summary.json',
-      'apps/two/coverage/coverage-summary.json',
-    ]);
-    pathExists.mockResolvedValue(true as never);
-    readJson
-      .mockResolvedValueOnce(summaryFileMockData(10, 20, 30, 40))
-      .mockResolvedValueOnce(summaryFileMockData(50, 60, 70, 80))
-      .mockResolvedValueOnce(summaryFileMockData(10, 20, 30, 40))
-      .mockResolvedValueOnce(summaryFileMockData(50, 60, 70, 80));
+    const { GithubActionsTestLayer, infoMock, execMock } =
+      makeGithubActionsTestLayer({
+        info: Effect.void,
+        getInput: getInputMock,
+        getMultilineInput: mockFn()
+          .calledWith('coverage-summary-path')
+          .mockReturnValueOnce(
+            Effect.succeed(['./apps/**/coverage/coverage-summary.json']),
+          ),
+        exec: mockFn()
+          .calledWith('git diff', arrayIncludes(`${outputPath}/*`), anyObject())
+          .mockReturnValue(Effect.succeed(1)),
+        getActor: Effect.succeed(actor),
+      });
 
-    exec
-      .calledWith(
-        'git diff',
-        arrayIncludes(`${outputPath}/*`) as never,
-        anyObject() as never,
-      )
-      .mockResolvedValue(1 as never);
+    const { FsTestLayer } = makeFsTestLayer({
+      exists: Effect.succeed(true),
+      readFileString: vi
+        .fn()
+        .mockReturnValueOnce(
+          Effect.succeed(
+            summaryFileMockData({
+              branches: 10,
+              functions: 20,
+              lines: 30,
+              statements: 40,
+            }),
+          ),
+        )
+        .mockReturnValueOnce(
+          Effect.succeed(
+            summaryFileMockData({
+              branches: 50,
+              functions: 60,
+              lines: 70,
+              statements: 80,
+            }),
+          ),
+        )
+        .mockReturnValueOnce(
+          Effect.succeed(
+            summaryFileMockData({
+              branches: 10,
+              functions: 20,
+              lines: 30,
+              statements: 40,
+            }),
+          ),
+        )
+        .mockReturnValueOnce(
+          Effect.succeed(
+            summaryFileMockData({
+              branches: 50,
+              functions: 60,
+              lines: 70,
+              statements: 80,
+            }),
+          ),
+        ),
+    });
 
+    vi.mocked(globEffect).mockReturnValueOnce(
+      Effect.succeed([
+        'apps/one/coverage/coverage-summary.json',
+        'apps/two/coverage/coverage-summary.json',
+      ]),
+    );
     vi.mocked(generateBadgesEffect).mockImplementation(() =>
       Effect.succeed(true),
     );
@@ -367,23 +571,28 @@ describe('actionWorkflow effect function', () => {
       Effect.succeed(true),
     );
 
-    const { mainTask } = await import('./main-task');
+    const program = pipe(
+      mainTask(),
+      Effect.provide(Layer.mergeAll(GithubActionsTestLayer, FsTestLayer)),
+    );
+    await runPromise(program, { stripCwd: true, hideStackTrace: true });
 
-    await runPromise(mainTask());
-
-    expect(info).toHaveBeenCalledTimes(6);
-    expect(info).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
-    expect(info).toHaveBeenNthCalledWith(2, `✅ Found 2 summary files`);
-    expect(info).toHaveBeenNthCalledWith(
+    expect(infoMock).toHaveBeenCalledTimes(6);
+    expect(infoMock).toHaveBeenNthCalledWith(1, 'ℹ️ Current branch is main');
+    expect(infoMock).toHaveBeenNthCalledWith(2, '✅ Found 2 summary files');
+    expect(infoMock).toHaveBeenNthCalledWith(
       3,
       '📁 apps/one/coverage/coverage-summary.json (subPath = one)',
     );
-    expect(info).toHaveBeenNthCalledWith(
+    expect(infoMock).toHaveBeenNthCalledWith(
       4,
       '📁 apps/two/coverage/coverage-summary.json (subPath = two)',
     );
-    expect(info).toHaveBeenNthCalledWith(5, '🚀 Generating badges ...');
-    expect(info).toHaveBeenNthCalledWith(6, '🚀 Pushing badges to the repo');
+    expect(infoMock).toHaveBeenNthCalledWith(5, '🚀 Generating badges ...');
+    expect(infoMock).toHaveBeenNthCalledWith(
+      6,
+      '🚀 Pushing badges to the repo',
+    );
 
     expect(generateBadgesEffect).toHaveBeenCalledTimes(2);
     expect(generateBadgesEffect).toHaveBeenNthCalledWith(
@@ -421,44 +630,30 @@ describe('actionWorkflow effect function', () => {
       undefined,
     );
 
-    expect(exec).toHaveBeenCalledTimes(8);
-    expect(exec).toHaveBeenNthCalledWith(
+    expect(execMock).toHaveBeenCalledTimes(8);
+    expect(execMock).toHaveBeenNthCalledWith(
       1,
       'git diff',
       ['--quiet', `${outputPath}/*`],
       { ignoreReturnCode: true },
     );
-    expect(exec).toHaveBeenNthCalledWith(
-      2,
-      'git config',
-      ['--global', 'user.name', context.actor],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(
-      3,
-      'git config',
-      ['--global', 'user.email', `${context.actor}@users.noreply.github.com`],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(
-      4,
-      'git checkout',
-      [targetBranch],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(5, 'git status', undefined, undefined);
-    expect(exec).toHaveBeenNthCalledWith(6, 'git add', [outputPath], undefined);
-    expect(exec).toHaveBeenNthCalledWith(
-      7,
-      'git commit',
-      ['-m', commitMessage],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(
-      8,
-      'git push origin targetBranch',
-      undefined,
-      undefined,
-    );
+    expect(execMock).toHaveBeenNthCalledWith(2, 'git config', [
+      '--global',
+      'user.name',
+      actor,
+    ]);
+    expect(execMock).toHaveBeenNthCalledWith(3, 'git config', [
+      '--global',
+      'user.email',
+      `${actor}@users.noreply.github.com`,
+    ]);
+    expect(execMock).toHaveBeenNthCalledWith(4, 'git checkout', [targetBranch]);
+    expect(execMock).toHaveBeenNthCalledWith(5, 'git status');
+    expect(execMock).toHaveBeenNthCalledWith(6, 'git add', [outputPath]);
+    expect(execMock).toHaveBeenNthCalledWith(7, 'git commit', [
+      '-m',
+      commitMessage,
+    ]);
+    expect(execMock).toHaveBeenNthCalledWith(8, 'git push origin targetBranch');
   });
 });

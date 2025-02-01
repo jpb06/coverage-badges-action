@@ -1,9 +1,9 @@
 {
-  "total": {
-    "lines": { "pct": 25 },
-    "statements": { "pct": 33 },
-    "functions": { "pct": 72 },
-    "branches": { "pct": 54 },
-    "branchesTrue": { "pct": 100 }
-  }
+	"total": {
+		"lines": { "pct": 25 },
+		"statements": { "pct": 33 },
+		"functions": { "pct": 72 },
+		"branches": { "pct": 54 },
+		"branchesTrue": { "pct": 100 }
+	}
 }

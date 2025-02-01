@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   lint:
-    name: ⬣ ESLint
+    name: ⬣ Lint
     runs-on: ubuntu-latest
     steps:
       - name: 🛑 Cancel Previous Runs
@@ -25,23 +25,24 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
 
-      - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
+      - name: 📦 Setup bun
+        uses: oven-sh/setup-bun@v2
 
       - name: ⎔ Setup node
         uses: actions/setup-node@v4
         with:
           node-version-file: '.node-version'
-          cache: 'pnpm'
+          # cache: 'bun'
           cache-dependency-path: ./package.json
 
       - name: 📥 Install deps
-        run: pnpm install --frozen-lockfile
+        run: bun install --frozen-lockfile
+
+      - name: 📓 Format
+        run: bun run format-ci
 
       - name: 🔬 Lint
-        run: pnpm lint
+        run: bun run lint
 
   typecheck:
     name: ʦ TypeScript
@@ -53,23 +54,21 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
 
-      - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
+      - name: 📦 Setup bun
+        uses: oven-sh/setup-bun@v2
 
       - name: ⎔ Setup node
         uses: actions/setup-node@v4
         with:
           node-version-file: '.node-version'
-          cache: 'pnpm'
+          # cache: 'bun'
           cache-dependency-path: ./package.json
 
       - name: 📥 Install deps
-        run: pnpm install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: 🔎 Type check
-        run: pnpm type-check
+        run: bun run type-check
 
   test:
     name: 🎯 Tests
@@ -81,23 +80,21 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
 
-      - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
+      - name: 📦 Setup bun
+        uses: oven-sh/setup-bun@v2
 
       - name: ⎔ Setup node
         uses: actions/setup-node@v4
         with:
           node-version-file: '.node-version'
-          cache: 'pnpm'
+          # cache: 'bun'
           cache-dependency-path: ./package.json
 
       - name: 📥 Install deps
-        run: pnpm install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: 🧪 Tests
-        run: pnpm test-ci
+        run: bun run test-ci
 
       - name: 💾 Uploading coverage artifact
         uses: actions/upload-artifact@v4

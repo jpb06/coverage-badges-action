@@ -1,43 +1,59 @@
+import { Effect, pipe } from 'effect';
 import { runPromise } from 'effect-errors';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import { mockFsExtra } from '../../../tests/mocks';
+import { makeFsTestLayer } from '@tests/layers';
+import { summaryFileMockData } from '@tests/mock-data';
 
 describe('mergeSummaryReports function', () => {
   const dummyPath = './cool';
-  const { readJson } = mockFsExtra();
 
   it('should return summary averages', async () => {
-    readJson
-      .mockResolvedValueOnce({
-        total: {
-          lines: { pct: 30 },
-          statements: { pct: 20 },
-          functions: { pct: 10 },
-          branches: { pct: 5 },
-        },
-      })
-      .mockResolvedValueOnce({
-        total: {
-          lines: { pct: 60 },
-          statements: { pct: 70 },
-          functions: { pct: 90 },
-          branches: { pct: 60 },
-        },
-      })
-      .mockResolvedValueOnce({
-        total: {
-          lines: { pct: 100 },
-          statements: { pct: 50 },
-          functions: { pct: 30 },
-          branches: { pct: 90 },
-        },
-      });
+    const readFileStringMock = vi
+      .fn()
+      .mockReturnValueOnce(
+        Effect.succeed(
+          summaryFileMockData({
+            lines: 30,
+            statements: 20,
+            functions: 10,
+            branches: 5,
+          }),
+        ),
+      )
+      .mockReturnValueOnce(
+        Effect.succeed(
+          summaryFileMockData({
+            lines: 60,
+            statements: 70,
+            functions: 90,
+            branches: 60,
+          }),
+        ),
+      )
+      .mockReturnValueOnce(
+        Effect.succeed(
+          summaryFileMockData({
+            lines: 100,
+            statements: 50,
+            functions: 30,
+            branches: 90,
+          }),
+        ),
+      );
 
-    const { mergeSummaryReports } = await import('./merge-summary-reports');
+    const { FsTestLayer } = makeFsTestLayer({
+      readFileString: readFileStringMock,
+    });
+
+    const { mergeSummaryReports } = await import('./merge-summary-reports.js');
 
     const result = await runPromise(
-      mergeSummaryReports([dummyPath, dummyPath, dummyPath]),
+      pipe(
+        mergeSummaryReports([dummyPath, dummyPath, dummyPath]),
+        Effect.provide(FsTestLayer),
+      ),
+      { stripCwd: true, hideStackTrace: true },
     );
 
     expect(result).toStrictEqual({

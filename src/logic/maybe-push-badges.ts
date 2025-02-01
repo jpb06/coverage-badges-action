@@ -1,10 +1,11 @@
-import { info } from '@actions/core';
 import { Effect, pipe } from 'effect';
 
-import { hasCoverageEvolved } from './coverage/has-coverage-evolved';
-import { pushBadges } from './git/push-badges';
-import { setGitConfig } from './git/set-git-config';
-import { getTargetBranch } from './github/get-target-branch';
+import { GithubActions } from '@effects/deps/github-actions';
+
+import { hasCoverageEvolved } from './coverage/has-coverage-evolved.js';
+import { pushBadges } from './git/push-badges.js';
+import { setGitConfig } from './git/set-git-config.js';
+import { getTargetBranch } from './github/get-target-branch.js';
 
 export const maybePushBadges = (
   shouldCommit: boolean,
@@ -14,6 +15,8 @@ export const maybePushBadges = (
 ) =>
   pipe(
     Effect.gen(function* () {
+      const { info } = yield* GithubActions;
+
       if (!shouldCommit) {
         info("ℹ️ `no-commit` set to true: badges won't be committed");
         return;
@@ -28,10 +31,10 @@ export const maybePushBadges = (
       info('🚀 Pushing badges to the repo');
       yield* setGitConfig();
 
-      const targetBranch = getTargetBranch(currentBranch);
+      const targetBranch = yield* getTargetBranch(currentBranch);
       yield* pushBadges(targetBranch, outputPath);
     }),
-    Effect.withSpan('maybePushBadges', {
+    Effect.withSpan('maybe-push-badges', {
       attributes: {
         shouldCommit,
         badgesExist,

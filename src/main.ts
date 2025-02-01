@@ -1,3 +1,3 @@
-import { promisifiedActionWorkflow } from './workflow/action-workflow';
+import { actionWorkflow } from './workflow/action-workflow.js';
 
-void promisifiedActionWorkflow();
+actionWorkflow();

@@ -1,20 +1,22 @@
-import { getMultilineInput } from '@actions/core';
 import { Effect, pipe } from 'effect';
 
-import { globEffect } from '../../../effects/glob/glob.effect';
+import { GithubActions } from '@effects/deps/github-actions';
+import { globEffect } from '@effects/deps/glob';
 
-import { NoJsonSummariesProvidedError } from './errors/no-json-summaries-provided.error';
-import { type ValidatedPath, validatePath } from './validate-path';
+import { NoJsonSummariesProvidedError } from './errors/no-json-summaries-provided.error.js';
+import { validatePath } from './logic/path-validation/validate-path.js';
+import type { ValidatedPath } from './types/validated-types.type.js';
 
 export const getValidPaths = pipe(
   Effect.gen(function* () {
-    const maybeGlobPaths = getMultilineInput('coverage-summary-path');
+    const { getMultilineInput } = yield* GithubActions;
+    const maybeGlobPaths = yield* getMultilineInput('coverage-summary-path');
 
     const array = yield* Effect.forEach(
       maybeGlobPaths,
       (globPath) =>
         Effect.gen(function* () {
-          const matchingPaths = yield* globEffect(globPath);
+          const matchingPaths: string[] = yield* globEffect(globPath);
 
           return yield* Effect.forEach(matchingPaths, validatePath(globPath), {
             concurrency: 'unbounded',
@@ -38,5 +40,5 @@ export const getValidPaths = pipe(
 
     return validPaths;
   }),
-  Effect.withSpan('getValidPaths'),
+  Effect.withSpan('get-valid-paths'),
 );
