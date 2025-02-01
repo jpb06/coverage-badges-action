@@ -32,8 +32,8 @@ inputs:
     default: './badges'
 
 runs:
-  using: 'node22'
-  main: 'dist/index.js'
+  using: 'node20'
+  main: './lib/main.js'
 
 branding:
   icon: check-square
