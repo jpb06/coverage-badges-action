@@ -1,29 +1,30 @@
-import { getInput } from '@actions/core';
-import { context } from '@actions/github';
 import { Effect, pipe } from 'effect';
 
-import { execEffect } from '../../effects/github';
+import { GithubActions } from '@effects/deps/github-actions';
 
 export const setGitConfig = () =>
   pipe(
     Effect.gen(function* () {
-      const userEmail = getInput('commit-user-email');
-      const userName = getInput('commit-user');
+      const { exec, getInput, getActor } = yield* GithubActions;
 
+      const userEmail = yield* getInput('commit-user-email');
+      const userName = yield* getInput('commit-user');
+
+      const actor = yield* getActor();
       yield* Effect.all([
-        execEffect('git config', [
+        exec('git config', [
           '--global',
           'user.name',
-          userName.length === 0 ? context.actor : userName,
+          userName.length === 0 ? actor : userName,
         ]),
-        execEffect('git config', [
+        exec('git config', [
           '--global',
           'user.email',
           userEmail.length === 0
-            ? `${context.actor}@users.noreply.github.com`
+            ? `${actor}@users.noreply.github.com`
             : userEmail,
         ]),
       ]);
     }),
-    Effect.withSpan('setGitConfig'),
+    Effect.withSpan('set-git-config'),
   );

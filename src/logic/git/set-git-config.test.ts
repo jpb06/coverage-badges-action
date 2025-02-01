@@ -1,59 +1,67 @@
-import { getInput } from '@actions/core';
-import { exec } from '@actions/exec';
-import { context } from '@actions/github';
+import { Effect, pipe } from 'effect';
 import { runPromise } from 'effect-errors';
-import { describe, beforeEach, expect, vi, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import { setGitConfig } from './set-git-config';
+import { makeGithubActionsTestLayer } from '@tests/layers';
 
-vi.mock('@actions/exec');
-vi.mock('@actions/github');
-vi.mock('@actions/core');
+import { setGitConfig } from './set-git-config.js';
 
 describe('setGitConfig function', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
+  const actor = 'actor';
 
   it('should use default values for commit user', async () => {
-    vi.mocked(getInput).mockReturnValue('');
+    const { GithubActionsTestLayer, execMock } = makeGithubActionsTestLayer({
+      getInput: Effect.succeed(''),
+      exec: Effect.succeed(1),
+      getActor: Effect.succeed(actor),
+    });
 
-    await runPromise(setGitConfig());
+    await runPromise(
+      pipe(setGitConfig(), Effect.provide(GithubActionsTestLayer)),
+      { stripCwd: true, hideStackTrace: true },
+    );
 
-    expect(exec).toHaveBeenCalledTimes(2);
-    expect(exec).toHaveBeenNthCalledWith(
-      1,
-      'git config',
-      ['--global', 'user.name', context.actor],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(
-      2,
-      'git config',
-      ['--global', 'user.email', `${context.actor}@users.noreply.github.com`],
-      undefined,
-    );
+    expect(execMock).toHaveBeenCalledTimes(2);
+    expect(execMock).toHaveBeenNthCalledWith(1, 'git config', [
+      '--global',
+      'user.name',
+      actor,
+    ]);
+    expect(execMock).toHaveBeenNthCalledWith(2, 'git config', [
+      '--global',
+      'user.email',
+      `${actor}@users.noreply.github.com`,
+    ]);
   });
 
   it('should use custom values for commit user', async () => {
     const email = 'yolo@cool.org';
     const name = 'yolo bro';
-    vi.mocked(getInput).mockReturnValueOnce(email).mockReturnValueOnce(name);
 
-    await runPromise(setGitConfig());
+    const { GithubActionsTestLayer, execMock } = makeGithubActionsTestLayer({
+      getInput: vi
+        .fn()
+        .mockReturnValueOnce(Effect.succeed(email))
+        .mockReturnValueOnce(Effect.succeed(name)),
+      exec: Effect.succeed(1),
+      getActor: Effect.succeed(actor),
+    });
 
-    expect(exec).toHaveBeenCalledTimes(2);
-    expect(exec).toHaveBeenNthCalledWith(
-      1,
-      'git config',
-      ['--global', 'user.name', name],
-      undefined,
+    await runPromise(
+      pipe(setGitConfig(), Effect.provide(GithubActionsTestLayer)),
+      { stripCwd: true, hideStackTrace: true },
     );
-    expect(exec).toHaveBeenNthCalledWith(
-      2,
-      'git config',
-      ['--global', 'user.email', email],
-      undefined,
-    );
+
+    expect(execMock).toHaveBeenCalledTimes(2);
+    expect(execMock).toHaveBeenNthCalledWith(1, 'git config', [
+      '--global',
+      'user.name',
+      name,
+    ]);
+    expect(execMock).toHaveBeenNthCalledWith(2, 'git config', [
+      '--global',
+      'user.email',
+      email,
+    ]);
   });
 });

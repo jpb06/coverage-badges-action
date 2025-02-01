@@ -1,6 +1,7 @@
-import { getInput, info } from '@actions/core';
 import { Effect, pipe } from 'effect';
 import { TaggedError } from 'effect/Data';
+
+import { GithubActions } from '@effects/deps/github-actions';
 
 export class BranchNotAllowedForGenerationError extends TaggedError(
   'branch-not-allowed-for-generation',
@@ -19,14 +20,16 @@ export const checkBranchStatus = (
         return;
       }
 
-      const input = getInput('branches');
+      const { getInput, info } = yield* GithubActions;
+
+      const input = yield* getInput('branches');
       if (input === '*') {
         return;
       }
 
       let branches = input.split(',');
       if (branches.length === 1 && branches[0].length === 0) {
-        info(`ℹ️ No branches specified, defaulting to master and main`);
+        yield* info('ℹ️ No branches specified, defaulting to master and main');
         branches = ['master', 'main'];
       }
 
@@ -40,7 +43,7 @@ export const checkBranchStatus = (
         );
       }
     }),
-    Effect.withSpan('checkBranchStatus', {
+    Effect.withSpan('check-branch-status', {
       attributes: {
         currentBranch,
         shouldCommit,

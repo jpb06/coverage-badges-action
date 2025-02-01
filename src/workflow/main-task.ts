@@ -1,24 +1,28 @@
-import { getInput } from '@actions/core';
 import { Effect, pipe } from 'effect';
 
-import { doBadgesExist } from '../logic/coverage/do-badges-exist';
-import { getValidPaths } from '../logic/coverage/get-valid-paths/get-valid-paths';
-import { generateBadges } from '../logic/generate-badges';
-import { getCurrentBranch } from '../logic/github/get-current-branch';
-import { checkBranchStatus } from '../logic/inputs/check-branch-status';
-import { maybePushBadges } from '../logic/maybe-push-badges';
+import { GithubActions } from '@effects/deps/github-actions';
+
+import { doBadgesExist } from '../logic/coverage/do-badges-exist.js';
+import { getValidPaths } from '../logic/coverage/get-valid-paths/get-valid-paths.js';
+import { generateBadges } from '../logic/generate-badges.js';
+import { getCurrentBranch } from '../logic/github/get-current-branch.js';
+import { checkBranchStatus } from '../logic/inputs/check-branch-status.js';
+import { maybePushBadges } from '../logic/maybe-push-badges.js';
 
 export const mainTask = () =>
   pipe(
     Effect.gen(function* () {
+      const { getInput } = yield* GithubActions;
+
+      const noCommit = yield* getInput('no-commit');
+      const shouldCommit = noCommit !== 'true';
       const currentBranch = yield* getCurrentBranch;
-      const shouldCommit = getInput('no-commit') !== 'true';
 
       yield* checkBranchStatus(currentBranch, shouldCommit);
 
       const summaryFilesPaths = yield* getValidPaths;
 
-      const outputPath = getInput('output-folder');
+      const outputPath = yield* getInput('output-folder');
 
       const badgesExist = yield* doBadgesExist(outputPath, summaryFilesPaths);
 
@@ -30,5 +34,12 @@ export const mainTask = () =>
         currentBranch,
       );
     }),
-    Effect.withSpan('mainTask'),
+    Effect.catchTag('branch-not-allowed-for-generation', (cause) =>
+      Effect.gen(function* () {
+        const { info } = yield* GithubActions;
+
+        yield* info(cause.message);
+      }),
+    ),
+    Effect.withSpan('main-task'),
   );

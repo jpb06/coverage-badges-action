@@ -1,32 +1,67 @@
-import { exec } from '@actions/exec';
+import { Effect, pipe } from 'effect';
 import { runPromise } from 'effect-errors';
-import { describe, expect, vi, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { hasCoverageEvolved } from './has-coverage-evolved';
+import { makeGithubActionsTestLayer } from '@tests/layers';
 
-vi.mock('@actions/exec');
+import { hasCoverageEvolved } from './has-coverage-evolved.js';
 
 describe('hasCoverageEvolved function', () => {
   const outputPath = './badges';
 
   it('should return true if coverage folder does not exist', async () => {
-    const result = await runPromise(hasCoverageEvolved(false, outputPath));
+    const { GithubActionsTestLayer } = makeGithubActionsTestLayer({
+      exec: Effect.succeed(1),
+    });
+
+    const result = await runPromise(
+      pipe(
+        hasCoverageEvolved(false, outputPath),
+        Effect.provide(GithubActionsTestLayer),
+      ),
+      {
+        stripCwd: true,
+        hideStackTrace: true,
+      },
+    );
 
     expect(result).toBe(true);
   });
 
   it('should return true if diff returns one', async () => {
-    vi.mocked(exec).mockResolvedValueOnce(1);
+    const { GithubActionsTestLayer } = makeGithubActionsTestLayer({
+      exec: Effect.succeed(1),
+    });
 
-    const result = await runPromise(hasCoverageEvolved(true, outputPath));
+    const result = await runPromise(
+      pipe(
+        hasCoverageEvolved(true, outputPath),
+        Effect.provide(GithubActionsTestLayer),
+      ),
+      {
+        stripCwd: true,
+        hideStackTrace: true,
+      },
+    );
 
     expect(result).toBe(true);
   });
 
   it('should return false if diff returns zero', async () => {
-    vi.mocked(exec).mockResolvedValueOnce(0);
+    const { GithubActionsTestLayer } = makeGithubActionsTestLayer({
+      exec: Effect.succeed(0),
+    });
 
-    const result = await runPromise(hasCoverageEvolved(true, outputPath));
+    const result = await runPromise(
+      pipe(
+        hasCoverageEvolved(true, outputPath),
+        Effect.provide(GithubActionsTestLayer),
+      ),
+      {
+        stripCwd: true,
+        hideStackTrace: true,
+      },
+    );
 
     expect(result).toBe(false);
   });

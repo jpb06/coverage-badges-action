@@ -1,44 +1,42 @@
-import { getInput } from '@actions/core';
-import { exec } from '@actions/exec';
+import { Effect, pipe } from 'effect';
 import { runPromise } from 'effect-errors';
-import { describe, beforeEach, expect, vi, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { pushBadges } from './push-badges';
+import { makeGithubActionsTestLayer } from '@tests/layers';
 
-vi.mock('@actions/exec');
-vi.mock('@actions/core');
+import { pushBadges } from './push-badges.js';
 
 describe('pushBadges function', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('should push changes', async () => {
     const branchName = 'master';
 
-    vi.mocked(getInput).mockReturnValueOnce('Updating coverage badges');
+    const { GithubActionsTestLayer, execMock, getInputMock } =
+      makeGithubActionsTestLayer({
+        getInput: Effect.succeed('Updating coverage badges'),
+        exec: Effect.succeed(1),
+      });
 
-    await runPromise(pushBadges(branchName));
+    await runPromise(
+      pipe(pushBadges(branchName), Effect.provide(GithubActionsTestLayer)),
+      {
+        stripCwd: true,
+        hideStackTrace: true,
+      },
+    );
 
-    expect(exec).toHaveBeenCalledTimes(5);
-    expect(exec).toHaveBeenNthCalledWith(
-      1,
-      'git checkout',
-      [branchName],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(3, 'git add', ['./badges'], undefined);
-    expect(exec).toHaveBeenNthCalledWith(
-      4,
-      'git commit',
-      ['-m', 'Updating coverage badges'],
-      undefined,
-    );
-    expect(exec).toHaveBeenNthCalledWith(
+    expect(getInputMock).toHaveBeenCalledTimes(1);
+    expect(getInputMock).toHaveBeenCalledWith('commit-message');
+
+    expect(execMock).toHaveBeenCalledTimes(5);
+    expect(execMock).toHaveBeenNthCalledWith(1, 'git checkout', [branchName]);
+    expect(execMock).toHaveBeenNthCalledWith(3, 'git add', ['./badges']);
+    expect(execMock).toHaveBeenNthCalledWith(4, 'git commit', [
+      '-m',
+      'Updating coverage badges',
+    ]);
+    expect(execMock).toHaveBeenNthCalledWith(
       5,
       `git push origin ${branchName}`,
-      undefined,
-      undefined,
     );
   });
 });

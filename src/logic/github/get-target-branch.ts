@@ -1,12 +1,19 @@
-import { getInput } from '@actions/core';
+import { Effect, pipe } from 'effect';
 
-export const getTargetBranch = (currentBranch: string) => {
-  const targetBranch = getInput('target-branch');
+import { GithubActions } from '@effects/deps/github-actions';
 
-  const hasTargetBranch = targetBranch !== '';
-  if (hasTargetBranch) {
-    return targetBranch;
-  }
+export const getTargetBranch = (currentBranch: string) =>
+  pipe(
+    Effect.gen(function* () {
+      const { getInput } = yield* GithubActions;
+      const targetBranch = yield* getInput('target-branch');
 
-  return currentBranch;
-};
+      const hasTargetBranch = targetBranch !== '';
+      if (hasTargetBranch) {
+        return targetBranch;
+      }
+
+      return currentBranch;
+    }),
+    Effect.withSpan('get-target-branch', { attributes: { currentBranch } }),
+  );

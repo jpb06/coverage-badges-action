@@ -33,7 +33,7 @@ inputs:
 
 runs:
   using: 'node20'
-  main: 'dist/index.js'
+  main: './lib/main.js'
 
 branding:
   icon: check-square

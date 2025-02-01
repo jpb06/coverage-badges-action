@@ -1,41 +1,63 @@
-import { getInput, info } from '@actions/core';
-import { Effect } from 'effect';
+import { Effect, pipe } from 'effect';
 import { runSync } from 'effect-errors';
-import { describe, afterEach, expect, vi, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import { checkBranchStatus } from './check-branch-status';
+import { makeGithubActionsTestLayer } from '@tests/layers';
 
-vi.mock('@actions/core');
+import { checkBranchStatus } from './check-branch-status.js';
 
 describe('isBranchValidForBadgesGeneration function', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('should not fail when no branches were specified as input and current branch is master', () => {
-    vi.mocked(getInput).mockReturnValueOnce('');
+    const { GithubActionsTestLayer, infoMock } = makeGithubActionsTestLayer({
+      getInput: Effect.succeed(''),
+      info: Effect.void,
+    });
 
     expect(() => {
-      runSync(checkBranchStatus('master', true));
+      runSync(
+        pipe(
+          checkBranchStatus('master', true),
+          Effect.provide(GithubActionsTestLayer),
+        ),
+      );
     }).not.toThrow();
-    expect(info).toHaveBeenCalledTimes(1);
+
+    expect(infoMock).toHaveBeenCalledTimes(1);
   });
 
   it('should not fail when no branches were specified as input and current branch is main', () => {
-    vi.mocked(getInput).mockReturnValueOnce('');
+    const { GithubActionsTestLayer, infoMock } = makeGithubActionsTestLayer({
+      getInput: Effect.succeed(''),
+      info: Effect.void,
+    });
 
     expect(() => {
-      runSync(checkBranchStatus('main', true));
+      runSync(
+        pipe(
+          checkBranchStatus('main', true),
+          Effect.provide(GithubActionsTestLayer),
+        ),
+      );
     }).not.toThrow();
-    expect(info).toHaveBeenCalledTimes(1);
+
+    expect(infoMock).toHaveBeenCalledTimes(1);
   });
 
   it('should fail if branch is not allowed', () => {
-    vi.mocked(getInput).mockReturnValueOnce('yolo,bro,master,cool');
+    const { GithubActionsTestLayer, infoMock } = makeGithubActionsTestLayer({
+      getInput: Effect.succeed('yolo,bro,master,cool'),
+      info: Effect.void,
+    });
 
     expect(() => {
-      Effect.runSync(checkBranchStatus('main', true));
+      Effect.runSync(
+        pipe(
+          checkBranchStatus('main', true),
+          Effect.provide(GithubActionsTestLayer),
+        ),
+      );
     }).toThrow();
-    expect(info).toHaveBeenCalledTimes(0);
+
+    expect(infoMock).toHaveBeenCalledTimes(0);
   });
 });

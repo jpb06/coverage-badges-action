@@ -1,18 +1,22 @@
-import { getInput } from '@actions/core';
 import { Effect, pipe } from 'effect';
 
-import { execEffect } from '../../effects/github';
+import { GithubActions } from '@effects/deps/github-actions';
 
 export const pushBadges = (branchName: string, source = './badges') =>
   pipe(
-    Effect.all([
-      execEffect('git checkout', [branchName]),
-      execEffect('git status'),
-      execEffect('git add', [source]),
-      execEffect('git commit', ['-m', getInput('commit-message')]),
-      execEffect(`git push origin ${branchName}`),
-    ]),
-    Effect.withSpan('pushBadges', {
+    Effect.gen(function* () {
+      const { exec, getInput } = yield* GithubActions;
+
+      const commitMessage = yield* getInput('commit-message');
+      return yield* Effect.all([
+        exec('git checkout', [branchName]),
+        exec('git status'),
+        exec('git add', [source]),
+        exec('git commit', ['-m', commitMessage]),
+        exec(`git push origin ${branchName}`),
+      ]);
+    }),
+    Effect.withSpan('push-badges', {
       attributes: {
         branchName,
         source,
