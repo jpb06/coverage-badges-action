@@ -19,6 +19,19 @@ const maybeAddSubPath = (path: string | undefined) => {
   return path?.endsWith('/') ? path : `${path}/`;
 };
 
+const validatePath =
+  (outputPath: string, exists: FileSystem['exists']) =>
+  ({ subPath }: ValidatedPath) =>
+    pipe(
+      Effect.all(
+        files.map((file) =>
+          exists(`${outputPath}/${maybeAddSubPath(subPath)}${file}`),
+        ),
+        { concurrency: 'unbounded' },
+      ),
+      Effect.map((result) => result.every((exists) => exists)),
+    );
+
 export const doBadgesExist = (outputPath: string, paths: ValidatedPath[]) =>
   pipe(
     Effect.gen(function* () {
@@ -26,17 +39,10 @@ export const doBadgesExist = (outputPath: string, paths: ValidatedPath[]) =>
 
       const result = yield* Effect.forEach(
         paths,
-        ({ subPath }) =>
-          pipe(
-            Effect.all(
-              files.map((file) =>
-                exists(`${outputPath}/${maybeAddSubPath(subPath)}${file}`),
-              ),
-              { concurrency: 'unbounded' },
-            ),
-            Effect.map((result) => result.every((exists) => exists)),
-          ),
-        { concurrency: 'unbounded' },
+        validatePath(outputPath, exists),
+        {
+          concurrency: 'unbounded',
+        },
       );
 
       return result.every((allExist) => allExist);
