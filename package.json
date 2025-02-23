@@ -39,7 +39,7 @@
     "effect": "3.12.7",
     "effect-errors": "1.8.23",
     "glob": "11.0.1",
-    "node-coverage-badges": "1.2.11"
+    "node-coverage-badges": "1.2.13"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
