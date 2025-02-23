@@ -33,6 +33,6 @@ export const LoggerConsoleLive = Layer.succeed(Logger, {
   warn: (message?: unknown, ...optionalParams: unknown[]) =>
     pipe(
       Effect.succeed(console.warn(message, ...optionalParams)),
-      Effect.withSpan('logger-console/error'),
+      Effect.withSpan('logger-console/warn'),
     ),
 });

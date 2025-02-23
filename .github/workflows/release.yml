@@ -1,0 +1,30 @@
+name: ⚡ Release
+
+on:
+  workflow_run:
+    workflows: ['⚡ Integration checks']
+    branches: [main]
+    types:
+      - completed
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  publish:
+    name: 🛩️ Release & Publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 🛰️ Release please
+        uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          config-file: release-please/config.json
+          manifest-file: release-please/manifest.json
+
