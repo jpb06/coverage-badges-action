@@ -50,7 +50,7 @@
     "esbuild": "0.25.0",
     "npm-check-updates": "17.1.15",
     "readme-package-icons": "1.2.0",
-    "typescript": "5.7.3",
+    "typescript": "5.8.2",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "3.0.6",
     "vitest-mock-extended": "3.0.1"
