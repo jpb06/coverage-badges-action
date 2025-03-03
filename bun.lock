@@ -11,7 +11,7 @@
         "effect": "3.13.2",
         "effect-errors": "1.8.37",
         "glob": "11.0.1",
-        "node-coverage-badges": "1.2.13",
+        "node-coverage-badges": "1.2.14",
       },
       "devDependencies": {
         "@biomejs/biome": "1.9.4",
@@ -516,7 +516,7 @@
 
     "node-addon-api": ["node-addon-api@7.1.1", "", {}, "sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ=="],
 
-    "node-coverage-badges": ["node-coverage-badges@1.2.13", "", { "dependencies": { "@effect/platform": "0.77.2", "comment-json": "4.2.5", "effect": "3.13.2", "picocolors": "1.1.1", "yargs": "17.7.2" }, "bin": { "generateBadges": "cjs/cli/generate-badges.cli.js", "generateBadgesEsm": "esm/cli/generate-badges.cli.js" } }, "sha512-x40ltJ6RN61pKCGNGDINqygh9o0EYQ+tRUY/MLqzN1BTmICVJMSF4rEdW7DAcUb+jajLjDK1YbkUQzCFyPjLkQ=="],
+    "node-coverage-badges": ["node-coverage-badges@1.2.14", "", { "dependencies": { "@effect/platform": "0.77.4", "comment-json": "4.2.5", "effect": "3.13.4", "picocolors": "1.1.1", "yargs": "17.7.2" }, "bin": { "generateBadges": "cjs/cli/generate-badges.cli.js", "generateBadgesEsm": "esm/cli/generate-badges.cli.js" } }, "sha512-YMOv1mVayLI7JDsC9tYj8ZA+7reuA6gzIpmGKup4gaMLmqad+JlgoSpAAgVUJjrZXLBnDxu+5zov41mTjdnH4Q=="],
 
     "npm-check-updates": ["npm-check-updates@17.1.15", "", { "bin": { "npm-check-updates": "build/cli.js", "ncu": "build/cli.js" } }, "sha512-miATvKu5rjec/1wxc5TGDjpsucgtCHwRVZorZpDkS6NzdWXfnUWlN4abZddWb7XSijAuBNzzYglIdTm9SbgMVg=="],
 
@@ -669,6 +669,10 @@
     "@octokit/plugin-rest-endpoint-methods/@octokit/types": ["@octokit/types@12.6.0", "", { "dependencies": { "@octokit/openapi-types": "^20.0.0" } }, "sha512-1rhSOfRa6H9w4YwK0yrf5faDaDTb+yLyBUKOCV4xtCDB5VmIPqd/v9yr9o6SAzOAlRxMiRiCic6JVM1/kunVkw=="],
 
     "import-fresh/resolve-from": ["resolve-from@4.0.0", "", {}, "sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g=="],
+
+    "node-coverage-badges/@effect/platform": ["@effect/platform@0.77.4", "", { "dependencies": { "find-my-way-ts": "^0.1.5", "multipasta": "^0.2.5" }, "peerDependencies": { "effect": "^3.13.4" } }, "sha512-3jBDn4bAWqRSKARmoMY2NmMxIMM5Py5BqJdUuYJqPyI6jbz7qkOMwgeaF62rWqiqhQLHLTgU4QL/cPwyZl7mVg=="],
+
+    "node-coverage-badges/effect": ["effect@3.13.4", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "fast-check": "^3.23.1" } }, "sha512-XZgCImyBpONuKdsBRk37JfV7242yxTu8r/TcL5ZELIyqRbMYa+Prr86cz1INxXi7iFXfU0havZkCJGyYp1BsiA=="],
 
     "test-exclude/glob": ["glob@10.4.5", "", { "dependencies": { "foreground-child": "^3.1.0", "jackspeak": "^3.1.2", "minimatch": "^9.0.4", "minipass": "^7.1.2", "package-json-from-dist": "^1.0.0", "path-scurry": "^1.11.1" }, "bin": { "glob": "dist/esm/bin.mjs" } }, "sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg=="],
 
