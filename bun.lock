@@ -8,7 +8,7 @@
         "@actions/exec": "1.1.1",
         "@actions/github": "6.0.0",
         "@octokit/core": "6.1.4",
-        "effect": "3.13.2",
+        "effect": "3.13.6",
         "effect-errors": "1.8.37",
         "glob": "11.0.1",
         "node-coverage-badges": "1.2.13",
@@ -364,7 +364,7 @@
 
     "eastasianwidth": ["eastasianwidth@0.2.0", "", {}, "sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA=="],
 
-    "effect": ["effect@3.13.2", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "fast-check": "^3.23.1" } }, "sha512-/w+CPqHDJ33Wq7xC4YKAchrEEPtjvxh563xH9kDTZp99seNYBoBs87vl8DJwartEjj+KLQLP8PzoDne+XmGT2A=="],
+    "effect": ["effect@3.13.6", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "fast-check": "^3.23.1" } }, "sha512-NKmzyIuOb2UuHFPRz9EYScbhMBxXkzjPRuu+4axE+hMk1f0U7TZxzi2CP3TVVxA2kzvh00aBQEbyH7Opq4PnWg=="],
 
     "effect-errors": ["effect-errors@1.8.37", "", { "dependencies": { "@effect/platform": "0.77.2", "@effect/platform-node": "0.73.2", "@effect/schema": "0.75.5", "comment-json": "4.2.5", "effect": "3.13.2", "picocolors": "1.1.1", "source-map-js": "1.2.1" } }, "sha512-EMyP7hKWQslYaKOizwY2L2plFBRNHTbuv04oE22XFM5KwDDexehhCODzoFiSVkuAe8ynS212Ey9ncHImh98GGg=="],
 
@@ -668,7 +668,11 @@
 
     "@octokit/plugin-rest-endpoint-methods/@octokit/types": ["@octokit/types@12.6.0", "", { "dependencies": { "@octokit/openapi-types": "^20.0.0" } }, "sha512-1rhSOfRa6H9w4YwK0yrf5faDaDTb+yLyBUKOCV4xtCDB5VmIPqd/v9yr9o6SAzOAlRxMiRiCic6JVM1/kunVkw=="],
 
+    "effect-errors/effect": ["effect@3.13.2", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "fast-check": "^3.23.1" } }, "sha512-/w+CPqHDJ33Wq7xC4YKAchrEEPtjvxh563xH9kDTZp99seNYBoBs87vl8DJwartEjj+KLQLP8PzoDne+XmGT2A=="],
+
     "import-fresh/resolve-from": ["resolve-from@4.0.0", "", {}, "sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g=="],
+
+    "node-coverage-badges/effect": ["effect@3.13.2", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "fast-check": "^3.23.1" } }, "sha512-/w+CPqHDJ33Wq7xC4YKAchrEEPtjvxh563xH9kDTZp99seNYBoBs87vl8DJwartEjj+KLQLP8PzoDne+XmGT2A=="],
 
     "test-exclude/glob": ["glob@10.4.5", "", { "dependencies": { "foreground-child": "^3.1.0", "jackspeak": "^3.1.2", "minimatch": "^9.0.4", "minipass": "^7.1.2", "package-json-from-dist": "^1.0.0", "path-scurry": "^1.11.1" }, "bin": { "glob": "dist/esm/bin.mjs" } }, "sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg=="],
 
