@@ -11,7 +11,7 @@
         "effect": "3.13.7",
         "effect-errors": "1.8.43",
         "glob": "11.0.1",
-        "node-coverage-badges": "1.2.15",
+        "node-coverage-badges": "1.2.16",
       },
       "devDependencies": {
         "@biomejs/biome": "1.9.4",
@@ -514,7 +514,7 @@
 
     "node-addon-api": ["node-addon-api@7.1.1", "", {}, "sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ=="],
 
-    "node-coverage-badges": ["node-coverage-badges@1.2.15", "", { "dependencies": { "@effect/platform": "0.78.0", "comment-json": "4.2.5", "effect": "3.13.7", "picocolors": "1.1.1", "yargs": "17.7.2" }, "bin": { "generateBadges": "cjs/cli/generate-badges.cli.js", "generateBadgesEsm": "esm/cli/generate-badges.cli.js" } }, "sha512-oQp7uMVGSl89Es85RfOl13DtO8MJdBgHVSzkHhf9G+m1EIpF1Izl9sQrP9xnYDGGwBLpc15SSAcP1TAmBb2iyg=="],
+    "node-coverage-badges": ["node-coverage-badges@1.2.16", "", { "dependencies": { "@effect/platform": "0.79.1", "comment-json": "4.2.5", "picocolors": "1.1.1", "yargs": "17.7.2" }, "peerDependencies": { "effect": "3.13.10" }, "bin": { "generateBadges": "cjs/cli/generate-badges.cli.js", "generateBadgesEsm": "esm/cli/generate-badges.cli.js" } }, "sha512-rrxXrjMb9RhxiTknM84w3fZe+HNZlqNxR5NJvgcD5X9xrgDmNl0S8qYMVJzwJqS4y/WaNU8xT5JuXC9oYAaW6A=="],
 
     "npm-check-updates": ["npm-check-updates@17.1.15", "", { "bin": { "npm-check-updates": "build/cli.js", "ncu": "build/cli.js" } }, "sha512-miATvKu5rjec/1wxc5TGDjpsucgtCHwRVZorZpDkS6NzdWXfnUWlN4abZddWb7XSijAuBNzzYglIdTm9SbgMVg=="],
 
@@ -669,8 +669,6 @@
     "@types/conventional-commits-parser/@types/node": ["@types/node@22.13.5", "", { "dependencies": { "undici-types": "~6.20.0" } }, "sha512-+lTU0PxZXn0Dr1NBtC7Y8cR21AJr87dLLU953CWA6pMxxv/UDc7jYAY90upcrie1nRcD6XNG5HOYEDtgW5TxAg=="],
 
     "import-fresh/resolve-from": ["resolve-from@4.0.0", "", {}, "sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g=="],
-
-    "node-coverage-badges/@effect/platform": ["@effect/platform@0.78.0", "", { "dependencies": { "find-my-way-ts": "^0.1.5", "multipasta": "^0.2.5" }, "peerDependencies": { "effect": "^3.13.7" } }, "sha512-2vGIfBtPO7zPioVy4wmSbeF0VWfj3GLpB9+6JT7K0lZVeYogHF2GTuPDB87xMILw86Ecz9iR98JuA9Co7PgxKQ=="],
 
     "test-exclude/glob": ["glob@10.4.5", "", { "dependencies": { "foreground-child": "^3.1.0", "jackspeak": "^3.1.2", "minimatch": "^9.0.4", "minipass": "^7.1.2", "package-json-from-dist": "^1.0.0", "path-scurry": "^1.11.1" }, "bin": { "glob": "dist/esm/bin.mjs" } }, "sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg=="],
 
