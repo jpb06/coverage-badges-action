@@ -21,7 +21,7 @@
         "@vitest/coverage-v8": "3.0.8",
         "esbuild": "0.25.1",
         "npm-check-updates": "17.1.15",
-        "readme-package-icons": "1.2.0",
+        "readme-package-icons": "1.2.1",
         "typescript": "5.8.2",
         "vite-tsconfig-paths": "5.1.4",
         "vitest": "3.0.8",
@@ -548,7 +548,7 @@
 
     "pure-rand": ["pure-rand@6.1.0", "", {}, "sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA=="],
 
-    "readme-package-icons": ["readme-package-icons@1.2.0", "", { "dependencies": { "comment-json": "4.2.5", "picocolors": "1.1.1", "yargs": "17.7.2" }, "bin": { "generateReadmeIcons": "cjs/cli/generate-readme-icons.cli.js", "generateReadmeIconsEsm": "esm/cli/generate-readme-icons.cli.js" } }, "sha512-uiKcxmYCzMDpdT9wDtEAoBX8rrdVLPaQ6lyyK/A/Z+lxhydUc6yJT4gqNeWlO9kPsxzaVCOnYdSYRpV0q9uOZA=="],
+    "readme-package-icons": ["readme-package-icons@1.2.1", "", { "dependencies": { "comment-json": "4.2.5", "picocolors": "1.1.1", "yargs": "17.7.2" }, "bin": { "generateReadmeIcons": "cjs/cli/generate-readme-icons.cli.js", "generateReadmeIconsEsm": "esm/cli/generate-readme-icons.cli.js" } }, "sha512-7q9NZ1rj4v3DkSiw0wPlKAU+0vkcTKDJ27SckCBOwoXfMB7NZFJPGzNu2aaXD+spjfrm2hm5dTaFsIo0D3fX/Q=="],
 
     "repeat-string": ["repeat-string@1.6.1", "", {}, "sha512-PV0dzCYDNfRi1jCDbJzpW7jNNDRuCOG/jI5ctQcGKt/clZD+YcPS3yIlWuTJMmESC8aevCFmWJy5wjAFgNqN6w=="],
 
