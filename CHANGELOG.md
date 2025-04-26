@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/jpb06/coverage-badges-action/compare/v1.1.3...v1.2.0) (2025-04-26)
+
+
+### Features
+
+* switching to effect-errors ([#62](https://github.com/jpb06/coverage-badges-action/issues/62)) ([9735d10](https://github.com/jpb06/coverage-badges-action/commit/9735d101d5c1a07afc829ae64bc111b903d37da6))
+
 ## [1.1.3](https://github.com/jpb06/coverage-badges-action/compare/v1.1.2...v1.1.3) (2025-04-26)
 
 
