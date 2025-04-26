@@ -12,13 +12,11 @@ export const collectErrorDetails = <E>(cause: Cause<E>) =>
       const { error } = yield* Logger;
 
       const captured = yield* captureErrors(cause, {
-        reverseSpans: true,
         stripCwd: true,
       });
       const message = prettyPrintFromCapturedErrors(captured, {
         hideStackTrace: true,
         stripCwd: true,
-        reverseSpans: true,
       });
 
       yield* error(message);
