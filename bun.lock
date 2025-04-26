@@ -20,7 +20,7 @@
         "@types/node": "22.15.2",
         "@vitest/coverage-v8": "3.1.2",
         "esbuild": "0.25.3",
-        "npm-check-updates": "17.1.18",
+        "npm-check-updates": "18.0.1",
         "readme-package-icons": "1.2.1",
         "typescript": "5.8.2",
         "vite-tsconfig-paths": "5.1.4",
@@ -518,7 +518,7 @@
 
     "node-coverage-badges": ["node-coverage-badges@1.2.16", "", { "dependencies": { "@effect/platform": "0.79.1", "comment-json": "4.2.5", "picocolors": "1.1.1", "yargs": "17.7.2" }, "peerDependencies": { "effect": "3.13.10" }, "bin": { "generateBadges": "cjs/cli/generate-badges.cli.js", "generateBadgesEsm": "esm/cli/generate-badges.cli.js" } }, "sha512-rrxXrjMb9RhxiTknM84w3fZe+HNZlqNxR5NJvgcD5X9xrgDmNl0S8qYMVJzwJqS4y/WaNU8xT5JuXC9oYAaW6A=="],
 
-    "npm-check-updates": ["npm-check-updates@17.1.18", "", { "bin": { "ncu": "build/cli.js", "npm-check-updates": "build/cli.js" } }, "sha512-bkUy2g4v1i+3FeUf5fXMLbxmV95eG4/sS7lYE32GrUeVgQRfQEk39gpskksFunyaxQgTIdrvYbnuNbO/pSUSqw=="],
+    "npm-check-updates": ["npm-check-updates@18.0.1", "", { "bin": { "npm-check-updates": "build/cli.js", "ncu": "build/cli.js" } }, "sha512-MO7mLp/8nm6kZNLLyPgz4gHmr9tLoU+pWPLdXuGAx+oZydBHkHWN0ibTonsrfwC2WEQNIQxuZagYwB67JQpAuw=="],
 
     "once": ["once@1.4.0", "", { "dependencies": { "wrappy": "1" } }, "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w=="],
 
