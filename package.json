@@ -38,7 +38,7 @@
     "@octokit/core": "6.1.4",
     "effect": "3.14.14",
     "effect-errors": "1.8.43",
-    "glob": "11.0.1",
+    "glob": "11.0.2",
     "node-coverage-badges": "1.2.16"
   },
   "devDependencies": {
