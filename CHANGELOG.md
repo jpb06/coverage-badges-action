@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/jpb06/coverage-badges-action/compare/v1.2.0...v1.2.1) (2025-04-27)
+
+
+### Bug Fixes
+
+* missing info messages ([#64](https://github.com/jpb06/coverage-badges-action/issues/64)) ([499a472](https://github.com/jpb06/coverage-badges-action/commit/499a472b360ea122639ee723e3d4c6b2deb7ebee))
+
 ## [1.2.0](https://github.com/jpb06/coverage-badges-action/compare/v1.1.3...v1.2.0) (2025-04-26)
 
 
