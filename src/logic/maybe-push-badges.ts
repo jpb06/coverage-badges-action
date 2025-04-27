@@ -18,17 +18,17 @@ export const maybePushBadges = (
       const { info } = yield* GithubActions;
 
       if (!shouldCommit) {
-        info("ℹ️ `no-commit` set to true: badges won't be committed");
+        yield* info("ℹ️ `no-commit` set to true: badges won't be committed");
         return;
       }
 
       const hasEvolved = yield* hasCoverageEvolved(badgesExist, outputPath);
       if (!hasEvolved) {
-        info('✅ Coverage has not evolved, no action required.');
+        yield* info('✅ Coverage has not evolved, no action required.');
         return;
       }
 
-      info('🚀 Pushing badges to the repo');
+      yield* info('🚀 Pushing badges to the repo');
       yield* setGitConfig();
 
       const targetBranch = yield* getTargetBranch(currentBranch);
