@@ -45,7 +45,7 @@
     "@biomejs/biome": "1.9.4",
     "@commitlint/cli": "19.8.0",
     "@commitlint/config-conventional": "19.8.0",
-    "@effect/cluster": "0.30.2",
+    "@effect/cluster": "0.30.6",
     "@effect/platform": "0.80.18",
     "@types/node": "22.15.2",
     "@vitest/coverage-v8": "3.1.3",
