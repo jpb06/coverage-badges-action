@@ -1,7 +1,7 @@
 {
   "name": "coverage-badges-action",
   "description": "Generates coverage badges and pushes them to the repo",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "main": "lib/main.js",
   "type": "module",
   "repository": {

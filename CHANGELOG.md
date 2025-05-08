@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.3](https://github.com/jpb06/coverage-badges-action/compare/v1.2.2...v1.2.3) (2025-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @actions/github to v6.0.1 ([#83](https://github.com/jpb06/coverage-badges-action/issues/83)) ([8d4ad17](https://github.com/jpb06/coverage-badges-action/commit/8d4ad179498f4174d4820a851e05ed449206585b))
+* **deps:** update dependency effect to v3.14.21 ([#79](https://github.com/jpb06/coverage-badges-action/issues/79)) ([2ab14e9](https://github.com/jpb06/coverage-badges-action/commit/2ab14e95180040e9e7986ff2c76b8a2cc9938b75))
+* **deps:** update dependency effect-errors to v1.10.6 ([#80](https://github.com/jpb06/coverage-badges-action/issues/80)) ([8a2ce4a](https://github.com/jpb06/coverage-badges-action/commit/8a2ce4ab5530344b3dd6c9889ab3f18499100b6d))
+* **deps:** update dependency node-coverage-badges to v1.2.18 ([#73](https://github.com/jpb06/coverage-badges-action/issues/73)) ([bc5c1c8](https://github.com/jpb06/coverage-badges-action/commit/bc5c1c81de8ccd92fcc022d719cf79fa75af5fc7))
+* round average coverage numbers to 2 decimals ([#85](https://github.com/jpb06/coverage-badges-action/issues/85)) ([85f2184](https://github.com/jpb06/coverage-badges-action/commit/85f218435d8bef50ba8b7dced1809db47785c66c))
+
 ## [1.2.2](https://github.com/jpb06/coverage-badges-action/compare/v1.2.1...v1.2.2) (2025-05-05)
 
 
