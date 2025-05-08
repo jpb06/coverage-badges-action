@@ -5,4 +5,4 @@ const sumArray = (array: number[]) => array.reduce((total, n) => total + n, 0);
 export const getAverage = (
   key: SummaryKeys,
   sums: Record<SummaryKeys, number[]>,
-) => sumArray(sums[key]) / sums[key].length;
+) => Number((sumArray(sums[key]) / sums[key].length).toFixed(2));

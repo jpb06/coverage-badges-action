@@ -58,10 +58,10 @@ describe('mergeSummaryReports function', () => {
 
     expect(result).toStrictEqual({
       total: {
-        lines: { pct: 63.333333333333336 },
-        statements: { pct: 46.666666666666664 },
-        functions: { pct: 43.333333333333336 },
-        branches: { pct: 51.666666666666664 },
+        lines: { pct: 63.33 },
+        statements: { pct: 46.67 },
+        functions: { pct: 43.33 },
+        branches: { pct: 51.67 },
       },
     });
   });
