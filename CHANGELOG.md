@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/jpb06/coverage-badges-action/compare/v1.2.3...v1.3.0) (2025-05-08)
+
+
+### Features
+
+* adding an input to specify badges label prefix ([#90](https://github.com/jpb06/coverage-badges-action/issues/90)) ([ea23a22](https://github.com/jpb06/coverage-badges-action/commit/ea23a2239970647605e0505e29b5c6d7a19837df))
+
+
+### Bug Fixes
+
+* **deps:** update dependency node-coverage-badges to v1.3.0 ([#88](https://github.com/jpb06/coverage-badges-action/issues/88)) ([38ef432](https://github.com/jpb06/coverage-badges-action/commit/38ef4326501fa6540b80ab9177a34264b9e0520f))
+
 ## [1.2.3](https://github.com/jpb06/coverage-badges-action/compare/v1.2.2...v1.2.3) (2025-05-08)
 
 
