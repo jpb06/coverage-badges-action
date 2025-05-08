@@ -37,7 +37,7 @@
     "@actions/github": "6.0.0",
     "@octokit/core": "6.1.5",
     "effect": "3.14.21",
-    "effect-errors": "1.10.5",
+    "effect-errors": "1.10.6",
     "glob": "11.0.2",
     "node-coverage-badges": "1.2.18"
   },
