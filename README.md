@@ -110,6 +110,12 @@ The icon to use for the badges, as a simple icons slug. You can find slugs [here
 
 > Default is [file-icons:test-generic](https://icon-sets.iconify.design/file-icons/test-generic/).
 
+### 🔶 `badges-labels-prefix`
+
+Label prefix for the generated badges text. For example if you use `Repo test coverage`, generated badges will have a label matching `Repo test coverage: {key}` where `key = 'total' | 'lines' | 'statements' | 'functions' | 'branches'`.
+
+> Default value: **`Test coverage: `**
+
 ### 🔶 `commit-message`
 
 Commit message of the commit with generated badges.

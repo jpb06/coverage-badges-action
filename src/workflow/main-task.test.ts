@@ -186,6 +186,9 @@ describe('mainTask function', () => {
       .calledWith('badges-icon')
       .mockReturnValueOnce(Effect.succeed(''));
     getInputMock
+      .calledWith('badges-labels-prefix')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
       .calledWith('no-commit')
       .mockReturnValueOnce(Effect.succeed('true'));
     getInputMock
@@ -257,6 +260,7 @@ describe('mainTask function', () => {
       './coverage/coverage-summary.json',
       './badges',
       undefined,
+      undefined,
     );
 
     expect(execMock).toHaveBeenCalledTimes(0);
@@ -271,6 +275,9 @@ describe('mainTask function', () => {
     const getInputMock = mockFn();
     getInputMock
       .calledWith('badges-icon')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('badges-labels-prefix')
       .mockReturnValueOnce(Effect.succeed(''));
     getInputMock
       .calledWith('no-commit')
@@ -344,6 +351,7 @@ describe('mainTask function', () => {
       './coverage/coverage-summary.json',
       './badges',
       undefined,
+      undefined,
     );
 
     expect(execMock).toHaveBeenCalledTimes(1);
@@ -364,6 +372,9 @@ describe('mainTask function', () => {
     const getInputMock = mockFn();
     getInputMock
       .calledWith('badges-icon')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('badges-labels-prefix')
       .mockReturnValueOnce(Effect.succeed(''));
     getInputMock
       .calledWith('no-commit')
@@ -438,6 +449,7 @@ describe('mainTask function', () => {
       './coverage/coverage-summary.json',
       './badges',
       undefined,
+      undefined,
     );
 
     expect(execMock).toHaveBeenCalledTimes(8);
@@ -474,6 +486,9 @@ describe('mainTask function', () => {
     const getInputMock = mockFn();
     getInputMock
       .calledWith('badges-icon')
+      .mockReturnValueOnce(Effect.succeed(''));
+    getInputMock
+      .calledWith('badges-labels-prefix')
       .mockReturnValueOnce(Effect.succeed(''));
     getInputMock
       .calledWith('no-commit')
@@ -600,11 +615,13 @@ describe('mainTask function', () => {
       'apps/one/coverage/coverage-summary.json',
       './badges/one',
       undefined,
+      undefined,
     );
     expect(generateBadgesEffect).toHaveBeenNthCalledWith(
       2,
       'apps/two/coverage/coverage-summary.json',
       './badges/two',
+      undefined,
       undefined,
     );
 

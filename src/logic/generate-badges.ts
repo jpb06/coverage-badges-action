@@ -30,13 +30,17 @@ export const generateBadges = (
       const badgesIconInput = yield* getInput('badges-icon');
       const badgesIcon = badgesIconInput === '' ? undefined : badgesIconInput;
 
+      const labelPrefixInput = yield* getInput('badges-labels-prefix');
+      const labelPrefix =
+        labelPrefixInput === '' ? undefined : labelPrefixInput;
+
       yield* Effect.forEach(
         summaryFilesPaths,
         ({ path, subPath }) => {
           const writePath =
             subPath !== undefined ? `${outputPath}/${subPath}` : outputPath;
 
-          return generateBadgesEffect(path, writePath, badgesIcon);
+          return generateBadgesEffect(path, writePath, badgesIcon, labelPrefix);
         },
         { concurrency: 'unbounded' },
       );

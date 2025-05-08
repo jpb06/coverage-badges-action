@@ -40,3 +40,7 @@ jobs:
         uses: ./
         with:
           badges-icon: vitest
+          badges-labels-prefix: "Repo test coverage"
+          commit-message: "chore: updating coverage badges"
+          commit-user: jpb06
+          commit-user-email: jpb.06@outlook.com

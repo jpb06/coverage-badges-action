@@ -18,6 +18,9 @@ inputs:
   badges-icon:
     description: 'Icon to use for the badges (simple-icons slug - https://simpleicons.org/).'
     default: ''
+  badges-labels-prefix:
+    description: 'Label prefix for coverage badges. For example "Repo coverage"'
+    default: ''  
   commit-message:
     description: 'Commit message of the commit with generated badges.'
     default: 'Updating coverage badges'
