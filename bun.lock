@@ -18,7 +18,7 @@
         "@commitlint/cli": "19.8.1",
         "@commitlint/config-conventional": "19.8.1",
         "@effect/cluster": "0.34.0",
-        "@effect/platform": "0.82.0",
+        "@effect/platform": "0.82.3",
         "@types/node": "22.15.18",
         "@vitest/coverage-v8": "3.1.3",
         "esbuild": "0.25.4",
@@ -112,7 +112,7 @@
 
     "@effect/experimental": ["@effect/experimental@0.44.14", "", { "dependencies": { "uuid": "^11.0.3" }, "peerDependencies": { "@effect/platform": "^0.80.14", "effect": "^3.14.14", "ioredis": "^5", "lmdb": "^3" }, "optionalPeers": ["ioredis", "lmdb"] }, "sha512-soBCnKruHgXPPuxlFmw8DpvS6uuzDi2mytUwamfTttLMo5rydyFF9og6/c8MsUJyx4jadJzufDt2fhsxfsWxnQ=="],
 
-    "@effect/platform": ["@effect/platform@0.82.0", "", { "dependencies": { "find-my-way-ts": "^0.1.5", "msgpackr": "^1.11.2", "multipasta": "^0.2.5" }, "peerDependencies": { "effect": "^3.15.0" } }, "sha512-+aGwGx80JjvnSqgAWgRawBG8qFggBypoTYxSJDzsWkdLBtAmD+OBaVHAJxXqogqXmxX+X0B3PHng0OOxsYjCIw=="],
+    "@effect/platform": ["@effect/platform@0.82.3", "", { "dependencies": { "find-my-way-ts": "^0.1.5", "msgpackr": "^1.11.2", "multipasta": "^0.2.5" }, "peerDependencies": { "effect": "^3.15.2" } }, "sha512-KKCmBGP3IoQDwj4jThTicLprdViFrFfwtRkJwZTR5z+zFmwgF1J2cOk3MSafkcrL8FMpAItD9FizXvcz/bG4QA=="],
 
     "@effect/platform-node": ["@effect/platform-node@0.80.0", "", { "dependencies": { "@effect/platform-node-shared": "^0.34.0", "mime": "^3.0.0", "undici": "^7.1.0", "ws": "^8.18.0" }, "peerDependencies": { "@effect/cluster": "^0.33.0", "@effect/platform": "^0.82.0", "@effect/rpc": "^0.59.0", "@effect/sql": "^0.35.0", "effect": "^3.15.0" } }, "sha512-5y0sLrEgUZVMF9V8qdZM4ztub6xTPBP93eHfwUTchcA56j8Kpvvj6K7VkxHRrLsEWMlECRxpAr9/dJUtZ4gpfg=="],
 
