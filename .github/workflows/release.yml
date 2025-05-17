@@ -28,3 +28,20 @@ jobs:
           config-file: release-please/config.json
           manifest-file: release-please/manifest.json
 
+      - name: 🔄 Checkout repo
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ⬇️ Checkout latest
+        if: ${{ steps.release.outputs.release_created }}
+        run: git checkout latest
+
+      - name: 🔀 Rebase latest on main
+        if: ${{ steps.release.outputs.release_created }}
+        run: git merge origin/main
+
+      - name: ⬆️ Push latest
+        if: ${{ steps.release.outputs.release_created }}
+        run: git push origin latest
