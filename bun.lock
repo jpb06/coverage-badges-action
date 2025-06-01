@@ -7,7 +7,7 @@
         "@actions/core": "1.11.1",
         "@actions/exec": "1.1.1",
         "@actions/github": "6.0.1",
-        "@effect/cluster": "0.34.4",
+        "@effect/cluster": "0.37.0",
         "@effect/platform": "0.84.4",
         "@octokit/core": "7.0.2",
         "effect": "3.16.3",
@@ -108,7 +108,7 @@
 
     "@commitlint/types": ["@commitlint/types@19.8.1", "", { "dependencies": { "@types/conventional-commits-parser": "^5.0.0", "chalk": "^5.3.0" } }, "sha512-/yCrWGCoA1SVKOks25EGadP9Pnj0oAIHGpl2wH2M2Y46dPM2ueb8wyCVOD7O3WCTkaJ0IkKvzhl1JY7+uCT2Dw=="],
 
-    "@effect/cluster": ["@effect/cluster@0.34.4", "", { "peerDependencies": { "@effect/platform": "^0.82.7", "@effect/rpc": "^0.59.8", "@effect/sql": "^0.35.7", "effect": "^3.15.4" } }, "sha512-n53gIeQwPqOsZi5jz+5H8SHW2FNXEdKuZVhygz1nP8SoMEfrq3D48JzvmGIkj0SebnZuhwP18LMK83WiTk0oTw=="],
+    "@effect/cluster": ["@effect/cluster@0.37.0", "", { "peerDependencies": { "@effect/platform": "^0.84.4", "@effect/rpc": "^0.61.4", "@effect/sql": "^0.37.4", "@effect/workflow": "^0.1.0", "effect": "^3.16.3" } }, "sha512-MAe2FnY8rst86TiPc//wBmmfPLOhgrjI6L8Ll8goxnYMWXrRipfAfvlQhnn9ieqQ8Z4xelexn8+r/1kyAzn/sg=="],
 
     "@effect/experimental": ["@effect/experimental@0.46.7", "", { "dependencies": { "uuid": "^11.0.3" }, "peerDependencies": { "@effect/platform": "^0.82.7", "effect": "^3.15.4", "ioredis": "^5", "lmdb": "^3" }, "optionalPeers": ["ioredis", "lmdb"] }, "sha512-38T7ykK6g9a3dMrhvu0dTomnA0UiIRfuf5zVH4LOlNBMYxeHcrohixVbk0I0lo4Ut+QsuNaw1lTL4MXbZ3hVtw=="],
 
@@ -121,6 +121,8 @@
     "@effect/rpc": ["@effect/rpc@0.59.8", "", { "peerDependencies": { "@effect/platform": "^0.82.7", "effect": "^3.15.4" } }, "sha512-ToUVjUtSloEdNc/82VAzMBc62YUrENMJVQG90tFu+kHtGGN+qbv6QRTd9jID+E6Hoa7QAoN64lyLrvUjJHcJkA=="],
 
     "@effect/sql": ["@effect/sql@0.35.7", "", { "dependencies": { "@opentelemetry/semantic-conventions": "^1.33.0", "uuid": "^11.0.3" }, "peerDependencies": { "@effect/experimental": "^0.46.7", "@effect/platform": "^0.82.7", "effect": "^3.15.4" } }, "sha512-HP9j0zjY4hJ5WSnYFTtRY0hXaxmozkHRVRQ2H+/XZ8MuWV4JP6Jixue2AKNVuNn7JN3OH2TV2ldc1HEgI71M+A=="],
+
+    "@effect/workflow": ["@effect/workflow@0.1.0", "", { "peerDependencies": { "effect": "^3.16.3" } }, "sha512-fYE9NC87qKgDILdl6admskiy5Xx7PG9sLq1EhPpd4713hOnqKzEbQFcY0EkN9dZh1UvYghf2c6UUc//y4VJs4w=="],
 
     "@esbuild/aix-ppc64": ["@esbuild/aix-ppc64@0.25.4", "", { "os": "aix", "cpu": "ppc64" }, "sha512-1VCICWypeQKhVbE9oW/sJaAmjLxhVqacdkvPLEjwlttjfwENRSClS8EjBz0KzRyFSCPDIkuXW34Je/vk7zdB7Q=="],
 
