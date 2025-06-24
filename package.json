@@ -35,7 +35,7 @@
     "@actions/core": "1.11.1",
     "@actions/exec": "1.1.1",
     "@actions/github": "6.0.1",
-    "@effect/cluster": "0.37.0",
+    "@effect/cluster": "0.41.1",
     "@effect/platform": "0.87.0",
     "@octokit/core": "7.0.2",
     "effect": "3.16.9",
