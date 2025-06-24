@@ -1,0 +1,44 @@
+name: ⚡ Coverage badges generation from branch
+
+on:
+  pull_request:
+    branches: [generating-from-branch]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coverage-badges-generation:
+    name: 📣 Coverage badges generation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          registry-url: 'https://registry.npmjs.org'
+          cache-dependency-path: ./package.json
+
+      - name: 📥 Install deps
+        run: bun install --frozen-lockfile
+
+      - name: 🔍 Tests
+        run: bun test-ci
+
+      - name: ⚙️ Generating coverage badges
+        uses: ./
+        with:
+          branches: generating-from-branch-2
+          badges-icon: vitest
+          badges-labels-prefix: "Repo test coverage"
+          commit-message: "chore: updating coverage badges"
+          commit-user: jpb06
+          commit-user-email: jpb.06@outlook.com
