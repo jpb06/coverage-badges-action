@@ -2,7 +2,7 @@ import { FileSystem } from '@effect/platform/FileSystem';
 import { type Effect, Layer } from 'effect';
 import type { Mock } from 'vitest';
 
-import { type TestLayerError, initLayerFn } from './util/init-layer-fn.util.js';
+import { initLayerFn, type TestLayerError } from './util/init-layer-fn.util.js';
 
 type FsTestLayerInput = {
   exists?: Effect.Effect<boolean> | Effect.Effect<never, TestLayerError> | Mock;

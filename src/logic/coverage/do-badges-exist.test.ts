@@ -1,9 +1,9 @@
+import { Effect, pipe } from 'effect';
 import { runPromise } from 'effect-errors';
 import { describe, expect, it, vi } from 'vitest';
 
 import { makeFsTestLayer } from '@tests/layers';
 
-import { Effect, pipe } from 'effect';
 import { doBadgesExist } from './do-badges-exist.js';
 
 describe('doBadgesExist function', () => {

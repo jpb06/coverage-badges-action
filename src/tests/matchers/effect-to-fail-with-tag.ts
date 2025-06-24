@@ -8,7 +8,7 @@ type FailEffectDetails = {
   message?: string;
 };
 
-export const effectFailureTagMatcher = async () => {
+export const effectFailureTagMatcher = () => {
   expect.extend({
     toFailWithTag: async (received, expected) => {
       if (!Effect.isEffect(received)) {

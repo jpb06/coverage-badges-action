@@ -1,8 +1,8 @@
+import { Effect, pipe } from 'effect';
 import { runPromise } from 'effect-errors';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { makeGithubActionsTestLayer } from '@tests/layers';
-import { Effect, pipe } from 'effect';
 
 describe('getCurrentBranch function', () => {
   beforeAll(() => {

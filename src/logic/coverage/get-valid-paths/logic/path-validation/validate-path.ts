@@ -1,7 +1,7 @@
+import type { PlatformError } from '@effect/platform/Error';
 import type { FileSystem } from '@effect/platform/FileSystem';
 import { Effect, pipe } from 'effect';
 
-import type { PlatformError } from '@effect/platform/Error';
 import type { JsonParsingError } from '@effects/deps/fs/read-json/index.js';
 
 import type { ValidatedPath } from '../../types/validated-types.type.js';

@@ -1,4 +1,4 @@
-import { type InputOptions, getMultilineInput } from '@actions/core';
+import { getMultilineInput, type InputOptions } from '@actions/core';
 import { Effect, pipe } from 'effect';
 
 import { GithubActionsLayerError } from '../errors/github-actions-layer.error.js';

@@ -1,8 +1,8 @@
 import { FetchHttpClient } from '@effect/platform';
 import { NodeFileSystem } from '@effect/platform-node';
 import { Console, Effect, Layer, pipe } from 'effect';
-import { captureErrors, prettyPrintFromCapturedErrors } from 'effect-errors';
 import type { Cause } from 'effect/Cause';
+import { captureErrors, prettyPrintFromCapturedErrors } from 'effect-errors';
 
 export const collectErrorDetails = <E>(cause: Cause<E>) =>
   pipe(
