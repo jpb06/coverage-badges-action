@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4](https://github.com/jpb06/coverage-badges-action/compare/v1.3.3...v1.3.4) (2025-06-25)
+
+
+### Bug Fixes
+
+* effect dependencies ([#135](https://github.com/jpb06/coverage-badges-action/issues/135)) ([81578d7](https://github.com/jpb06/coverage-badges-action/commit/81578d7ed27941d23676dfcb7b992184eaf0d4de))
+
 ## [1.3.3](https://github.com/jpb06/coverage-badges-action/compare/v1.3.2...v1.3.3) (2025-06-25)
 
 
