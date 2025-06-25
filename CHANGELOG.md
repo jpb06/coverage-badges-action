@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.3](https://github.com/jpb06/coverage-badges-action/compare/v1.3.2...v1.3.3) (2025-06-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @effect/cluster to v0.41.2 ([#132](https://github.com/jpb06/coverage-badges-action/issues/132)) ([967f704](https://github.com/jpb06/coverage-badges-action/commit/967f704732b5b662777bc5a4e1497c42bda3f1ae))
+* **deps:** update dependency node-coverage-badges to v1.3.3 ([#133](https://github.com/jpb06/coverage-badges-action/issues/133)) ([c44fb21](https://github.com/jpb06/coverage-badges-action/commit/c44fb219c8a96d530c63e493a0a026af8db70d28))
+
 ## [1.3.2](https://github.com/jpb06/coverage-badges-action/compare/v1.3.1...v1.3.2) (2025-06-24)
 
 
