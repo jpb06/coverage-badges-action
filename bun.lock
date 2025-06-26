@@ -10,7 +10,7 @@
         "@effect/cluster": "0.41.2",
         "@effect/platform": "0.87.0",
         "@octokit/core": "7.0.2",
-        "effect": "3.16.9",
+        "effect": "3.16.10",
         "effect-errors": "1.10.13",
         "glob": "11.0.3",
         "node-coverage-badges": "1.3.3",
@@ -400,7 +400,7 @@
 
     "eastasianwidth": ["eastasianwidth@0.2.0", "", {}, "sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA=="],
 
-    "effect": ["effect@3.16.9", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "fast-check": "^3.23.1" } }, "sha512-onKn21L/Us3G/x4BeUxiE4B/jNiJ09uRcYEfSYVPJE10dTUM3aDdO3g15PW6ccF1BJuOtQt1cxx4/1lACwX/bA=="],
+    "effect": ["effect@3.16.10", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "fast-check": "^3.23.1" } }, "sha512-F0hDCOLax7i3SOy5wQnJZTzKP9aGg8OQNUJ2s8YoL5fVcCgRCgE+Ky+Hfz5qC7LgVVOWDDbRpCh5MPB20wRI8Q=="],
 
     "effect-errors": ["effect-errors@1.10.13", "", { "dependencies": { "comment-json": "4.2.5", "picocolors": "1.1.1", "source-map-js": "1.2.1" }, "peerDependencies": { "@effect/cluster": "0.x", "@effect/platform": "0.x", "@effect/platform-node": "0.x", "@effect/rpc": "0.x", "@effect/sql": "0.x", "effect": "3.x" } }, "sha512-r1KaISEWiQ/w1xedrM3pc5H9VK+DxZgAjXF3gE6Z5D2g4Ota/96b6p0Ypn5w0Kvicz9NtS/8q1Ic2lRhpdqZtA=="],
 
