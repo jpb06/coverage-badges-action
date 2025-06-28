@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.4.0](https://github.com/jpb06/coverage-badges-action/compare/v1.3.4...v1.4.0) (2025-06-28)
+
+
+### Features
+
+* display badges generation info in output ([#144](https://github.com/jpb06/coverage-badges-action/issues/144)) ([824e62d](https://github.com/jpb06/coverage-badges-action/commit/824e62d792a950b8cda3f05861eb815da9cb1bd5))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @effect/cluster to v0.41.3 ([#137](https://github.com/jpb06/coverage-badges-action/issues/137)) ([0da87c4](https://github.com/jpb06/coverage-badges-action/commit/0da87c49de387a011db9ceb2e0abb46a31635c44))
+* **deps:** update dependency @effect/platform to v0.87.1 ([#138](https://github.com/jpb06/coverage-badges-action/issues/138)) ([0f34762](https://github.com/jpb06/coverage-badges-action/commit/0f34762c2e11e75cadde6aa3054d6a9ef1d1cb8b))
+* **deps:** update dependency effect to v3.16.10 ([#139](https://github.com/jpb06/coverage-badges-action/issues/139)) ([3375fe0](https://github.com/jpb06/coverage-badges-action/commit/3375fe04f6a51abea72cdceb76f8f2973568c250))
+* **deps:** update dependency node-coverage-badges to v1.4.0 ([#145](https://github.com/jpb06/coverage-badges-action/issues/145)) ([769e29d](https://github.com/jpb06/coverage-badges-action/commit/769e29dfb36064085761783b92fd32c3c24962ac))
+* **errors reporting:** use setFailed and avoid failing twice when an error occurs ([#143](https://github.com/jpb06/coverage-badges-action/issues/143)) ([4168df7](https://github.com/jpb06/coverage-badges-action/commit/4168df7bacade9834c721125a04a6fc10582e6c1))
+
 ## [1.3.4](https://github.com/jpb06/coverage-badges-action/compare/v1.3.3...v1.3.4) (2025-06-25)
 
 
