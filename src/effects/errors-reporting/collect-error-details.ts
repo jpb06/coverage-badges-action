@@ -4,6 +4,8 @@ import { Console, Effect, Layer, pipe } from 'effect';
 import type { Cause } from 'effect/Cause';
 import { captureErrors, prettyPrintFromCapturedErrors } from 'effect-errors';
 
+import { GithubActions } from '@effects/deps/github-actions';
+
 export const collectErrorDetails = <E>(cause: Cause<E>) =>
   pipe(
     Effect.gen(function* () {
@@ -17,7 +19,9 @@ export const collectErrorDetails = <E>(cause: Cause<E>) =>
 
       yield* Console.error(message);
 
-      yield* Effect.fail('❌ Github action workflow failure');
+      const { setFailed } = yield* GithubActions;
+
+      setFailed('❌ Github action workflow failure');
     }),
     Effect.scoped,
     Effect.provide(Layer.mergeAll(FetchHttpClient.layer, NodeFileSystem.layer)),

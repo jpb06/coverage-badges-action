@@ -25,6 +25,9 @@ export interface GithubActionsOps {
   readonly warning: (
     message: string,
   ) => Effect.Effect<void, GithubActionsLayerError>;
+  readonly setFailed: (
+    message: string,
+  ) => Effect.Effect<void, GithubActionsLayerError>;
 }
 
 export class GithubActions extends Context.Tag('GithubActions')<
