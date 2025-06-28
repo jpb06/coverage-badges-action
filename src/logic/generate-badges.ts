@@ -39,8 +39,13 @@ export const generateBadges = (
         ({ path, subPath }) => {
           const writePath =
             subPath !== undefined ? `${outputPath}/${subPath}` : outputPath;
-
-          return generateBadgesEffect(path, writePath, badgesIcon, labelPrefix);
+          return generateBadgesEffect(
+            path,
+            writePath,
+            badgesIcon,
+            labelPrefix,
+            true,
+          );
         },
         { concurrency: 'unbounded' },
       );

@@ -14,8 +14,8 @@ export const mainTask = () =>
     Effect.gen(function* () {
       const { getInput } = yield* GithubActions;
 
-      const noCommit = yield* getInput('no-commit');
-      const shouldCommit = noCommit !== 'true';
+      const noCommitInput = yield* getInput('no-commit');
+      const shouldCommit = noCommitInput !== 'true';
       const currentBranch = yield* getCurrentBranch;
 
       yield* checkBranchStatus(currentBranch, shouldCommit);

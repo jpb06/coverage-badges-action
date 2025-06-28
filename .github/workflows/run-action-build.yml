@@ -1,9 +1,7 @@
-name: ⚡ Coverage badges generation
+name: ⚡ Live tests
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -11,7 +9,7 @@ concurrency:
 
 jobs:
   coverage-badges-generation:
-    name: 📣 Coverage badges generation
+    name: 🧑‍🔬 Build action and run transpiled output
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -39,7 +37,10 @@ jobs:
       - name: ⚙️ Building action
         run: bun run build
 
-      - name: 😼 Generating coverage badges
+      - name: ❎ Remove badges
+        run: rm -rf ./badges
+
+      - name: 😼 Running action
         id: local-action-run
         uses: ./
         with:
@@ -48,3 +49,4 @@ jobs:
           commit-message: "chore: updating coverage badges"
           commit-user: jpb06
           commit-user-email: jpb.06@outlook.com
+          no-commit: true

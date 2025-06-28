@@ -261,6 +261,7 @@ describe('mainTask function', () => {
       './badges',
       undefined,
       undefined,
+      true,
     );
 
     expect(execMock).toHaveBeenCalledTimes(0);
@@ -352,6 +353,7 @@ describe('mainTask function', () => {
       './badges',
       undefined,
       undefined,
+      true,
     );
 
     expect(execMock).toHaveBeenCalledTimes(1);
@@ -450,6 +452,7 @@ describe('mainTask function', () => {
       './badges',
       undefined,
       undefined,
+      true,
     );
 
     expect(execMock).toHaveBeenCalledTimes(8);
@@ -616,6 +619,7 @@ describe('mainTask function', () => {
       './badges/one',
       undefined,
       undefined,
+      true,
     );
     expect(generateBadgesEffect).toHaveBeenNthCalledWith(
       2,
@@ -623,6 +627,7 @@ describe('mainTask function', () => {
       './badges/two',
       undefined,
       undefined,
+      true,
     );
 
     expect(generateBadgesFromValuesEffect).toHaveBeenCalledTimes(1);

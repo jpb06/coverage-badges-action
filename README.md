@@ -1,7 +1,7 @@
 # coverage-badges-action
 
 [![Open in Visual Studio Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=2c2c32&color=007acc&logoColor=007acc)](https://open.vscode.dev/jpb06/coverage-badges-action)
-![Github workflow](https://img.shields.io/github/actions/workflow/status/jpb06/coverage-badges-action/tests-scan.yml?branch=master&logo=github-actions&label=last%20workflow)
+![Github workflow](https://img.shields.io/github/actions/workflow/status/jpb06/coverage-badges-action/tests-scan.yml?branch=main&logo=github-actions&label=last%20workflow)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jpb06_coverage-badges-action&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jpb06_coverage-badges-action)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jpb06_coverage-badges-action&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=jpb06_coverage-badges-action)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=jpb06_coverage-badges-action&metric=security_rating)](https://sonarcloud.io/dashboard?id=jpb06_coverage-badges-action)
