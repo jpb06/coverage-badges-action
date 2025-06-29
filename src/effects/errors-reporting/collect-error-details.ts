@@ -21,7 +21,7 @@ export const collectErrorDetails = <E>(cause: Cause<E>) =>
 
       const { setFailed } = yield* GithubActions;
 
-      setFailed('❌ Github action workflow failure');
+      yield* setFailed('❌ Github action workflow failure');
     }),
     Effect.scoped,
     Effect.provide(Layer.mergeAll(FetchHttpClient.layer, NodeFileSystem.layer)),
