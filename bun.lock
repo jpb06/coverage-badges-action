@@ -7,7 +7,7 @@
         "@actions/core": "1.11.1",
         "@actions/exec": "1.1.1",
         "@actions/github": "6.0.1",
-        "@effect/cluster": "0.41.15",
+        "@effect/cluster": "0.41.17",
         "@effect/platform": "0.87.11",
         "@octokit/core": "7.0.2",
         "effect": "3.16.12",
@@ -108,7 +108,7 @@
 
     "@commitlint/types": ["@commitlint/types@19.8.1", "", { "dependencies": { "@types/conventional-commits-parser": "^5.0.0", "chalk": "^5.3.0" } }, "sha512-/yCrWGCoA1SVKOks25EGadP9Pnj0oAIHGpl2wH2M2Y46dPM2ueb8wyCVOD7O3WCTkaJ0IkKvzhl1JY7+uCT2Dw=="],
 
-    "@effect/cluster": ["@effect/cluster@0.41.15", "", { "peerDependencies": { "@effect/platform": "^0.87.11", "@effect/rpc": "^0.64.12", "@effect/sql": "^0.40.12", "@effect/workflow": "^0.4.12", "effect": "^3.16.12" } }, "sha512-7xgINXrc0iwOrb6pEQ+GFdNsyXs1Z3lBH3gIb7FBLEtqEVuxUybRgKqwqsrwgdPYg7Mfc5awnVmGZV2VSyX2dw=="],
+    "@effect/cluster": ["@effect/cluster@0.41.17", "", { "peerDependencies": { "@effect/platform": "^0.87.12", "@effect/rpc": "^0.64.13", "@effect/sql": "^0.40.13", "@effect/workflow": "^0.4.13", "effect": "^3.16.12" } }, "sha512-VCsyCbTRrYxashuZFWo7IS9RptXB5a7DUXlKJFlxd9swXWMxlvSX4D/KGayJXuWhogyMrQAvmUjC53bxj3Gm/w=="],
 
     "@effect/experimental": ["@effect/experimental@0.51.1", "", { "dependencies": { "uuid": "^11.0.3" }, "peerDependencies": { "@effect/platform": "^0.87.1", "effect": "^3.16.10", "ioredis": "^5", "lmdb": "^3" }, "optionalPeers": ["ioredis", "lmdb"] }, "sha512-R+j+oI1nSigKPxDxcfDK60dASFkDQRMOfmBZCLRY7lDtK4xBeCrUK//fHX5QhO/dOpyqpTsoQsCzNPRHo+7NrQ=="],
 
