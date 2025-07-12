@@ -8,7 +8,7 @@
         "@actions/exec": "1.1.1",
         "@actions/github": "6.0.1",
         "@effect/cluster": "0.41.17",
-        "@effect/platform": "0.87.11",
+        "@effect/platform": "0.87.12",
         "@octokit/core": "7.0.3",
         "effect": "3.16.12",
         "effect-errors": "1.10.14",
@@ -112,7 +112,7 @@
 
     "@effect/experimental": ["@effect/experimental@0.51.1", "", { "dependencies": { "uuid": "^11.0.3" }, "peerDependencies": { "@effect/platform": "^0.87.1", "effect": "^3.16.10", "ioredis": "^5", "lmdb": "^3" }, "optionalPeers": ["ioredis", "lmdb"] }, "sha512-R+j+oI1nSigKPxDxcfDK60dASFkDQRMOfmBZCLRY7lDtK4xBeCrUK//fHX5QhO/dOpyqpTsoQsCzNPRHo+7NrQ=="],
 
-    "@effect/platform": ["@effect/platform@0.87.11", "", { "dependencies": { "find-my-way-ts": "^0.1.6", "msgpackr": "^1.11.4", "multipasta": "^0.2.5" }, "peerDependencies": { "effect": "^3.16.12" } }, "sha512-ig6KdITBL7i2IjLWlgpOAshg6dEzd7gLhq6OtF/Oy6IuYI6C3SUSkzKfsJFQwyzYj9gb7lHVoBvQk7E8EpXktg=="],
+    "@effect/platform": ["@effect/platform@0.87.12", "", { "dependencies": { "find-my-way-ts": "^0.1.6", "msgpackr": "^1.11.4", "multipasta": "^0.2.5" }, "peerDependencies": { "effect": "^3.16.12" } }, "sha512-IRYynFjo18wmfTd0FVNAXSC631+gE1yBeBfcOHtPLyMlApjhB31YzaCs+T9kY1cBrE7nZ78lJl0MtHmu1W9Wkw=="],
 
     "@effect/platform-node": ["@effect/platform-node@0.88.3", "", { "dependencies": { "@effect/platform-node-shared": "^0.42.3", "mime": "^3.0.0", "undici": "^7.10.0", "ws": "^8.18.2" }, "peerDependencies": { "@effect/cluster": "^0.41.3", "@effect/platform": "^0.87.1", "@effect/rpc": "^0.64.2", "@effect/sql": "^0.40.1", "effect": "^3.16.10" } }, "sha512-ChJxjjpT/pSmBpWgyKVHG1m8J8tEtPaKc160FFjNz/HGVmhBSsWce9Vro9Z13mQvsm2K5SZkET2pyQX8Rw60Yw=="],
 
