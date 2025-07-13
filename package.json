@@ -38,7 +38,7 @@
     "@effect/cluster": "0.41.17",
     "@effect/platform": "0.87.12",
     "@octokit/core": "7.0.3",
-    "effect": "3.16.12",
+    "effect": "3.16.13",
     "effect-errors": "1.10.14",
     "glob": "11.0.3",
     "node-coverage-badges": "1.4.1"
