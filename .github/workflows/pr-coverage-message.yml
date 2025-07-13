@@ -1,0 +1,48 @@
+name: pr-coverage-message
+
+on:
+  push:
+    branches:
+      - pr-coverage-message
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pr-coverage-message:
+    name: pr-coverage-message
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          registry-url: 'https://registry.npmjs.org'
+          cache-dependency-path: ./package.json
+
+      - name: 📥 Install deps
+        run: bun install --frozen-lockfile
+
+      - name: ⚙️ Building action
+        run: bun run build
+
+      - name: 😼 testing stuff
+        id: local-action-run
+        uses: ./
+        with:
+          branches: "pr-coverage-message"
+          badges-icon: vitest
+          badges-labels-prefix: "Tests"
+          commit-message: "chore: updating coverage badges"
+          commit-user: jpb06
+          commit-user-email: jpb.06@outlook.com
