@@ -236,7 +236,22 @@ describe('mainTask function', () => {
 
     vi.mocked(globEffect).mockReturnValueOnce(Effect.succeed([reportPath]));
     vi.mocked(generateBadgesEffect).mockImplementation(() =>
-      Effect.succeed(true),
+      Effect.succeed({
+        total: {
+          branches: {
+            pct: 10,
+          },
+          functions: {
+            pct: 20,
+          },
+          lines: {
+            pct: 30,
+          },
+          statements: {
+            pct: 40,
+          },
+        },
+      }),
     );
 
     const program = pipe(
@@ -328,7 +343,22 @@ describe('mainTask function', () => {
 
     vi.mocked(globEffect).mockReturnValueOnce(Effect.succeed([reportPath]));
     vi.mocked(generateBadgesEffect).mockImplementation(() =>
-      Effect.succeed(true),
+      Effect.succeed({
+        total: {
+          branches: {
+            pct: 10,
+          },
+          functions: {
+            pct: 20,
+          },
+          lines: {
+            pct: 30,
+          },
+          statements: {
+            pct: 40,
+          },
+        },
+      }),
     );
 
     const program = pipe(
@@ -427,7 +457,22 @@ describe('mainTask function', () => {
 
     vi.mocked(globEffect).mockReturnValueOnce(Effect.succeed([reportPath]));
     vi.mocked(generateBadgesEffect).mockImplementation(() =>
-      Effect.succeed(true),
+      Effect.succeed({
+        total: {
+          branches: {
+            pct: 10,
+          },
+          functions: {
+            pct: 20,
+          },
+          lines: {
+            pct: 30,
+          },
+          statements: {
+            pct: 40,
+          },
+        },
+      }),
     );
 
     const program = pipe(
@@ -583,7 +628,22 @@ describe('mainTask function', () => {
       ]),
     );
     vi.mocked(generateBadgesEffect).mockImplementation(() =>
-      Effect.succeed(true),
+      Effect.succeed({
+        total: {
+          branches: {
+            pct: 50,
+          },
+          functions: {
+            pct: 60,
+          },
+          lines: {
+            pct: 70,
+          },
+          statements: {
+            pct: 80,
+          },
+        },
+      }),
     );
     vi.mocked(generateBadgesFromValuesEffect).mockImplementation(() =>
       Effect.succeed(true),
