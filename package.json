@@ -38,7 +38,7 @@
 		"@actions/github": "6.0.1",
 		"@effect/cluster": "0.41.18",
 		"@effect/platform": "0.90.10",
-		"@octokit/core": "7.0.3",
+		"@octokit/core": "7.0.4",
 		"effect": "3.17.14",
 		"effect-errors": "1.10.14",
 		"glob": "11.0.3",
