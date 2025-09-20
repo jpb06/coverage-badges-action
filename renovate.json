@@ -2,7 +2,10 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    ":prHourlyLimitNone"
+    "customManagers:biomeVersions",
+    ":prHourlyLimitNone",
+    "helpers:pinGitHubActionDigestsToSemver",
+    ":enableVulnerabilityAlerts"
   ],
   "schedule": "after 6am and before 6pm",
   "automerge": false,
