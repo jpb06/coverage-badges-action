@@ -1,60 +1,61 @@
 {
-  "name": "coverage-badges-action",
-  "description": "Generates coverage badges and pushes them to the repo",
-  "version": "1.4.1",
-  "main": "lib/main.js",
-  "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jpb06/coverage-badges-action.git"
-  },
-  "author": "jpb06 <jpb.06@outlook.com>",
-  "license": "MIT",
-  "engines": {
-    "node": "22.x"
-  },
-  "scripts": {
-    "update-deps": "bun npm-check-updates --root --format group -i",
-    "clean-dist": "rm -rf ./dist && rm -rf ./lib",
-    "build": "bun clean-dist && esbuild ./src/main.ts --bundle --tsconfig=tsconfig.prod.json --minify --sourcemap --outfile=./lib/main.js --platform=node",
-    "postbuild": "echo '{\"type\": \"commonjs\"}' > lib/package.json",
-    "type-check": "tsc --noEmit -P tsconfig.type-check.json",
-    "format": "biome format --write ./src",
-    "format-ci": "biome format ./src",
-    "lint": "biome lint ./src",
-    "lint-fix": "biome lint --write ./src",
-    "test": "vitest",
-    "test-ci": "vitest --coverage --run",
-    "test-dev": "vitest --coverage",
-    "test-coverage": "vitest run --coverage",
-    "run-local": "bun run build && act -P ubuntu-latest=-self-hosted --job coverage-badges-generation",
-    "badges": "generateBadges",
-    "sync-icons": "bun generateReadmeIcons -h 50"
-  },
-  "dependencies": {
-    "@actions/core": "1.11.1",
-    "@actions/exec": "1.1.1",
-    "@actions/github": "6.0.1",
-    "@effect/cluster": "0.41.18",
-    "@effect/platform": "0.87.13",
-    "@octokit/core": "7.0.3",
-    "effect": "3.16.13",
-    "effect-errors": "1.10.14",
-    "glob": "11.0.3",
-    "node-coverage-badges": "1.4.1"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.1.1",
-    "@commitlint/cli": "19.8.1",
-    "@commitlint/config-conventional": "19.8.1",
-    "@types/node": "24.0.13",
-    "@vitest/coverage-v8": "3.2.4",
-    "esbuild": "0.25.6",
-    "npm-check-updates": "18.0.1",
-    "readme-package-icons": "1.2.2",
-    "typescript": "5.8.3",
-    "vite-tsconfig-paths": "5.1.4",
-    "vitest": "3.2.4",
-    "vitest-mock-extended": "3.1.0"
-  }
+	"name": "coverage-badges-action",
+	"description": "Generates coverage badges and pushes them to the repo",
+	"version": "1.4.1",
+	"main": "lib/main.js",
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jpb06/coverage-badges-action.git"
+	},
+	"author": "jpb06 <jpb.06@outlook.com>",
+	"license": "MIT",
+	"engines": {
+		"node": "22.x"
+	},
+	"scripts": {
+		"update-deps": "bun npm-check-updates --root --format group -i",
+		"clean-dist": "rm -rf ./dist && rm -rf ./lib",
+		"build": "bun clean-dist && esbuild ./src/main.ts --bundle --tsconfig=tsconfig.prod.json --minify --sourcemap --outfile=./lib/main.js --platform=node",
+		"postbuild": "echo '{\"type\": \"commonjs\"}' > lib/package.json",
+		"type-check": "tsc --noEmit -P tsconfig.type-check.json",
+		"check": "biome check .",
+		"format": "biome format --write .",
+		"format-ci": "biome format .",
+		"lint": "biome lint .",
+		"lint-fix": "biome lint --write .",
+		"test": "vitest",
+		"test-ci": "vitest --coverage --run",
+		"test-dev": "vitest --coverage",
+		"test-coverage": "vitest run --coverage",
+		"run-local": "bun run build && act -P ubuntu-latest=-self-hosted --job coverage-badges-generation",
+		"badges": "generateBadges",
+		"sync-icons": "bun generateReadmeIcons -h 50"
+	},
+	"dependencies": {
+		"@actions/core": "1.11.1",
+		"@actions/exec": "1.1.1",
+		"@actions/github": "6.0.1",
+		"@effect/cluster": "0.41.18",
+		"@effect/platform": "0.87.13",
+		"@octokit/core": "7.0.3",
+		"effect": "3.16.13",
+		"effect-errors": "1.10.14",
+		"glob": "11.0.3",
+		"node-coverage-badges": "1.4.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.1.1",
+		"@commitlint/cli": "19.8.1",
+		"@commitlint/config-conventional": "19.8.1",
+		"@types/node": "24.0.13",
+		"@vitest/coverage-v8": "3.2.4",
+		"esbuild": "0.25.6",
+		"npm-check-updates": "18.0.1",
+		"readme-package-icons": "1.2.2",
+		"typescript": "5.8.3",
+		"vite-tsconfig-paths": "5.1.4",
+		"vitest": "3.2.4",
+		"vitest-mock-extended": "3.1.0"
+	}
 }
