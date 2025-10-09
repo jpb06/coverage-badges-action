@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/jpb06/coverage-badges-action/compare/v1.4.3...v1.4.4) (2025-10-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency node-coverage-badges to v1.5.2 ([#197](https://github.com/jpb06/coverage-badges-action/issues/197)) ([6dba183](https://github.com/jpb06/coverage-badges-action/commit/6dba1832df59d720f1d2a6dde245a31a270fa388))
+
 ## [1.4.3](https://github.com/jpb06/coverage-badges-action/compare/v1.4.2...v1.4.3) (2025-10-08)
 
 
