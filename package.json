@@ -49,7 +49,7 @@
 		"@commitlint/config-conventional": "20.0.0",
 		"@types/node": "24.7.2",
 		"@vitest/coverage-v8": "4.0.8",
-		"esbuild": "0.26.0",
+		"esbuild": "0.27.0",
 		"npm-check-updates": "19.1.2",
 		"readme-package-icons": "1.2.2",
 		"typescript": "5.9.3",
