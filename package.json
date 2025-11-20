@@ -40,7 +40,7 @@
 		"@effect/platform": "0.93.3",
 		"effect": "3.19.4",
 		"effect-errors": "1.10.17",
-		"glob": "12.0.0",
+		"glob": "13.0.0",
 		"node-coverage-badges": "1.5.2"
 	},
 	"devDependencies": {
