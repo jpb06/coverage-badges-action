@@ -39,7 +39,7 @@
 		"@effect/cluster": "0.53.1",
 		"@effect/platform": "0.93.3",
 		"effect": "3.19.14",
-		"effect-errors": "1.10.17",
+		"effect-errors": "1.10.22",
 		"glob": "13.0.0",
 		"node-coverage-badges": "1.5.2"
 	},
