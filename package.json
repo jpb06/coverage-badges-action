@@ -34,7 +34,7 @@
 	},
 	"dependencies": {
 		"@actions/core": "2.0.2",
-		"@actions/exec": "1.1.1",
+		"@actions/exec": "2.0.0",
 		"@actions/github": "7.0.0",
 		"@effect/cluster": "0.53.1",
 		"@effect/platform": "0.93.3",
