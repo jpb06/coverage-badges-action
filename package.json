@@ -48,13 +48,13 @@
 		"@commitlint/cli": "20.3.1",
 		"@commitlint/config-conventional": "20.3.1",
 		"@types/node": "24.7.2",
-		"@vitest/coverage-v8": "4.0.12",
+		"@vitest/coverage-v8": "4.0.17",
 		"esbuild": "0.27.2",
 		"npm-check-updates": "19.1.2",
 		"readme-package-icons": "1.2.2",
 		"typescript": "5.9.3",
 		"vite-tsconfig-paths": "5.1.4",
-		"vitest": "4.0.12",
+		"vitest": "4.0.17",
 		"vitest-mock-extended": "3.1.0"
 	}
 }
