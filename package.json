@@ -11,7 +11,7 @@
 	"author": "jpb06 <jpb.06@outlook.com>",
 	"license": "MIT",
 	"engines": {
-		"node": "22.x"
+		"node": "24.x"
 	},
 	"scripts": {
 		"update-deps": "bun npm-check-updates --root --format group -i",
@@ -47,7 +47,7 @@
 		"@biomejs/biome": "2.3.11",
 		"@commitlint/cli": "20.3.1",
 		"@commitlint/config-conventional": "20.3.1",
-		"@types/node": "24.7.2",
+		"@types/node": "24.10.9",
 		"@vitest/coverage-v8": "4.0.17",
 		"esbuild": "0.27.2",
 		"npm-check-updates": "19.3.1",
