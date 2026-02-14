@@ -38,7 +38,7 @@
 		"@actions/github": "9.0.0",
 		"@effect/cluster": "0.56.3",
 		"@effect/platform": "0.94.4",
-		"effect": "3.19.16",
+		"effect": "3.19.17",
 		"effect-errors": "1.10.22",
 		"glob": "13.0.2",
 		"node-coverage-badges": "1.6.2"
