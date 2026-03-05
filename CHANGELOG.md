@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.8](https://github.com/jpb06/coverage-badges-action/compare/v1.4.7...v1.4.8) (2026-03-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency effect to v3.19.19 ([#285](https://github.com/jpb06/coverage-badges-action/issues/285)) ([9d34146](https://github.com/jpb06/coverage-badges-action/commit/9d341465a54663d1e91da9935345ada6f768fc36))
+* **deps:** update dependency effect-errors to v1.10.23 ([#293](https://github.com/jpb06/coverage-badges-action/issues/293)) ([db4aac6](https://github.com/jpb06/coverage-badges-action/commit/db4aac628bb0f436342f62188bb0ad7f477c9fe0))
+* **deps:** update dependency glob to v13.0.6 ([#286](https://github.com/jpb06/coverage-badges-action/issues/286)) ([aa70699](https://github.com/jpb06/coverage-badges-action/commit/aa70699311249ae48bd7f21df3df176504ca8c54))
+* **deps:** update dependency node-coverage-badges to v1.6.3 ([#294](https://github.com/jpb06/coverage-badges-action/issues/294)) ([368ee02](https://github.com/jpb06/coverage-badges-action/commit/368ee02a57ddf66bed60ee85d4cfeed7e1f54187))
+
 ## [1.4.7](https://github.com/jpb06/coverage-badges-action/compare/v1.4.6...v1.4.7) (2026-02-14)
 
 
