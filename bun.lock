@@ -22,7 +22,7 @@
         "@types/node": "25.2.3",
         "@vitest/coverage-v8": "4.0.18",
         "esbuild": "0.27.3",
-        "npm-check-updates": "19.3.2",
+        "npm-check-updates": "19.6.3",
         "readme-package-icons": "1.2.2",
         "typescript": "5.9.3",
         "vite-tsconfig-paths": "6.1.1",
@@ -516,7 +516,7 @@
 
     "node-gyp-build-optional-packages": ["node-gyp-build-optional-packages@5.2.2", "", { "dependencies": { "detect-libc": "^2.0.1" }, "bin": { "node-gyp-build-optional-packages": "bin.js", "node-gyp-build-optional-packages-optional": "optional.js", "node-gyp-build-optional-packages-test": "build-test.js" } }, "sha512-s+w+rBWnpTMwSFbaE0UXsRlg7hU4FjekKU4eyAih5T8nJuNZT1nNsskXpxmeqSK9UzkBl6UgRlnKc8hz8IEqOw=="],
 
-    "npm-check-updates": ["npm-check-updates@19.3.2", "", { "bin": { "npm-check-updates": "build/cli.js", "ncu": "build/cli.js" } }, "sha512-9rr3z7znFjCSuaFxHGTFR2ZBOvLWaJcpLKmIquoTbDBNrwAGiHhv4MZyty6EJ9Xo/aMn35+2ISPSMgWIXx5Xkg=="],
+    "npm-check-updates": ["npm-check-updates@19.6.3", "", { "bin": { "npm-check-updates": "build/cli.js", "ncu": "build/cli.js" } }, "sha512-VAt9Bp26eLaymZ0nZyh5n/by+YZIuegXlvWR0yv1zBqd984f8VnEnBbn+1lS3nN5LyEjn62BJ+yYgzNSpb6Gzg=="],
 
     "obug": ["obug@2.1.1", "", {}, "sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ=="],
 
