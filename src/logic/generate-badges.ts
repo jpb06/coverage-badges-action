@@ -38,7 +38,7 @@ export const generateBadges = (
         summaryFilesPaths,
         ({ path, subPath }) => {
           const writePath =
-            subPath !== undefined ? `${outputPath}/${subPath}` : outputPath;
+            subPath === undefined ? outputPath : `${outputPath}/${subPath}`;
           return generateBadgesEffect(
             path,
             writePath,
