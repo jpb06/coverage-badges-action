@@ -44,7 +44,7 @@
 		"node-coverage-badges": "1.6.3"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.8",
+		"@biomejs/biome": "2.4.12",
 		"@commitlint/cli": "20.5.0",
 		"@commitlint/config-conventional": "20.5.0",
 		"@types/node": "25.5.0",
