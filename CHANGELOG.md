@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.10](https://github.com/jpb06/coverage-badges-action/compare/v1.4.9...v1.4.10) (2026-04-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @actions/github to v9.1.0 ([#325](https://github.com/jpb06/coverage-badges-action/issues/325)) ([36d8f35](https://github.com/jpb06/coverage-badges-action/commit/36d8f35620d5c25983a97a81e14405c927d6b939))
+* **deps:** update dependency @effect/cluster to v0.58.0 ([#310](https://github.com/jpb06/coverage-badges-action/issues/310)) ([2b65d12](https://github.com/jpb06/coverage-badges-action/commit/2b65d1279ae9d58259bd39c2e57ffcb9b3211704))
+* **deps:** update dependency @effect/platform to v0.96.0 ([#311](https://github.com/jpb06/coverage-badges-action/issues/311)) ([8ef7e8a](https://github.com/jpb06/coverage-badges-action/commit/8ef7e8a90d317a174ca3ce631ebd04d0f3031a52))
+* **deps:** update dependency effect to v3.21.0 ([#312](https://github.com/jpb06/coverage-badges-action/issues/312)) ([6f373ac](https://github.com/jpb06/coverage-badges-action/commit/6f373ac7689f373b41150a42fb2043688bd4e449))
+* **deps:** update dependency effect-errors to v1.10.24 ([#323](https://github.com/jpb06/coverage-badges-action/issues/323)) ([5ce6b5d](https://github.com/jpb06/coverage-badges-action/commit/5ce6b5d6115140d5356ca46a16e850e1c87b6566))
+
 ## [1.4.9](https://github.com/jpb06/coverage-badges-action/compare/v1.4.8...v1.4.9) (2026-03-22)
 
 
