@@ -35,7 +35,7 @@ inputs:
     default: './badges'
 
 runs:
-  using: 'node20'
+  using: 'node24'
   main: './lib/main.js'
 
 branding:
