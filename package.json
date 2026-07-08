@@ -47,7 +47,7 @@
 		"@biomejs/biome": "2.4.13",
 		"@commitlint/cli": "20.5.3",
 		"@commitlint/config-conventional": "20.5.3",
-		"@types/node": "25.6.0",
+		"@types/node": "25.9.5",
 		"@vitest/coverage-v8": "4.1.5",
 		"esbuild": "0.28.0",
 		"readme-package-icons": "1.2.3",
