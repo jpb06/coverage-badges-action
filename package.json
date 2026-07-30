@@ -37,7 +37,7 @@
 		"@actions/exec": "3.0.0",
 		"@actions/github": "9.1.1",
 		"@effect/cluster": "0.58.2",
-		"@effect/platform": "0.96.1",
+		"@effect/platform": "0.97.1",
 		"effect": "3.21.2",
 		"effect-errors": "1.10.24",
 		"glob": "13.0.6",
